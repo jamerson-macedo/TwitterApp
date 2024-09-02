@@ -88,18 +88,7 @@ extension ProfileView {
             
             .font(.caption)
             .foregroundStyle(Color.gray)
-            
-            HStack(spacing:24){
-                HStack(spacing:4){
-                    Text("2").font(.subheadline).bold()
-                    Text("Following").foregroundStyle(Color.gray)
-                }
-              
-                HStack(spacing:4){
-                    Text("2").font(.subheadline).bold()
-                    Text("Followers").foregroundStyle(Color.gray)
-                }
-            }.padding(.vertical)
+            UserStatsView().padding(.vertical)
         }.padding(.horizontal)
     }
     var tweetFilterBar : some View{
