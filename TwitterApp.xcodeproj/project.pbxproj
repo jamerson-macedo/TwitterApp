@@ -19,6 +19,7 @@
 		CFDFB82C2C86257400F624E6 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB82B2C86257400F624E6 /* MessagesView.swift */; };
 		CFDFB8302C8626C300F624E6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB82F2C8626C300F624E6 /* ProfileView.swift */; };
 		CFDFB8322C862F5300F624E6 /* TweetFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8312C862F5300F624E6 /* TweetFilterViewModel.swift */; };
+		CFDFB8372C86350200F624E6 /* UserRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8362C86350200F624E6 /* UserRowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		CFDFB82B2C86257400F624E6 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		CFDFB82F2C8626C300F624E6 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		CFDFB8312C862F5300F624E6 /* TweetFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetFilterViewModel.swift; sourceTree = "<group>"; };
+		CFDFB8362C86350200F624E6 /* UserRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 		CFDFB8172C861AB500F624E6 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				CFDFB8352C8634F300F624E6 /* users */,
 				CFDFB81D2C861BC900F624E6 /* Tweets */,
 			);
 			path = Components;
@@ -173,7 +176,8 @@
 		CFDFB8232C86245500F624E6 /* Explore */ = {
 			isa = PBXGroup;
 			children = (
-				CFDFB8272C8624AC00F624E6 /* ExploreView.swift */,
+				CFDFB8342C8634A600F624E6 /* ViewModel */,
+				CFDFB8332C8634A300F624E6 /* View */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -217,6 +221,29 @@
 				CFDFB82F2C8626C300F624E6 /* ProfileView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		CFDFB8332C8634A300F624E6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CFDFB8272C8624AC00F624E6 /* ExploreView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CFDFB8342C8634A600F624E6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CFDFB8352C8634F300F624E6 /* users */ = {
+			isa = PBXGroup;
+			children = (
+				CFDFB8362C86350200F624E6 /* UserRowView.swift */,
+			);
+			path = users;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,6 +324,7 @@
 				CFDFB81C2C861B3900F624E6 /* FeedView.swift in Sources */,
 				CFDFB8052C861A0000F624E6 /* TwitterApp.swift in Sources */,
 				CFDFB8282C8624AC00F624E6 /* ExploreView.swift in Sources */,
+				CFDFB8372C86350200F624E6 /* UserRowView.swift in Sources */,
 				CFDFB8222C86229900F624E6 /* MainTabView.swift in Sources */,
 				CFDFB82A2C86255300F624E6 /* NotificationsView.swift in Sources */,
 			);
