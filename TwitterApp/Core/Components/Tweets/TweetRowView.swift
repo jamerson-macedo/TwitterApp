@@ -30,6 +30,7 @@ struct TweetRowView: View {
                 Spacer()
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                     Image(systemName: "arrow.2.squarepath").font(.subheadline)
+                        
                 })
                 Spacer()
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
@@ -40,6 +41,7 @@ struct TweetRowView: View {
                     Image(systemName: "bookmark").font(.subheadline)
                 })
             }.padding()
+                .foregroundStyle(Color.gray)
             Divider()
         }
     }
