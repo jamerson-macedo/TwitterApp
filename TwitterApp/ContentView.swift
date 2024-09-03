@@ -12,7 +12,7 @@ struct ContentView: View {
     var body: some View {
         ZStack(alignment: .topLeading){
             MainTabView().navigationBarHidden(showMenu)
-            
+            // cor preta por cima
             if showMenu{
                 ZStack{
                     Color.black.opacity(showMenu ? 0.25 : 0.0)
@@ -21,7 +21,8 @@ struct ContentView: View {
                         showMenu = false // quando clicar na sombra ela volta
                     }
                 }.ignoresSafeArea()
-            }
+            }// depois o menu
+            
             SideMenuView().frame(width: 300)
                 .offset(x: showMenu ? 0 : -300)
                 .background(showMenu ? Color.white : Color.clear)
