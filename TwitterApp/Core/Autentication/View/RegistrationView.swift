@@ -12,6 +12,10 @@ struct RegistrationView: View {
     @State private var username = ""
     @State private var fullname = ""
     @State private var password = ""
+    @Environment(\.dismiss) var dismiss
+    // não inicia em nenhum lugar
+    // apenas na main ai serve para todos
+    @EnvironmentObject var viewmodel : AuthViewModel
     var body: some View {
         VStack{
             //headerview
@@ -37,7 +41,9 @@ struct RegistrationView: View {
             }.padding(.horizontal,32)
                 .padding(.top,44)
            
-            Button(action: {}, label: {
+            Button(action: {
+                viewmodel.register(withEmail: email, password: password, fullname: fullname, userName: username)
+            }, label: {
                 Text("Sign up").font(.headline)
                     .foregroundStyle(Color.white)
                     .frame(width: 340,height: 50)
@@ -48,8 +54,8 @@ struct RegistrationView: View {
             }).shadow(color:.gray.opacity(0.5), radius: 10, x: 0,y:0).padding(.top,22)
             
             Spacer()
-            NavigationLink {
-                LoginView().navigationBarHidden(true)
+            Button{
+                dismiss()
             } label: {
                 HStack{
                     Text("Already have an account?").font(.footnote)

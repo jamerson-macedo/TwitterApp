@@ -30,6 +30,11 @@
 		CFDFB8502C87B4FF00F624E6 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB84F2C87B4FF00F624E6 /* RegistrationView.swift */; };
 		CFDFB8522C87B71700F624E6 /* RoundedShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8512C87B71700F624E6 /* RoundedShape.swift */; };
 		CFDFB8542C87C24400F624E6 /* CustomInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8532C87C24400F624E6 /* CustomInputField.swift */; };
+		CFDFB8572C87D40800F624E6 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CFDFB8562C87D40800F624E6 /* FirebaseAuth */; };
+		CFDFB8592C87D40800F624E6 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CFDFB8582C87D40800F624E6 /* FirebaseFirestore */; };
+		CFDFB85B2C87D40800F624E6 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = CFDFB85A2C87D40800F624E6 /* FirebaseStorage */; };
+		CFDFB85D2C87D48F00F624E6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CFDFB85C2C87D48F00F624E6 /* GoogleService-Info.plist */; };
+		CFDFB85F2C87D6C200F624E6 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB85E2C87D6C200F624E6 /* AuthViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +62,8 @@
 		CFDFB84F2C87B4FF00F624E6 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		CFDFB8512C87B71700F624E6 /* RoundedShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedShape.swift; sourceTree = "<group>"; };
 		CFDFB8532C87C24400F624E6 /* CustomInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputField.swift; sourceTree = "<group>"; };
+		CFDFB85C2C87D48F00F624E6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CFDFB85E2C87D6C200F624E6 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +71,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFDFB8572C87D40800F624E6 /* FirebaseAuth in Frameworks */,
+				CFDFB8592C87D40800F624E6 /* FirebaseFirestore in Frameworks */,
+				CFDFB85B2C87D40800F624E6 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +106,7 @@
 				CFDFB8042C861A0000F624E6 /* TwitterApp.swift */,
 				CFDFB8062C861A0000F624E6 /* ContentView.swift */,
 				CFDFB8082C861A0100F624E6 /* Assets.xcassets */,
+				CFDFB85C2C87D48F00F624E6 /* GoogleService-Info.plist */,
 				CFDFB80A2C861A0100F624E6 /* Preview Content */,
 			);
 			path = TwitterApp;
@@ -344,6 +355,7 @@
 		CFDFB84C2C87B4DD00F624E6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				CFDFB85E2C87D6C200F624E6 /* AuthViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -364,6 +376,11 @@
 			dependencies = (
 			);
 			name = TwitterApp;
+			packageProductDependencies = (
+				CFDFB8562C87D40800F624E6 /* FirebaseAuth */,
+				CFDFB8582C87D40800F624E6 /* FirebaseFirestore */,
+				CFDFB85A2C87D40800F624E6 /* FirebaseStorage */,
+			);
 			productName = TwitterApp;
 			productReference = CFDFB8012C861A0000F624E6 /* TwitterApp.app */;
 			productType = "com.apple.product-type.application";
@@ -392,6 +409,9 @@
 				Base,
 			);
 			mainGroup = CFDFB7F82C861A0000F624E6;
+			packageReferences = (
+				CFDFB8552C87D40800F624E6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = CFDFB8022C861A0000F624E6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -408,6 +428,7 @@
 			files = (
 				CFDFB80C2C861A0100F624E6 /* Preview Assets.xcassets in Resources */,
 				CFDFB8092C861A0100F624E6 /* Assets.xcassets in Resources */,
+				CFDFB85D2C87D48F00F624E6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +457,7 @@
 				CFDFB8472C86689900F624E6 /* NewTweetView.swift in Sources */,
 				CFDFB8522C87B71700F624E6 /* RoundedShape.swift in Sources */,
 				CFDFB8372C86350200F624E6 /* UserRowView.swift in Sources */,
+				CFDFB85F2C87D6C200F624E6 /* AuthViewModel.swift in Sources */,
 				CFDFB8222C86229900F624E6 /* MainTabView.swift in Sources */,
 				CFDFB82A2C86255300F624E6 /* NotificationsView.swift in Sources */,
 				CFDFB8422C86573200F624E6 /* UserStatsView.swift in Sources */,
@@ -644,6 +666,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CFDFB8552C87D40800F624E6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CFDFB8562C87D40800F624E6 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CFDFB8552C87D40800F624E6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		CFDFB8582C87D40800F624E6 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CFDFB8552C87D40800F624E6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		CFDFB85A2C87D40800F624E6 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CFDFB8552C87D40800F624E6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CFDFB7F92C861A0000F624E6 /* Project object */;
 }
