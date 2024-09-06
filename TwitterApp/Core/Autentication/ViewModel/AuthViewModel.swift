@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestore
 class AuthViewModel : ObservableObject{
     @Published var userSession : FirebaseAuth.User?
    
@@ -15,9 +16,18 @@ class AuthViewModel : ObservableObject{
     init(){
         // quando iniciar se tiver usuario ele ja registra
         self.userSession = Auth.auth().currentUser
-        print("DEBUG: O USUARIO É\(self.userSession)")
+        print("DEBUG: O USUARIO É\(self.userSession?.uid)")
     }
     func login(withEmail email : String, password : String){
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+            if let error = error{
+                print("DEBUG : ", error.localizedDescription)
+                return
+            }
+            
+            guard let user = result?.user else {return}
+            self.userSession = user
+        }
         
     }
     func register(withEmail email : String, password : String , fullname:String,userName : String){
@@ -27,8 +37,22 @@ class AuthViewModel : ObservableObject{
                 return
             }
             guard let user = result?.user else {return}
+            
             self.userSession = user
+            
+            let data = ["email" : email,
+                        "username": userName.lowercased(),
+                        "fullname":fullname,
+                        "uid": user.uid]
+            Firestore.firestore().collection("users").document(user.uid).setData(data) { error in
+                
+            }
         }
+    }
+    
+    func signOut(){
+        userSession = nil
+        try? Auth.auth().signOut()
     }
     
 }

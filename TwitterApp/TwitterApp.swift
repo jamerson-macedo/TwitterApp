@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 @main
 struct TwitterApp: App {
+    // essa instancia fica por todo o app
     @StateObject var viewModel = AuthViewModel()
     init(){
         // iniciar o firebase
