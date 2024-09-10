@@ -40,6 +40,8 @@
 		CFDFB8662C8BDA3400F624E6 /* ImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8652C8BDA3400F624E6 /* ImageUploader.swift */; };
 		CFDFB8682C8FA1A600F624E6 /* AutenticationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8672C8FA1A600F624E6 /* AutenticationHeaderView.swift */; };
 		CFDFB86A2C90DBA300F624E6 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8692C90DBA300F624E6 /* UserService.swift */; };
+		CFDFB86C2C90DED400F624E6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB86B2C90DED400F624E6 /* User.swift */; };
+		CFDFB86E2C90FE9700F624E6 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB86D2C90FE9700F624E6 /* ExploreViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +76,8 @@
 		CFDFB8652C8BDA3400F624E6 /* ImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploader.swift; sourceTree = "<group>"; };
 		CFDFB8672C8FA1A600F624E6 /* AutenticationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutenticationHeaderView.swift; sourceTree = "<group>"; };
 		CFDFB8692C90DBA300F624E6 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		CFDFB86B2C90DED400F624E6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		CFDFB86D2C90FE9700F624E6 /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +138,7 @@
 		CFDFB8122C861A9500F624E6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CFDFB86B2C90DED400F624E6 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -285,6 +290,7 @@
 		CFDFB8342C8634A600F624E6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				CFDFB86D2C90FE9700F624E6 /* ExploreViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -474,6 +480,7 @@
 				CFDFB8322C862F5300F624E6 /* TweetFilterViewModel.swift in Sources */,
 				CFDFB81C2C861B3900F624E6 /* FeedView.swift in Sources */,
 				CFDFB83C2C8654AF00F624E6 /* SideMenuView.swift in Sources */,
+				CFDFB86E2C90FE9700F624E6 /* ExploreViewModel.swift in Sources */,
 				CFDFB8052C861A0000F624E6 /* TwitterApp.swift in Sources */,
 				CFDFB8282C8624AC00F624E6 /* ExploreView.swift in Sources */,
 				CFDFB8492C866A7700F624E6 /* TextArea.swift in Sources */,
@@ -482,6 +489,7 @@
 				CFDFB84E2C87B4F600F624E6 /* LoginView.swift in Sources */,
 				CFDFB8502C87B4FF00F624E6 /* RegistrationView.swift in Sources */,
 				CFDFB8472C86689900F624E6 /* NewTweetView.swift in Sources */,
+				CFDFB86C2C90DED400F624E6 /* User.swift in Sources */,
 				CFDFB8522C87B71700F624E6 /* RoundedShape.swift in Sources */,
 				CFDFB8372C86350200F624E6 /* UserRowView.swift in Sources */,
 				CFDFB85F2C87D6C200F624E6 /* AuthViewModel.swift in Sources */,

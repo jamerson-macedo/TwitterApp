@@ -9,18 +9,24 @@ import Foundation
 import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
+
 class AuthViewModel : ObservableObject{
-   // a trla principal ta observando essa variavel, se ela for nula vai pro login se não vai para a principal
-        @Published var userSession: FirebaseAuth.User?
-        //This property below is for The navigation to the profilePhotoSelectorView
-        @Published var didAuthenticateUser = false
-        @Published var currentUser: User?
-        private var tempUserSession: FirebaseAuth.User?
+    // a trla principal ta observando essa variavel, se ela for nula vai pro login se não vai para a principal
+    @Published var userSession: FirebaseAuth.User?
+    //This property below is for The navigation to the profilePhotoSelectorView
+    @Published var didAuthenticateUser = false
+    // o usuario do retorno
+    @Published var currentUser: User?
+    //
+    private var tempUserSession: FirebaseAuth.User?
+    
+    private let service = UserService()
+   
     
     init(){
         // quando iniciar se tiver usuario ele ja registra
         self.userSession = Auth.auth().currentUser
-        print("DEBUG: O USUARIO É\(self.userSession?.uid)")
+        fetchUser()
     }
     func login(withEmail email : String, password : String){
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
@@ -31,55 +37,64 @@ class AuthViewModel : ObservableObject{
             
             guard let user = result?.user else {return}
             self.userSession = user
+            self.fetchUser()
         }
         
     }
     func register(withEmail email: String, password: String, fullname: String, username: String) {
-           
-           Auth.auth().createUser(withEmail: email, password: password) { result, error in
-               if let error = error {
-                   print("DEBUG: Failed to register with error \(error.localizedDescription)")
-                   return
-               }
-               guard let user = result?.user else {return}
-              
-               
-               self.tempUserSession = user
-               
-               //storing the user data into the firestore database
-               let data = [
-                   "email": email,
-                   "username": username.lowercased(),
-                   "fullname": fullname,
-                   "uid": user.uid
-               ]
-               // quando o usuario é criado ele abre a tela para colocar a foto
-               Firestore.firestore().collection("users")
-               
-                   .document(user.uid).setData(data) { _ in
-                       self.didAuthenticateUser = true
-                   }
-               
-           }
-       }
+        
+        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+            if let error = error {
+                print("DEBUG: Failed to register with error \(error.localizedDescription)")
+                return
+            }
+            guard let user = result?.user else {return}
+            
+            
+            self.tempUserSession = user
+            
+            //storing the user data into the firestore database
+            let data = [
+                "email": email,
+                "username": username.lowercased(),
+                "fullname": fullname,
+                "uid": user.uid
+            ]
+            // quando o usuario é criado ele abre a tela para colocar a foto
+            Firestore.firestore().collection("users")
+            
+                .document(user.uid).setData(data) { _ in
+                    self.didAuthenticateUser = true
+                }
+            
+        }
+    }
     
     func signOut(){
         userSession = nil
         try? Auth.auth().signOut()
     }
     func uploadProfileImage(_ image: UIImage) {
-            //se o usuario temporario existir
+        //se o usuario temporario existir
         // sinal que ja foi feito o cadastro então ele faz o upload da imagem
-            guard let uid = tempUserSession?.uid else {return}
-            // faz o upload da url que retornou da função
+        guard let uid = tempUserSession?.uid else {return}
+        // faz o upload da url que retornou da função
         ImageUploade.uploadImage(image: image) { profileImageUrl in
-                Firestore.firestore().collection("users")
-                    .document(uid)
-                    .updateData(["profileImageUrl": profileImageUrl]) { _ in
-                        self.userSession = self.tempUserSession
-                        print("DEBUG : USUARIO CADASTRADO TUDO CERTO")
-                      //so that when we register a new user we can fetch the details of the currently registered user.
-                    }
-            }
+            Firestore.firestore().collection("users")
+                .document(uid)
+                .updateData(["profileImageUrl": profileImageUrl]) { _ in
+                    self.userSession = self.tempUserSession
+                    self.fetchUser()
+                }
         }
+    }
+    func fetchUser() {
+        // se tiver usuario
+        guard let uid = self.userSession?.uid else {return}
+        service.fetchUser(withuid: uid){ user in
+            self.currentUser = user
+            
+        }
+    }
+   
 }

@@ -47,6 +47,7 @@ extension ContentView{
                     .background(showMenu ? Color.white : Color.clear)
             }.navigationTitle("Home")
                 .navigationBarTitleDisplayMode(.inline)
+                .toolbarBackground(.thinMaterial)
                 .toolbar{
                     ToolbarItem(placement:.navigationBarLeading){
                         Button(action: {
@@ -54,12 +55,19 @@ extension ContentView{
                                 showMenu.toggle()
                             }
                         }, label: {
-                            Circle().frame(width: 32,height: 32)
-                        })
+                            if let user = viewModel.currentUser{
+                                AsyncImage(url: URL(string: user.profileImageUrl)){ image in
+                                    image.resizable().frame(width: 32,height: 32).clipShape(Circle())
+                                    
+                                }placeholder: {
+                                    ProgressView()
+                                }
+                            }})
                     }
                 }
                 .onAppear{
                     showMenu = false
+                   
                 }
             
             

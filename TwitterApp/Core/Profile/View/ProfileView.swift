@@ -11,6 +11,13 @@ struct ProfileView: View {
     @State private var selectedFilter : TweetFilterViewModel = .tweets
     @Namespace var animation
     @Environment(\.presentationMode) var mode
+    // queremos receber os dados
+    private let user :User
+    
+    init(user:User){
+        self.user = user
+    }
+    
     var body: some View {
         VStack(alignment : .leading){
             headerView
@@ -20,12 +27,12 @@ struct ProfileView: View {
             tweetsView
             
             Spacer()
-        }
+        }.navigationBarHidden(true)
     }
 }
 
 #Preview {
-    ProfileView()
+    ProfileView(user: User(fullname: "jamerson", profileImageUrl: "https://firebasestorage.googleapis.com:443/v0/b/twitter-a398c.appspot.com/o/profile_image%2F6AEDABE2-0A8F-4CD9-AA0E-27FA36F6F1F6?alt=media&token=dad3d01f-9f53-429c-a8a6-fa400259edc1", username: "Jamerson", email: "Jamerson@gmail.com"))
 }
 
 extension ProfileView {
@@ -39,10 +46,18 @@ extension ProfileView {
                     Image(systemName: "arrow.left").resizable()
                         .frame(width: 20,height: 16)
                         .foregroundColor(Color.white)
-                        .offset(x: 16,y:12)
+                        .offset(x: 16,y:-2)
                 })
                 
-                Circle().frame(width: 72,height: 72).offset(x: 16,y: 24)
+                    AsyncImage(url: URL(string: user.profileImageUrl)){ image in
+                        image.resizable().scaledToFill()
+                            .clipShape(Circle())
+                        
+                    }placeholder: {
+                        ProgressView()
+                    }
+                
+                .frame(width: 72,height: 72).offset(x: 16,y: 24)
             }
         }.frame(height: 96)
     }
@@ -66,10 +81,10 @@ extension ProfileView {
     var userInfo : some View{
         VStack(alignment: .leading,spacing: 4){
             HStack{
-                Text("Jamerson Macedo").font(.title2).bold()
+                Text(user.fullname).font(.title2).bold()
                 Image(systemName: "checkmark.seal.fill").foregroundStyle(Color.blue)
             }
-            Text("@Jamerson")
+            Text("@\(user.username)")
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
             Text("Minha bio").font(.subheadline).padding(.vertical)
