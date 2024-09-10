@@ -11,6 +11,7 @@ import Firebase
 struct TwitterApp: App {
     // essa instancia fica por todo o app
     @StateObject var viewModel = AuthViewModel()
+    
     init(){
         // iniciar o firebase
         FirebaseApp.configure()
@@ -19,7 +20,8 @@ struct TwitterApp: App {
         WindowGroup {
             NavigationView{
                 ContentView()
-            }.environmentObject(viewModel)
+            }
+            .environmentObject(viewModel)
         }
     }
 }

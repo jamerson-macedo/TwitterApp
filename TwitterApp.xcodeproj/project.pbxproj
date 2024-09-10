@@ -35,6 +35,11 @@
 		CFDFB85B2C87D40800F624E6 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = CFDFB85A2C87D40800F624E6 /* FirebaseStorage */; };
 		CFDFB85D2C87D48F00F624E6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CFDFB85C2C87D48F00F624E6 /* GoogleService-Info.plist */; };
 		CFDFB85F2C87D6C200F624E6 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB85E2C87D6C200F624E6 /* AuthViewModel.swift */; };
+		CFDFB8612C8BC93C00F624E6 /* PhotoSelectorVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8602C8BC93C00F624E6 /* PhotoSelectorVIew.swift */; };
+		CFDFB8642C8BD19A00F624E6 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8632C8BD19A00F624E6 /* ImagePicker.swift */; };
+		CFDFB8662C8BDA3400F624E6 /* ImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8652C8BDA3400F624E6 /* ImageUploader.swift */; };
+		CFDFB8682C8FA1A600F624E6 /* AutenticationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8672C8FA1A600F624E6 /* AutenticationHeaderView.swift */; };
+		CFDFB86A2C90DBA300F624E6 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8692C90DBA300F624E6 /* UserService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +69,11 @@
 		CFDFB8532C87C24400F624E6 /* CustomInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputField.swift; sourceTree = "<group>"; };
 		CFDFB85C2C87D48F00F624E6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CFDFB85E2C87D6C200F624E6 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		CFDFB8602C8BC93C00F624E6 /* PhotoSelectorVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorVIew.swift; sourceTree = "<group>"; };
+		CFDFB8632C8BD19A00F624E6 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		CFDFB8652C8BDA3400F624E6 /* ImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploader.swift; sourceTree = "<group>"; };
+		CFDFB8672C8FA1A600F624E6 /* AutenticationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutenticationHeaderView.swift; sourceTree = "<group>"; };
+		CFDFB8692C90DBA300F624E6 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +109,7 @@
 		CFDFB8032C861A0000F624E6 /* TwitterApp */ = {
 			isa = PBXGroup;
 			children = (
+				CFDFB8622C8BD18300F624E6 /* Util */,
 				CFDFB8162C861AAC00F624E6 /* Extensions */,
 				CFDFB8152C861AA600F624E6 /* Service */,
 				CFDFB8142C861AA200F624E6 /* Core */,
@@ -147,6 +158,8 @@
 		CFDFB8152C861AA600F624E6 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				CFDFB8652C8BDA3400F624E6 /* ImageUploader.swift */,
+				CFDFB8692C90DBA300F624E6 /* UserService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -166,6 +179,7 @@
 				CFDFB8482C866A7700F624E6 /* TextArea.swift */,
 				CFDFB8512C87B71700F624E6 /* RoundedShape.swift */,
 				CFDFB8532C87C24400F624E6 /* CustomInputField.swift */,
+				CFDFB8672C8FA1A600F624E6 /* AutenticationHeaderView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -348,6 +362,7 @@
 			children = (
 				CFDFB84D2C87B4F600F624E6 /* LoginView.swift */,
 				CFDFB84F2C87B4FF00F624E6 /* RegistrationView.swift */,
+				CFDFB8602C8BC93C00F624E6 /* PhotoSelectorVIew.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -358,6 +373,14 @@
 				CFDFB85E2C87D6C200F624E6 /* AuthViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CFDFB8622C8BD18300F624E6 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				CFDFB8632C8BD19A00F624E6 /* ImagePicker.swift */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -441,6 +464,9 @@
 			files = (
 				CFDFB82C2C86257400F624E6 /* MessagesView.swift in Sources */,
 				CFDFB8302C8626C300F624E6 /* ProfileView.swift in Sources */,
+				CFDFB86A2C90DBA300F624E6 /* UserService.swift in Sources */,
+				CFDFB8682C8FA1A600F624E6 /* AutenticationHeaderView.swift in Sources */,
+				CFDFB8662C8BDA3400F624E6 /* ImageUploader.swift in Sources */,
 				CFDFB8072C861A0000F624E6 /* ContentView.swift in Sources */,
 				CFDFB83E2C8654C200F624E6 /* SideMenuRowView.swift in Sources */,
 				CFDFB8542C87C24400F624E6 /* CustomInputField.swift in Sources */,
@@ -451,6 +477,7 @@
 				CFDFB8052C861A0000F624E6 /* TwitterApp.swift in Sources */,
 				CFDFB8282C8624AC00F624E6 /* ExploreView.swift in Sources */,
 				CFDFB8492C866A7700F624E6 /* TextArea.swift in Sources */,
+				CFDFB8612C8BC93C00F624E6 /* PhotoSelectorVIew.swift in Sources */,
 				CFDFB8402C8654DA00F624E6 /* SideMenuViewModel.swift in Sources */,
 				CFDFB84E2C87B4F600F624E6 /* LoginView.swift in Sources */,
 				CFDFB8502C87B4FF00F624E6 /* RegistrationView.swift in Sources */,
@@ -459,6 +486,7 @@
 				CFDFB8372C86350200F624E6 /* UserRowView.swift in Sources */,
 				CFDFB85F2C87D6C200F624E6 /* AuthViewModel.swift in Sources */,
 				CFDFB8222C86229900F624E6 /* MainTabView.swift in Sources */,
+				CFDFB8642C8BD19A00F624E6 /* ImagePicker.swift in Sources */,
 				CFDFB82A2C86255300F624E6 /* NotificationsView.swift in Sources */,
 				CFDFB8422C86573200F624E6 /* UserStatsView.swift in Sources */,
 			);
@@ -602,6 +630,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -631,6 +660,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

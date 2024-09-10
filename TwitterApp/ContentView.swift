@@ -9,13 +9,16 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var showMenu = false
-    @EnvironmentObject var viewModel : AuthViewModel
+    @EnvironmentObject var viewModel : AuthViewModel	
     // enviroment significa que voce pode usar outra viewmodel de outra tela
     var body: some View {
-        if viewModel.userSession == nil{
-            LoginView()
-        }else {
-            mainInterfaceView
+        Group {
+            if viewModel.userSession == nil {
+                LoginView()
+               
+            } else  {
+                mainInterfaceView
+            }
         }
     }
 }
@@ -25,7 +28,7 @@ struct ContentView: View {
 }
 extension ContentView{
     var mainInterfaceView : some View{
-        Group{
+       
             ZStack(alignment: .topLeading){
                 MainTabView().navigationBarHidden(showMenu)
                 // cor preta por cima
@@ -60,6 +63,5 @@ extension ContentView{
                 }
             
             
-        }
     }
 }

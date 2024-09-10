@@ -10,23 +10,12 @@ import SwiftUI
 struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
+    
     @EnvironmentObject var viewModel : AuthViewModel
     var body: some View {
         VStack{
             //headerview
-            VStack(alignment:.leading){
-                // para completar o background
-                HStack{Spacer()}
-             Text("Hello.")
-                    .font(.largeTitle)
-                        .fontWeight(.semibold)
-            Text("Welcome Back").font(.largeTitle)
-                    .fontWeight(.semibold)
-            }.frame(height: 260)
-                .padding(.leading)
-                .background(.blue)
-                .foregroundStyle(.white)
-                .clipShape(RoundedShape(corners: [.bottomRight]))
+          AutenticationHeaderView(title1: "Hello.", title2: "Welcome back")
             // edittext
             VStack(spacing : 48){
                 CustomInputField(imageName: "envelope", placeholderText: "Email",text: $email)
