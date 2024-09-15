@@ -20,5 +20,51 @@
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7843B66B-A634-4813-AFFB-1E2FAC86CA75"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TwitterApp/Core/SideMenu/View/SideMenuView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "7843B66B-A634-4813-AFFB-1E2FAC86CA75 - d9c9130dbb29889a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (TwitterApp.SideMenuViewModel) -&gt; SwiftUI._ConditionalContent&lt;SwiftUI._ConditionalContent&lt;SwiftUI.NavigationLink&lt;TwitterApp.SideMenuRowView, TwitterApp.ProfileView&gt;, SwiftUI.Button&lt;TwitterApp.SideMenuRowView&gt;&gt;, TwitterApp.SideMenuRowView&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(SwiftUI.AsyncImage&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.clipShape&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.Shape&gt;(_: &#x3c4;_1_0, style: SwiftUI.FillStyle) -&gt; some&gt;&gt;.0, SwiftUI.ProgressView&lt;SwiftUI.EmptyView, SwiftUI.EmptyView&gt;&gt;&gt;, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt;)&gt;&gt;, SwiftUI.ForEach&lt;Swift.Array&lt;TwitterApp.SideMenuViewModel&gt;, Swift.Int, SwiftUI._ConditionalContent&lt;SwiftUI._ConditionalContent&lt;SwiftUI.NavigationLink&lt;TwitterApp.SideMenuRowView, TwitterApp.ProfileView&gt;, SwiftUI.Button&lt;TwitterApp.SideMenuRowView&gt;&gt;, TwitterApp.SideMenuRowView&gt;&gt;, SwiftUI.Spacer)&gt; in TwitterApp.SideMenuView.body.getter : some"
+                  moduleName = "TwitterApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jamersonmacedo/Desktop/Projetos%20IOS/TwitterApp/TwitterApp/Core/SideMenu/View/SideMenuView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "41"
+                  endingLineNumber = "41">
+               </Location>
+               <Location
+                  uuid = "7843B66B-A634-4813-AFFB-1E2FAC86CA75 - a4ddf590283e2b5d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; TwitterApp.SideMenuRowView in closure #2 (TwitterApp.SideMenuViewModel) -&gt; SwiftUI._ConditionalContent&lt;SwiftUI._ConditionalContent&lt;SwiftUI.NavigationLink&lt;TwitterApp.SideMenuRowView, TwitterApp.ProfileView&gt;, SwiftUI.Button&lt;TwitterApp.SideMenuRowView&gt;&gt;, TwitterApp.SideMenuRowView&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(SwiftUI.AsyncImage&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.clipShape&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.Shape&gt;(_: &#x3c4;_1_0, style: SwiftUI.FillStyle) -&gt; some&gt;&gt;.0, SwiftUI.ProgressView&lt;SwiftUI.EmptyView, SwiftUI.EmptyView&gt;&gt;&gt;, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt;)&gt;&gt;, SwiftUI.ForEach&lt;Swift.Array&lt;TwitterApp.SideMenuViewModel&gt;, Swift.Int, SwiftUI._ConditionalContent&lt;SwiftUI._ConditionalContent&lt;SwiftUI.NavigationLink&lt;TwitterApp.SideMenuRowView, TwitterApp.ProfileView&gt;, SwiftUI.Button&lt;TwitterApp.SideMenuRowView&gt;&gt;, TwitterApp.SideMenuRowView&gt;&gt;, SwiftUI.Spacer)&gt; in TwitterApp.SideMenuView.body.getter : some"
+                  moduleName = "TwitterApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jamersonmacedo/Desktop/Projetos%20IOS/TwitterApp/TwitterApp/Core/SideMenu/View/SideMenuView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
