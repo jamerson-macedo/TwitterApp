@@ -11,12 +11,12 @@ struct UserStatsView: View {
     var body: some View {
         HStack(spacing:24){
             HStack(spacing:4){
-                Text("2").font(.subheadline).bold()
+                Text("10M").font(.subheadline).bold()
                 Text("Following").foregroundStyle(Color.gray)
             }
           
             HStack(spacing:4){
-                Text("2").font(.subheadline).bold()
+                Text("0").font(.subheadline).bold()
                 Text("Followers").foregroundStyle(Color.gray)
             }
         }

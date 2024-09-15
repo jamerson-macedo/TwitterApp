@@ -18,11 +18,15 @@ struct UserService {
         }
     }
     func fetchAllUsers(completion : @escaping ([User]) -> Void){
-       
+        // usuario atual
+        guard let currentUserID = Auth.auth().currentUser?.uid else { return }
         Firestore.firestore().collection("users").getDocuments { document, _ in
             guard let documents = document?.documents else {return}
             let users = documents.compactMap { query in
                 try? query.data(as:User.self)
+            }.filter { user in
+                // adiciona apenas os diferentes
+                user.id != currentUserID
             }
             
             completion(users)

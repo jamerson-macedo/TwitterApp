@@ -42,6 +42,7 @@
 		CFDFB86A2C90DBA300F624E6 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8692C90DBA300F624E6 /* UserService.swift */; };
 		CFDFB86C2C90DED400F624E6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB86B2C90DED400F624E6 /* User.swift */; };
 		CFDFB86E2C90FE9700F624E6 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB86D2C90FE9700F624E6 /* ExploreViewModel.swift */; };
+		CFDFB8702C94E70100F624E6 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB86F2C94E70100F624E6 /* SearchBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +79,7 @@
 		CFDFB8692C90DBA300F624E6 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		CFDFB86B2C90DED400F624E6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CFDFB86D2C90FE9700F624E6 /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
+		CFDFB86F2C94E70100F624E6 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 				CFDFB8512C87B71700F624E6 /* RoundedShape.swift */,
 				CFDFB8532C87C24400F624E6 /* CustomInputField.swift */,
 				CFDFB8672C8FA1A600F624E6 /* AutenticationHeaderView.swift */,
+				CFDFB86F2C94E70100F624E6 /* SearchBar.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				CFDFB8282C8624AC00F624E6 /* ExploreView.swift in Sources */,
 				CFDFB8492C866A7700F624E6 /* TextArea.swift in Sources */,
 				CFDFB8612C8BC93C00F624E6 /* PhotoSelectorVIew.swift in Sources */,
+				CFDFB8702C94E70100F624E6 /* SearchBar.swift in Sources */,
 				CFDFB8402C8654DA00F624E6 /* SideMenuViewModel.swift in Sources */,
 				CFDFB84E2C87B4F600F624E6 /* LoginView.swift in Sources */,
 				CFDFB8502C87B4FF00F624E6 /* RegistrationView.swift in Sources */,

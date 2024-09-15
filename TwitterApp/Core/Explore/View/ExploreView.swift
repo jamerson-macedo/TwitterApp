@@ -8,26 +8,34 @@
 import SwiftUI
 
 struct ExploreView: View {
-    @StateObject var viewmodel = ExploreViewModel()
+    @ObservedObject var viewmodel = ExploreViewModel()
+    @FocusState private var isSearchFocused : Bool
     var body: some View {
-        
-        VStack{
-            ScrollView{
-                LazyVStack{
-                    ForEach(viewmodel.allUsers){ user in
-                        NavigationLink{
-                            ProfileView(user: user)
-                        }label: {
-                            UserRowView(user: user)
+    
+            VStack{
+                SearchBar(text: $viewmodel.searchText).focused($isSearchFocused).onAppear{
+                    isSearchFocused = true
+                }
+                ScrollView{
+                    LazyVStack{
+                        ForEach(viewmodel.searchableUsers){ user in
+                            NavigationLink{
+                                ProfileView(user: user)
+                            }label: {
+                                UserRowView(user: user)
+                            }
+                            
                         }
-                        
                     }
                 }
+                
             }
-        }.navigationTitle("Search").navigationBarTitleDisplayMode(.inline)
-            
-    }
+            .navigationTitle("Search")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(.hidden)
+               
     
+    }
 }
 
 #Preview {

@@ -7,15 +7,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "12E51EC3-C842-4FE0-91EB-3A03DF2DCD11"
-            shouldBeEnabled = "Yes"
+            uuid = "62B30E52-E8E8-4904-BEA9-23528AB70EF2"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TwitterApp/ContentView.swift"
+            filePath = "TwitterApp/Core/Explore/View/ExploreView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "15"
-            endingLineNumber = "15"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
