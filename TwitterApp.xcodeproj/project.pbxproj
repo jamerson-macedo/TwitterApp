@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF69760C2C9A51C300753AEE /* TweetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF69760B2C9A51C300753AEE /* TweetService.swift */; };
+		CF69760E2C9A58A200753AEE /* NewTwitterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF69760D2C9A58A200753AEE /* NewTwitterViewModel.swift */; };
+		CF6976102C9A63FB00753AEE /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF69760F2C9A63FB00753AEE /* FeedViewModel.swift */; };
+		CF6976122C9A645300753AEE /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6976112C9A645300753AEE /* Tweet.swift */; };
 		CFDFB8052C861A0000F624E6 /* TwitterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8042C861A0000F624E6 /* TwitterApp.swift */; };
 		CFDFB8072C861A0000F624E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8062C861A0000F624E6 /* ContentView.swift */; };
 		CFDFB8092C861A0100F624E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFDFB8082C861A0100F624E6 /* Assets.xcassets */; };
@@ -46,6 +50,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CF69760B2C9A51C300753AEE /* TweetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetService.swift; sourceTree = "<group>"; };
+		CF69760D2C9A58A200753AEE /* NewTwitterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTwitterViewModel.swift; sourceTree = "<group>"; };
+		CF69760F2C9A63FB00753AEE /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		CF6976112C9A645300753AEE /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		CFDFB8012C861A0000F624E6 /* TwitterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFDFB8042C861A0000F624E6 /* TwitterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterApp.swift; sourceTree = "<group>"; };
 		CFDFB8062C861A0000F624E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -141,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				CFDFB86B2C90DED400F624E6 /* User.swift */,
+				CF6976112C9A645300753AEE /* Tweet.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -167,6 +176,7 @@
 			children = (
 				CFDFB8652C8BDA3400F624E6 /* ImageUploader.swift */,
 				CFDFB8692C90DBA300F624E6 /* UserService.swift */,
+				CF69760B2C9A51C300753AEE /* TweetService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -212,6 +222,7 @@
 		CFDFB81A2C861B1300F624E6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				CF69760F2C9A63FB00753AEE /* FeedViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -345,6 +356,7 @@
 		CFDFB8442C86688400F624E6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				CF69760D2C9A58A200753AEE /* NewTwitterViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -476,6 +488,8 @@
 				CFDFB86A2C90DBA300F624E6 /* UserService.swift in Sources */,
 				CFDFB8682C8FA1A600F624E6 /* AutenticationHeaderView.swift in Sources */,
 				CFDFB8662C8BDA3400F624E6 /* ImageUploader.swift in Sources */,
+				CF6976122C9A645300753AEE /* Tweet.swift in Sources */,
+				CF6976102C9A63FB00753AEE /* FeedViewModel.swift in Sources */,
 				CFDFB8072C861A0000F624E6 /* ContentView.swift in Sources */,
 				CFDFB83E2C8654C200F624E6 /* SideMenuRowView.swift in Sources */,
 				CFDFB8542C87C24400F624E6 /* CustomInputField.swift in Sources */,
@@ -486,6 +500,7 @@
 				CFDFB86E2C90FE9700F624E6 /* ExploreViewModel.swift in Sources */,
 				CFDFB8052C861A0000F624E6 /* TwitterApp.swift in Sources */,
 				CFDFB8282C8624AC00F624E6 /* ExploreView.swift in Sources */,
+				CF69760C2C9A51C300753AEE /* TweetService.swift in Sources */,
 				CFDFB8492C866A7700F624E6 /* TextArea.swift in Sources */,
 				CFDFB8612C8BC93C00F624E6 /* PhotoSelectorVIew.swift in Sources */,
 				CFDFB8702C94E70100F624E6 /* SearchBar.swift in Sources */,
@@ -499,6 +514,7 @@
 				CFDFB85F2C87D6C200F624E6 /* AuthViewModel.swift in Sources */,
 				CFDFB8222C86229900F624E6 /* MainTabView.swift in Sources */,
 				CFDFB8642C8BD19A00F624E6 /* ImagePicker.swift in Sources */,
+				CF69760E2C9A58A200753AEE /* NewTwitterViewModel.swift in Sources */,
 				CFDFB82A2C86255300F624E6 /* NotificationsView.swift in Sources */,
 				CFDFB8422C86573200F624E6 /* UserStatsView.swift in Sources */,
 			);

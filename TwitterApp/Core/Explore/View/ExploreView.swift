@@ -15,7 +15,7 @@ struct ExploreView: View {
             VStack{
                 SearchBar(text: $viewmodel.searchText).focused($isSearchFocused).onAppear{
                     isSearchFocused = true
-                }
+                }.padding()
                 ScrollView{
                     LazyVStack{
                         ForEach(viewmodel.searchableUsers){ user in
@@ -32,7 +32,7 @@ struct ExploreView: View {
             }
             .navigationTitle("Search")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar(.hidden)
+       
                
     
     }

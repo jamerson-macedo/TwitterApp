@@ -9,6 +9,10 @@ import SwiftUI
 
 struct NewTweetView: View {
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var viewModel : AuthViewModel
+    @StateObject var tweetViewModel = NewTwitterViewModel()
+    // a outra opção seria passar o user como dependencia para essa classe
+    @FocusState var isFocused : Bool
     @State private var caption = ""
     var body: some View {
         VStack{
@@ -20,7 +24,7 @@ struct NewTweetView: View {
                 }
                 Spacer()
                 Button{
-                    print("tweet")
+                    tweetViewModel.postTweet(text: caption)
                 }label: {
                     Text("Tweet").bold()
                         .padding(.horizontal)
@@ -31,13 +35,31 @@ struct NewTweetView: View {
                 }
             }.padding()
             HStack(alignment : .top){
-                Circle().frame(width:64,height: 64)
-                TextArea(text: $caption)
+                if let user = viewModel.currentUser{
+                    AsyncImage(url: URL(string: user.profileImageUrl)) { image in
+                        image.resizable()
+                            .frame(width: 64, height: 64)
+                            .clipShape(Circle())
+                    } placeholder: {
+                        ProgressView()
+                    }
+                }
+                TextArea(text: $caption).focused($isFocused)
+                    .onAppear{
+                    isFocused = true
+                }
             }.padding()
+        }.onReceive(tweetViewModel.$didUploadTweet) { success in
+            if success{
+                dismiss()
+            }
+            else {
+                // error message
+            }
         }
     }
 }
 
 #Preview {
-    NewTweetView()
+    NewTweetView().environmentObject(AuthViewModel())
 }

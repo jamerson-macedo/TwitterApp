@@ -18,11 +18,22 @@ struct SearchBar: View {
             // com o overlay ele entra dentro do layout
                 .overlay {
                     HStack{
-                        Image(systemName: "magnifyingglass")
-                            .foregroundStyle(.gray)
-                            .frame(minWidth: 0,maxWidth: .infinity,alignment: .leading)
-                            .padding(.leading,8)
-                    
+                        if text.isEmpty{
+                            Image(systemName: "magnifyingglass")
+                                .foregroundStyle(.gray)
+                                .frame(minWidth: 0,maxWidth: .infinity,alignment: .leading)
+                                .padding(.leading,8)
+                            
+                        }else {
+                            Button{
+                                self.text = ""
+                            }label: {
+                                Image(systemName: "xmark")
+                                    .foregroundStyle(.gray)
+                                    .frame(minWidth: 0,maxWidth: .infinity,alignment: .leading)
+                                    .padding(.leading,8)
+                            }
+                        }
                     }
                 }
         }.padding(.horizontal,4)
