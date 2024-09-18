@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct ProfileView: View {
+    let isFollowing : Bool
     @State private var selectedFilter : TweetFilterViewModel = .tweets
     @Namespace var animation
     @Environment(\.presentationMode) var mode
+    @ObservedObject var profileViewModel : ProfileViewModel
     // queremos receber os dados
-    private let user :User
     
-    init(user:User){
-        self.user = user
+    init(user:User,isFollowing:Bool){
+        // passo o usuario para a viewmodel ao inves de passar para uma variavel de campo
+        self.profileViewModel = ProfileViewModel(user: user)
+        self.isFollowing = isFollowing
     }
     
     var body: some View {
@@ -27,12 +30,13 @@ struct ProfileView: View {
             tweetsView
             
             Spacer()
-        }.navigationBarHidden(true)
+        }
+        .navigationBarHidden(true)
     }
 }
 
 #Preview {
-    ProfileView(user: User(fullname: "jamerson", profileImageUrl: "https://firebasestorage.googleapis.com:443/v0/b/twitter-a398c.appspot.com/o/profile_image%2F6AEDABE2-0A8F-4CD9-AA0E-27FA36F6F1F6?alt=media&token=dad3d01f-9f53-429c-a8a6-fa400259edc1", username: "Jamerson", email: "Jamerson@gmail.com"))
+    ProfileView(user: User(fullname: "jamerson", profileImageUrl: "https://firebasestorage.googleapis.com:443/v0/b/twitter-a398c.appspot.com/o/profile_image%2F6AEDABE2-0A8F-4CD9-AA0E-27FA36F6F1F6?alt=media&token=dad3d01f-9f53-429c-a8a6-fa400259edc1", username: "Jamerson", email: "Jamerson@gmail.com"), isFollowing: true)
 }
 
 extension ProfileView {
@@ -49,7 +53,7 @@ extension ProfileView {
                         .offset(x: 16,y:-2)
                 })
                 
-                    AsyncImage(url: URL(string: user.profileImageUrl)){ image in
+                AsyncImage(url: URL(string:profileViewModel.user.profileImageUrl )){ image in
                         image.resizable().scaledToFill()
                             .clipShape(Circle())
                         
@@ -67,24 +71,41 @@ extension ProfileView {
             Image(systemName: "bell.badge").font(.title3).padding(6).overlay{
                 Circle().stroke(Color.gray,lineWidth: 0.75)
             }
-            Button(action: {
-                
-            }, label: {
-                Text("Edit Profile").font(.subheadline).bold()
-                    .foregroundStyle(Color.black)
-                    .frame(width: 120,height: 32).overlay{
-                        RoundedRectangle(cornerRadius: 20).stroke(Color.gray,lineWidth: 0.75)
-                }
-            })
+            if isFollowing == false{
+                Button(action: {
+                    // go to editProfile
+                }, label: {
+                    
+                    Text("Edit Profile").font(.subheadline).bold()
+                        .foregroundStyle(Color.black)
+                        .frame(width: 120,height: 32).overlay{
+                            RoundedRectangle(cornerRadius: 20).stroke(Color.gray,lineWidth: 0.75)
+                        }
+                    
+                })
+            }else {
+                Button(action: {
+                    // actionfollow
+                }, label: {
+                    
+                    Text("Follow").font(.subheadline).bold()
+                        .foregroundStyle(Color.black)
+                        .frame(width: 120,height: 32).overlay{
+                            RoundedRectangle(cornerRadius: 20).stroke(Color.gray,lineWidth: 0.75)
+                        }
+                    
+                })
+            }
+            
         }.padding(.trailing)
     }
     var userInfo : some View{
         VStack(alignment: .leading,spacing: 4){
             HStack{
-                Text(user.fullname).font(.title2).bold()
+                Text(profileViewModel.user.fullname).font(.title2).bold()
                 Image(systemName: "checkmark.seal.fill").foregroundStyle(Color.blue)
             }
-            Text("@\(user.username)")
+            Text("@\(profileViewModel.user.username)")
                 .font(.subheadline)
                 .foregroundStyle(Color.gray)
             Text("Minha bio").font(.subheadline).padding(.vertical)
@@ -131,8 +152,10 @@ extension ProfileView {
     var tweetsView : some View{
         ScrollView{
             LazyVStack{
-                ForEach(0...10,id: \.self){_ in
-                    //TweetRowView().padding()
+                ForEach(profileViewModel.tweets){ tweets in
+                    TweetRowView(tweet: tweets).padding()
+                    
+                    
                 }
             }
         }

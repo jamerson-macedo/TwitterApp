@@ -20,7 +20,7 @@ struct ExploreView: View {
                     LazyVStack{
                         ForEach(viewmodel.searchableUsers){ user in
                             NavigationLink{
-                                ProfileView(user: user)
+                                ProfileView(user: user,isFollowing: true)
                             }label: {
                                 UserRowView(user: user)
                             }

@@ -43,12 +43,16 @@ struct TweetRowView: View {
                 })
                 Spacer()
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                    Image(systemName: "arrow.2.squarepath").font(.subheadline)
-                    
+                 
+                        Image(systemName: "arrow.2.squarepath").font(.subheadline)
+                   
                 })
                 Spacer()
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                    Image(systemName: "heart").font(.subheadline)
+                    HStack{
+                        Image(systemName: "heart").font(.subheadline)
+                        Text(tweet.likes.description).foregroundStyle(.gray).font(.caption)
+                    }
                 })
                 Spacer()
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {

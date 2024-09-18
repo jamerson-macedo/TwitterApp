@@ -38,7 +38,7 @@ struct SideMenuView: View {
                 ForEach(SideMenuViewModel.allCases, id: \.rawValue) { viewmodel in
                     if viewmodel == .profile {
                         
-                        NavigationLink(destination: ProfileView(user: user)) {
+                        NavigationLink(destination: ProfileView(user: user,isFollowing:  false)) {
                           
                             SideMenuRowView(viewmodel: viewmodel)
                             

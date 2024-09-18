@@ -29,21 +29,43 @@ struct TweetService {
         }
     }
     func fetchTweets(completion: @escaping ([Tweet]) -> Void) {
-        
-        Firestore.firestore().collection("tweets").getDocuments() { querySnapshot, error in
-            if let error = error {
-                completion([])
-                print(error)
-                return
+        Firestore.firestore()
+            .collection("tweets")
+            .order(by: "timestamp",descending: true)
+            .getDocuments() { querySnapshot, error in
+                if let error = error {
+                    completion([])
+                    print(error)
+                    return
+                }
+                
+                guard let documents = querySnapshot?.documents else { return }
+                let tweets = documents.compactMap{ query in
+                    try? query.data(as: Tweet.self)
+                }
+                //let tweets = querySnapshot.documents.encode(to: [Tweet].self)
+                completion(tweets)
             }
-            
-            guard let documents = querySnapshot?.documents else { return }
-            let tweets = documents.compactMap{ query in
-               try? query.data(as: Tweet.self)
+    }
+    func fetchTweetsById(forUid uid : String, completion : @escaping ([Tweet]) -> Void){
+        Firestore.firestore()
+            .collection("tweets")
+       
+            .whereField("uid", isEqualTo: uid)
+            .getDocuments() { querySnapshot, error in
+                if let error = error {
+                    completion([])
+                    print(error)
+                    return
+                }
+                
+                guard let documents = querySnapshot?.documents else { return }
+                let tweets = documents.compactMap{ query in
+                    try? query.data(as: Tweet.self)
+                }
+                //let tweets = querySnapshot.documents.encode(to: [Tweet].self)
+                completion(tweets.sorted(by: {$0.timestamp.dateValue() > $1.timestamp.dateValue()}))
             }
-            //let tweets = querySnapshot.documents.encode(to: [Tweet].self)
-            completion(tweets)
-        }
     }
     
 }
