@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 struct TweetRowView: View {
     let tweet : Tweet
@@ -28,7 +29,7 @@ struct TweetRowView: View {
                         HStack{
                             Text(user.fullname).font(.subheadline).bold()
                             Text("@\(user.username)").foregroundStyle(.gray).font(.caption)
-                            Text("2w").foregroundStyle(.gray).font(.caption)
+                            Text(Timestamp().formatDate(timestamp: tweet.timestamp)).foregroundStyle(.gray).font(.caption)
                         }
                         
                         Text(tweet.tweet).font(.headline).multilineTextAlignment(.leading)
