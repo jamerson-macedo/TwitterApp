@@ -9,12 +9,17 @@ import SwiftUI
 import FirebaseCore
 
 struct TweetRowView: View {
-    let tweet : Tweet
+    @ObservedObject var viewmodel : TweetRowViewModel
+    
+    init(tweet : Tweet) {
+        self.viewmodel = TweetRowViewModel(tweet: tweet)
+    }
+    
     var body: some View {
         VStack(alignment:.leading){
             
             HStack(alignment : .top,spacing: 12){
-                if let user = tweet.user{
+                if let user = viewmodel.tweet.user{
                     AsyncImage(url: URL(string: user.profileImageUrl)) { image in
                         image.resizable()
                             .frame(width: 56, height: 56)
@@ -29,10 +34,10 @@ struct TweetRowView: View {
                         HStack{
                             Text(user.fullname).font(.subheadline).bold()
                             Text("@\(user.username)").foregroundStyle(.gray).font(.caption)
-                            Text(Timestamp().formatDate(timestamp: tweet.timestamp)).foregroundStyle(.gray).font(.caption)
+                            Text(Timestamp().formatDate(timestamp: viewmodel.tweet.timestamp)).foregroundStyle(.gray).font(.caption)
                         }
                         
-                        Text(tweet.tweet).font(.headline).multilineTextAlignment(.leading)
+                        Text(viewmodel.tweet.tweet).font(.headline).multilineTextAlignment(.leading)
                     }
                     
                     
@@ -44,16 +49,21 @@ struct TweetRowView: View {
                 })
                 Spacer()
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                 
-                        Image(systemName: "arrow.2.squarepath").font(.subheadline)
-                   
+                    
+                    Image(systemName: "arrow.2.squarepath").font(.subheadline)
+                    
                 })
                 Spacer()
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                Button(action: {
+                    viewmodel.tweet.didLike ?? false ? viewmodel.unlikeTweet() : viewmodel.likeTweet()
+                }, label: {
                     HStack{
-                        Image(systemName: "heart").font(.subheadline)
-                        Text(tweet.likes.description).foregroundStyle(.gray).font(.caption)
-                    }
+                        
+                        Image(systemName: viewmodel.tweet.didLike ?? false ? "heart.fill" : "heart").font(.subheadline)
+                            .foregroundStyle(viewmodel.tweet.didLike ?? false ? .red : .gray)
+                        Text(viewmodel.tweet.likes.description).foregroundStyle(.gray).font(.caption)
+                        
+                    }  
                 })
                 Spacer()
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {

@@ -152,8 +152,10 @@ extension ProfileView {
     var tweetsView : some View{
         ScrollView{
             LazyVStack{
-                ForEach(profileViewModel.tweets){ tweets in
-                    TweetRowView(tweet: tweets).padding()
+                ForEach(profileViewModel.tweets(filter: self.selectedFilter)){ tweets in
+                    TweetRowView(tweet: tweets) .padding().onAppear{
+                        profileViewModel.fetchLikedTweets()
+                    }
                     
                     
                 }

@@ -14,5 +14,6 @@ struct Tweet : Identifiable,Decodable {
     let timestamp : Timestamp
     
     var user : User?
+    var didLike : Bool? = false
 }
 

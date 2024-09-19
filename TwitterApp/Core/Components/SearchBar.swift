@@ -17,24 +17,29 @@ struct SearchBar: View {
                 .cornerRadius(8)
             // com o overlay ele entra dentro do layout
                 .overlay {
-                    HStack{
-                        if text.isEmpty{
+                    HStack {
+                        if text.isEmpty {
                             Image(systemName: "magnifyingglass")
                                 .foregroundStyle(.gray)
-                                .frame(minWidth: 0,maxWidth: .infinity,alignment: .leading)
-                                .padding(.leading,8)
-                            
-                        }else {
-                            Button{
-                                self.text = ""
-                            }label: {
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                .padding(.leading, 8)
+                                .transition(.blurReplace) // Adiciona transição de opacidade
+                              // Anima a mudança
+                        } else {
+                            Button {
+                                withAnimation(.easeInOut) {
+                                    self.text = ""
+                                }
+                            } label: {
                                 Image(systemName: "xmark")
                                     .foregroundStyle(.gray)
-                                    .frame(minWidth: 0,maxWidth: .infinity,alignment: .leading)
-                                    .padding(.leading,8)
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading, 8)
+                                    .transition(.blurReplace) // Adiciona transição de opacidade
+                                    
                             }
                         }
-                    }
+                    } .animation(.spring, value: text)
                 }
         }.padding(.horizontal,4)
     }

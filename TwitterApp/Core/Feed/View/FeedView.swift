@@ -21,7 +21,7 @@ struct FeedView: View {
                             TweetRowView(tweet: tweet).padding()
                         }
                     }
-                }
+                }.animation(.smooth)
                 .navigationTitle("Home") // Título na toolbar
                 .navigationBarTitleDisplayMode(.inline) // Exibe a toolbar de maneira compacta
                 .toolbar {
