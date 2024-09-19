@@ -10,6 +10,7 @@ import FirebaseCore
 
 struct TweetRowView: View {
     @ObservedObject var viewmodel : TweetRowViewModel
+    @State var showComments : Bool = false
     
     init(tweet : Tweet) {
         self.viewmodel = TweetRowViewModel(tweet: tweet)
@@ -44,8 +45,13 @@ struct TweetRowView: View {
                 }
             }
             HStack(){
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                    Image(systemName: "bubble.left").font(.subheadline)
+                Button(action: {
+                    showComments.toggle()
+                }, label: {
+                    Image(systemName: "bubble.left").font(.subheadline).sheet(isPresented:$showComments){
+                        CommentsView(tweet: viewmodel.tweet)
+                    }
+                    
                 })
                 Spacer()
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {

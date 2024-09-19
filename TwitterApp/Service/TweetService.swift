@@ -81,7 +81,7 @@ extension TweetService{
             .collection("users")
             .document(uid)
             .collection("users-likes")
-       
+        
         // referencia para atualizar o objeto do tweet
         Firestore
             .firestore()
@@ -92,7 +92,7 @@ extension TweetService{
                 userLikesRef.document(tweetId).setData([:]){ error in
                     completion()
                 }
-        }
+            }
         
     }
     func unlikeTweet(_ tweet : Tweet, completion : @escaping()-> Void){
@@ -114,7 +114,7 @@ extension TweetService{
             .collection("tweets")
             .document(tweetId)
             .updateData(["likes":tweet.likes - 1]){ _ in
-                    // depois tem que deletar la do users-likes
+                // depois tem que deletar la do users-likes
                 userLikesRef.document(tweetId).delete{ error in
                     completion()
                     
@@ -150,17 +150,114 @@ extension TweetService{
                 guard let documents = documents?.documents else { return }
                 documents.forEach { doc in
                     // para cada um dos ids eu vou buscar eles agora
-                 
+                    
                     let tweetId = doc.documentID
                     Firestore.firestore().collection("tweets").document(tweetId)
                         .getDocument(){ document, error in
                             guard let tweet = try? document?.data(as:Tweet.self) else { return }
                             tweets.append(tweet)
                             completion(tweets)
-                    }
+                        }
                     
                 }
-               
+                
             }
+    }
+    
+}
+// MARK: - COMMENTS
+extension TweetService{
+    
+    func addComments(tweet: Tweet, commentText : String){
+        
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        guard let tweetId = tweet.id else { return }
+        let db = Firestore.firestore()
+        
+        let tweetsRef = db.collection("tweets").document(tweetId)
+        
+        let newCommentRef = [
+            "uid" : userId,
+            "commentText" : commentText,
+            "timestamp" : Timestamp(date: Date()),
+            
+        ] as [String: Any]
+        
+        tweetsRef.collection("comments").addDocument(data: newCommentRef) { error in
+            if let error = error {
+                print("Error adding document: \(error)")
+            } else {
+                print("Documento adicionado com sucesso")
+            }
+            
+        }
+        
+    }
+    func fetchComments(tweet: Tweet, completion: @escaping ([Comments]) -> Void) {
+        guard let tweetId = tweet.id else { return }
+        var commentList: [Comments] = []
+        let db = Firestore.firestore()
+        
+        let tweetsRef = db.collection("tweets").document(tweetId).collection("comments")
+        
+        // DispatchGroup para garantir que as buscas assíncronas sejam concluídas
+        let group = DispatchGroup()
+        
+        tweetsRef.order(by: "timestamp", descending: false).getDocuments { querySnapshot, error in
+            if let error = error {
+                print("DEBUG error fetching comments: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let documents = querySnapshot?.documents else {
+                completion([]) // Retorna uma lista vazia se não houver documentos
+                return
+            }
+            
+            for doc in documents {
+                let data = doc.data()
+                let commentText = data["commentText"] as? String
+                let timestamp = data["timestamp"] as? Timestamp
+                guard let userId = data["uid"] as? String else { continue }
+                
+                // Entra no DispatchGroup para cada comentário
+                group.enter()
+                
+                // Busca os dados do usuário
+                db.collection("users").document(userId).getDocument { userSnapshot, error in
+                    defer { group.leave() } // Sai do DispatchGroup após a busca ser concluída
+                    
+                    if let error = error {
+                        print("DEBUG error fetching user: \(error.localizedDescription)")
+                        return
+                    }
+                    
+                    guard let userData = userSnapshot?.data() else { return }
+                    let user = User(
+                        id: userId,
+                        fullname: userData["fullname"] as? String ?? "Unknown",
+                        profileImageUrl: userData["profileImageUrl"] as? String ?? "",
+                        username: userData["username"] as? String ?? "Unknown",
+                        email: userData["email"] as? String ?? "Unknown"
+                    )
+                    
+                    // Cria o objeto Comment
+                    let comment = Comments(
+                        id: doc.documentID,
+                        comments: commentText ?? "",
+                        timestamp: timestamp ?? Timestamp(),
+                        user: user
+                    )
+                    
+                    // Adiciona o comentário à lista
+                    commentList.append(comment)
+                }
+            }
+            
+            // Quando todas as buscas forem concluídas, chamamos o completion handler
+            group.notify(queue: .main) {
+                completion(commentList)
+            }
+        }
     }
 }

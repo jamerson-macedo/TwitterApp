@@ -14,6 +14,11 @@
 		CF6976142C9A798C00753AEE /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6976132C9A798C00753AEE /* ProfileViewModel.swift */; };
 		CF6976162C9A871300753AEE /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6976152C9A871300753AEE /* DateFormatter.swift */; };
 		CF7E6EAD2C9BB9C40099BDCB /* TweetRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7E6EAC2C9BB9BC0099BDCB /* TweetRowViewModel.swift */; };
+		CF7E6EB02C9CABA60099BDCB /* CommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7E6EAF2C9CABA60099BDCB /* CommentsView.swift */; };
+		CF7E6EB22C9CAD170099BDCB /* CommentsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7E6EB12C9CAD170099BDCB /* CommentsRowView.swift */; };
+		CF7E6EB42C9CADAD0099BDCB /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7E6EB32C9CADA90099BDCB /* CommentsViewModel.swift */; };
+		CF7E6EB62C9CADDE0099BDCB /* Comments.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7E6EB52C9CADDB0099BDCB /* Comments.swift */; };
+		CF7E6EB82C9CB41F0099BDCB /* CommentsRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7E6EB72C9CB41B0099BDCB /* CommentsRowViewModel.swift */; };
 		CFDFB8052C861A0000F624E6 /* TwitterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8042C861A0000F624E6 /* TwitterApp.swift */; };
 		CFDFB8072C861A0000F624E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8062C861A0000F624E6 /* ContentView.swift */; };
 		CFDFB8092C861A0100F624E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFDFB8082C861A0100F624E6 /* Assets.xcassets */; };
@@ -60,6 +65,11 @@
 		CF6976132C9A798C00753AEE /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		CF6976152C9A871300753AEE /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		CF7E6EAC2C9BB9BC0099BDCB /* TweetRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetRowViewModel.swift; sourceTree = "<group>"; };
+		CF7E6EAF2C9CABA60099BDCB /* CommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsView.swift; sourceTree = "<group>"; };
+		CF7E6EB12C9CAD170099BDCB /* CommentsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsRowView.swift; sourceTree = "<group>"; };
+		CF7E6EB32C9CADA90099BDCB /* CommentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
+		CF7E6EB52C9CADDB0099BDCB /* Comments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comments.swift; sourceTree = "<group>"; };
+		CF7E6EB72C9CB41B0099BDCB /* CommentsRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsRowViewModel.swift; sourceTree = "<group>"; };
 		CFDFB8012C861A0000F624E6 /* TwitterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFDFB8042C861A0000F624E6 /* TwitterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterApp.swift; sourceTree = "<group>"; };
 		CFDFB8062C861A0000F624E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -126,6 +136,17 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		CF7E6EAE2C9CAB8F0099BDCB /* Comments */ = {
+			isa = PBXGroup;
+			children = (
+				CF7E6EB72C9CB41B0099BDCB /* CommentsRowViewModel.swift */,
+				CF7E6EB32C9CADA90099BDCB /* CommentsViewModel.swift */,
+				CF7E6EAF2C9CABA60099BDCB /* CommentsView.swift */,
+				CF7E6EB12C9CAD170099BDCB /* CommentsRowView.swift */,
+			);
+			path = Comments;
+			sourceTree = "<group>";
+		};
 		CFDFB7F82C861A0000F624E6 = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +191,7 @@
 		CFDFB8122C861A9500F624E6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CF7E6EB52C9CADDB0099BDCB /* Comments.swift */,
 				CFDFB86B2C90DED400F624E6 /* User.swift */,
 				CF6976112C9A645300753AEE /* Tweet.swift */,
 			);
@@ -179,6 +201,7 @@
 		CFDFB8142C861AA200F624E6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				CF7E6EAE2C9CAB8F0099BDCB /* Comments */,
 				CFDFB84A2C87B4CF00F624E6 /* Autentication */,
 				CFDFB8432C86687600F624E6 /* UploadTweet */,
 				CFDFB8382C86547500F624E6 /* SideMenu */,
@@ -517,6 +540,7 @@
 				CF6976122C9A645300753AEE /* Tweet.swift in Sources */,
 				CF6976102C9A63FB00753AEE /* FeedViewModel.swift in Sources */,
 				CFDFB8072C861A0000F624E6 /* ContentView.swift in Sources */,
+				CF7E6EB82C9CB41F0099BDCB /* CommentsRowViewModel.swift in Sources */,
 				CFDFB83E2C8654C200F624E6 /* SideMenuRowView.swift in Sources */,
 				CFDFB8542C87C24400F624E6 /* CustomInputField.swift in Sources */,
 				CF7E6EAD2C9BB9C40099BDCB /* TweetRowViewModel.swift in Sources */,
@@ -528,15 +552,19 @@
 				CFDFB8052C861A0000F624E6 /* TwitterApp.swift in Sources */,
 				CFDFB8282C8624AC00F624E6 /* ExploreView.swift in Sources */,
 				CF69760C2C9A51C300753AEE /* TweetService.swift in Sources */,
+				CF7E6EB42C9CADAD0099BDCB /* CommentsViewModel.swift in Sources */,
+				CF7E6EB02C9CABA60099BDCB /* CommentsView.swift in Sources */,
 				CFDFB8492C866A7700F624E6 /* TextArea.swift in Sources */,
 				CFDFB8612C8BC93C00F624E6 /* PhotoSelectorVIew.swift in Sources */,
 				CFDFB8702C94E70100F624E6 /* SearchBar.swift in Sources */,
 				CFDFB8402C8654DA00F624E6 /* SideMenuViewModel.swift in Sources */,
 				CFDFB84E2C87B4F600F624E6 /* LoginView.swift in Sources */,
+				CF7E6EB22C9CAD170099BDCB /* CommentsRowView.swift in Sources */,
 				CFDFB8502C87B4FF00F624E6 /* RegistrationView.swift in Sources */,
 				CFDFB8472C86689900F624E6 /* NewTweetView.swift in Sources */,
 				CFDFB86C2C90DED400F624E6 /* User.swift in Sources */,
 				CFDFB8522C87B71700F624E6 /* RoundedShape.swift in Sources */,
+				CF7E6EB62C9CADDE0099BDCB /* Comments.swift in Sources */,
 				CFDFB8372C86350200F624E6 /* UserRowView.swift in Sources */,
 				CFDFB85F2C87D6C200F624E6 /* AuthViewModel.swift in Sources */,
 				CFDFB8222C86229900F624E6 /* MainTabView.swift in Sources */,

@@ -24,7 +24,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "7843B66B-A634-4813-AFFB-1E2FAC86CA75"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TwitterApp/Core/SideMenu/View/SideMenuView.swift"
