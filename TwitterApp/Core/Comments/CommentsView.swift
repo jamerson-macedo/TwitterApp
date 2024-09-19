@@ -7,32 +7,93 @@
 
 import SwiftUI
 import FirebaseCore
+import SwiftUI
+
+import SwiftUI
+
 struct CommentsView: View {
-    @ObservedObject var viewmodel : CommentsViewModel
+    
+    @Environment(\.dismiss) var dismiss
+    @ObservedObject var viewmodel: CommentsViewModel
     @State var comments = ""
-    init (tweet : Tweet) {
-        self.viewmodel = CommentsViewModel(tweet:tweet)
+    @State private var lastCommentID: String? // Armazenar o ID do último comentário adicionado
+    
+    init(tweet: Tweet) {
+        self.viewmodel = CommentsViewModel(tweet: tweet)
     }
     
     var body: some View {
-        VStack{
-            Text("Comments")
-            Spacer()
-            ScrollView{
-                ForEach(viewmodel.comments){ comments in
-                    CommentsRowView(comments: comments)
+        VStack {
+            HStack {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark")
                 }
+                
+                Text("Comments").bold()
+                Spacer()
             }
-            HStack{
-                TextField("Add a comment", text: $comments)
-                Button{
-                    viewmodel.addComment(commentText: comments)
-                }label: {
-                    Image(systemName: "paperplane.fill")
+            .padding()
+            
+            Spacer()
+            
+            ScrollViewReader { scrollViewProxy in
+                ScrollView {
+                    ForEach(viewmodel.comments) { comment in
+                        CommentsRowView(comments: comment)
+                            .id(comment.id) // Definindo o ID de cada comentário
+                    }
                 }
-            }.padding()
-        }.onAppear{
-            viewmodel.fetchComments()
+                
+                // Campo de texto para adicionar um novo comentário
+                HStack {
+                    TextField("Add a comment...", text: $comments)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(20)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                        .multilineTextAlignment(.leading)
+                        .padding(.leading, 10)
+                    
+                    // Botão de enviar
+                    Button(action: {
+                        // Adicionar comentário
+                        viewmodel.addComment(commentText: comments) { newCommentID in
+                            // Após adicionar, guarda o ID do comentário
+                            lastCommentID = newCommentID
+                            
+                            // Limpar o campo de comentário
+                            comments = ""
+                            
+                            // Garante que a rolagem ocorra após a atualização da interface
+                            DispatchQueue.main.async {
+                                if let lastCommentID = lastCommentID {
+                                    withAnimation {
+                                        scrollViewProxy.scrollTo(lastCommentID, anchor: .bottom)
+                                    }
+                                }
+                            }
+                        }
+                    }) {
+                        Image(systemName: "paperplane.fill")
+                            .font(.system(size: 24))
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(.blue)
+                            .clipShape(Circle())
+                            .shadow(color: Color.blue.opacity(0.3), radius: 10, x: 0, y: 5)
+                            .scaleEffect(comments.isEmpty ? 0.9 : 1.1)
+                            .animation(.spring(), value: comments.isEmpty)
+                    }
+                    .padding(.trailing, 10)
+                    .disabled(comments.isEmpty) // Desabilita o botão se o campo estiver vazio
+                }
+                .padding(.vertical, 10)
+            }
         }
     }
 }

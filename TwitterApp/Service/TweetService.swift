@@ -168,31 +168,69 @@ extension TweetService{
 // MARK: - COMMENTS
 extension TweetService{
     
-    func addComments(tweet: Tweet, commentText : String){
-        
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-        guard let tweetId = tweet.id else { return }
-        let db = Firestore.firestore()
-        
-        let tweetsRef = db.collection("tweets").document(tweetId)
-        
-        let newCommentRef = [
-            "uid" : userId,
-            "commentText" : commentText,
-            "timestamp" : Timestamp(date: Date()),
-            
-        ] as [String: Any]
-        
-        tweetsRef.collection("comments").addDocument(data: newCommentRef) { error in
-            if let error = error {
-                print("Error adding document: \(error)")
-            } else {
-                print("Documento adicionado com sucesso")
-            }
-            
+    func addComments(tweet: Tweet, commentText: String, completion: @escaping (Comments?) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid,
+              let tweetId = tweet.id else {
+            completion(nil)
+            return
         }
         
+        let db = Firestore.firestore()
+        let tweetsRef = db.collection("tweets").document(tweetId)
+        
+        // Busca os dados do usuário
+        db.collection("users").document(userId).getDocument { documentSnapshot, error in
+            if let error = error {
+                print("Erro ao buscar dados do usuário: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            
+            // Usa compactMap para criar o objeto `User` se os dados existirem
+            let user = documentSnapshot?.data().flatMap { data in
+                User(
+                    id: userId,
+                    fullname: data["fullname"] as? String ?? "Unknown",
+                    profileImageUrl: data["profileImageUrl"] as? String ?? "",
+                    username: data["username"] as? String ?? "Unknown",
+                    email: data["email"] as? String ?? "Unknown"
+                )
+            }
+            
+            guard let user = user else {
+                print("Dados do usuário não encontrados")
+                completion(nil)
+                return
+            }
+            
+            // Cria o novo comentário
+            let newComment = Comments(
+                id: UUID().uuidString,
+                comments: commentText,
+                timestamp: Timestamp(date: Date()),
+                user: user
+            )
+            
+            // Dados para persistir no Firestore
+            let newCommentRef = [
+                "uid": userId,
+                "commentText": commentText,
+                "timestamp": Timestamp(date: Date())
+            ] as [String: Any]
+            
+            // Adiciona o comentário no Firestore
+            tweetsRef.collection("comments").addDocument(data: newCommentRef) { error in
+                if let error = error {
+                    print("Erro ao adicionar comentário: \(error.localizedDescription)")
+                    completion(nil)
+                } else {
+                    print("Comentário adicionado com sucesso")
+                    completion(newComment)
+                }
+            }
+        }
     }
+    
     func fetchComments(tweet: Tweet, completion: @escaping ([Comments]) -> Void) {
         guard let tweetId = tweet.id else { return }
         var commentList: [Comments] = []

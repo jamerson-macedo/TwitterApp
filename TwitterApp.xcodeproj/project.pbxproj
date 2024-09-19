@@ -13,6 +13,8 @@
 		CF6976122C9A645300753AEE /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6976112C9A645300753AEE /* Tweet.swift */; };
 		CF6976142C9A798C00753AEE /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6976132C9A798C00753AEE /* ProfileViewModel.swift */; };
 		CF6976162C9A871300753AEE /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6976152C9A871300753AEE /* DateFormatter.swift */; };
+		CF700F842C9CDE490073C786 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = CF700F832C9CDE490073C786 /* GoogleSignIn */; };
+		CF700F862C9CDE490073C786 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CF700F852C9CDE490073C786 /* GoogleSignInSwift */; };
 		CF7E6EAD2C9BB9C40099BDCB /* TweetRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7E6EAC2C9BB9BC0099BDCB /* TweetRowViewModel.swift */; };
 		CF7E6EB02C9CABA60099BDCB /* CommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7E6EAF2C9CABA60099BDCB /* CommentsView.swift */; };
 		CF7E6EB22C9CAD170099BDCB /* CommentsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7E6EB12C9CAD170099BDCB /* CommentsRowView.swift */; };
@@ -111,7 +113,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF700F862C9CDE490073C786 /* GoogleSignInSwift in Frameworks */,
 				CFDFB8572C87D40800F624E6 /* FirebaseAuth in Frameworks */,
+				CF700F842C9CDE490073C786 /* GoogleSignIn in Frameworks */,
 				CFDFB8592C87D40800F624E6 /* FirebaseFirestore in Frameworks */,
 				CFDFB85B2C87D40800F624E6 /* FirebaseStorage in Frameworks */,
 			);
@@ -472,6 +476,8 @@
 				CFDFB8562C87D40800F624E6 /* FirebaseAuth */,
 				CFDFB8582C87D40800F624E6 /* FirebaseFirestore */,
 				CFDFB85A2C87D40800F624E6 /* FirebaseStorage */,
+				CF700F832C9CDE490073C786 /* GoogleSignIn */,
+				CF700F852C9CDE490073C786 /* GoogleSignInSwift */,
 			);
 			productName = TwitterApp;
 			productReference = CFDFB8012C861A0000F624E6 /* TwitterApp.app */;
@@ -503,6 +509,7 @@
 			mainGroup = CFDFB7F82C861A0000F624E6;
 			packageReferences = (
 				CFDFB8552C87D40800F624E6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				CF700F822C9CDE490073C786 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = CFDFB8022C861A0000F624E6 /* Products */;
 			projectDirPath = "";
@@ -782,6 +789,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CF700F822C9CDE490073C786 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 		CFDFB8552C87D40800F624E6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -793,6 +808,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CF700F832C9CDE490073C786 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF700F822C9CDE490073C786 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		CF700F852C9CDE490073C786 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF700F822C9CDE490073C786 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
 		CFDFB8562C87D40800F624E6 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CFDFB8552C87D40800F624E6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
