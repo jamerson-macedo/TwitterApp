@@ -16,6 +16,7 @@ struct TweetService {
         let data = ["uid":uid,
                     "tweet":tweet,
                     "likes" : 0,
+                    "numberOfComments" : 0,
                     "timestamp" : Timestamp(date: Date())] as [String : Any]
         // criei um doc com id aleatorio e dentro dele tem o id do usuario e os dados do twitter
         Firestore.firestore().collection("tweets").document().setData(data) { error in
@@ -225,6 +226,7 @@ extension TweetService{
                     completion(nil)
                 } else {
                     print("Comentário adicionado com sucesso")
+                    tweetsRef.updateData(["numberOfComments": tweet.numberOfComments + 1])
                     completion(newComment)
                 }
             }

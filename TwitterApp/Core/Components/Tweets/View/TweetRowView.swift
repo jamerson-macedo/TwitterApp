@@ -48,8 +48,13 @@ struct TweetRowView: View {
                 Button(action: {
                     showComments.toggle()
                 }, label: {
-                    Image(systemName: "bubble.left").font(.subheadline).sheet(isPresented:$showComments){
-                        CommentsView(tweet: viewmodel.tweet)
+                    HStack{
+                        Image(systemName: "bubble.left").font(.subheadline).sheet(isPresented:$showComments){
+                            CommentsView(tweet: viewmodel.tweet)
+                        }
+                        if viewmodel.tweet.numberOfComments > 0{
+                            Text("\(viewmodel.tweet.numberOfComments)")
+                        }
                     }
                     
                 })
@@ -67,8 +72,9 @@ struct TweetRowView: View {
                         
                         Image(systemName: viewmodel.tweet.didLike ?? false ? "heart.fill" : "heart").font(.subheadline)
                             .foregroundStyle(viewmodel.tweet.didLike ?? false ? .red : .gray)
-                        Text(viewmodel.tweet.likes.description).foregroundStyle(.gray).font(.caption)
-                        
+                        if viewmodel.tweet.likes > 0 {
+                            Text(viewmodel.tweet.likes.description)
+                        }
                     }  
                 })
                 Spacer()

@@ -99,5 +99,5 @@ struct CommentsView: View {
 }
 
 #Preview {
-    CommentsView(tweet: Tweet(uid: "", tweet: "Ola mundo", likes: 1, timestamp: Timestamp()))
+    CommentsView(tweet: Tweet(uid: "", tweet: "Ola mundo", likes: 1, timestamp: Timestamp(), numberOfComments: 1))
 }

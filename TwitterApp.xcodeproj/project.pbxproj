@@ -23,7 +23,6 @@
 		CF7E6EB82C9CB41F0099BDCB /* CommentsRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7E6EB72C9CB41B0099BDCB /* CommentsRowViewModel.swift */; };
 		CFDFB8052C861A0000F624E6 /* TwitterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8042C861A0000F624E6 /* TwitterApp.swift */; };
 		CFDFB8072C861A0000F624E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8062C861A0000F624E6 /* ContentView.swift */; };
-		CFDFB8092C861A0100F624E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFDFB8082C861A0100F624E6 /* Assets.xcassets */; };
 		CFDFB80C2C861A0100F624E6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFDFB80B2C861A0100F624E6 /* Preview Assets.xcassets */; };
 		CFDFB81C2C861B3900F624E6 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB81B2C861B3900F624E6 /* FeedView.swift */; };
 		CFDFB81F2C861BFE00F624E6 /* TweetRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB81E2C861BFE00F624E6 /* TweetRowView.swift */; };
@@ -66,6 +65,7 @@
 		CF6976112C9A645300753AEE /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		CF6976132C9A798C00753AEE /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		CF6976152C9A871300753AEE /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		CF700F892C9CE7390073C786 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CF7E6EAC2C9BB9BC0099BDCB /* TweetRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetRowViewModel.swift; sourceTree = "<group>"; };
 		CF7E6EAF2C9CABA60099BDCB /* CommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsView.swift; sourceTree = "<group>"; };
 		CF7E6EB12C9CAD170099BDCB /* CommentsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsRowView.swift; sourceTree = "<group>"; };
@@ -75,7 +75,6 @@
 		CFDFB8012C861A0000F624E6 /* TwitterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFDFB8042C861A0000F624E6 /* TwitterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterApp.swift; sourceTree = "<group>"; };
 		CFDFB8062C861A0000F624E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		CFDFB8082C861A0100F624E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CFDFB80B2C861A0100F624E6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CFDFB81B2C861B3900F624E6 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		CFDFB81E2C861BFE00F624E6 /* TweetRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetRowView.swift; sourceTree = "<group>"; };
@@ -170,6 +169,7 @@
 		CFDFB8032C861A0000F624E6 /* TwitterApp */ = {
 			isa = PBXGroup;
 			children = (
+				CF700F892C9CE7390073C786 /* Info.plist */,
 				CFDFB8622C8BD18300F624E6 /* Util */,
 				CFDFB8162C861AAC00F624E6 /* Extensions */,
 				CFDFB8152C861AA600F624E6 /* Service */,
@@ -177,7 +177,6 @@
 				CFDFB8122C861A9500F624E6 /* Model */,
 				CFDFB8042C861A0000F624E6 /* TwitterApp.swift */,
 				CFDFB8062C861A0000F624E6 /* ContentView.swift */,
-				CFDFB8082C861A0100F624E6 /* Assets.xcassets */,
 				CFDFB85C2C87D48F00F624E6 /* GoogleService-Info.plist */,
 				CFDFB80A2C861A0100F624E6 /* Preview Content */,
 			);
@@ -526,7 +525,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CFDFB80C2C861A0100F624E6 /* Preview Assets.xcassets in Resources */,
-				CFDFB8092C861A0100F624E6 /* Assets.xcassets in Resources */,
 				CFDFB85D2C87D48F00F624E6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -716,6 +714,7 @@
 				DEVELOPMENT_TEAM = L5U287N3KD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TwitterApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -746,6 +745,7 @@
 				DEVELOPMENT_TEAM = L5U287N3KD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TwitterApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
