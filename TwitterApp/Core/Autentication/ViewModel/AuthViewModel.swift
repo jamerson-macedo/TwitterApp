@@ -96,6 +96,7 @@ class AuthViewModel : ObservableObject{
     
     func signOut(){
         userSession = nil
+        tempUserSession = nil
         try? Auth.auth().signOut()
       
     }
@@ -121,7 +122,15 @@ class AuthViewModel : ObservableObject{
             
         }
     }
-    func signInWithGoogle() {
+    // Função para obter o root view controller (para o Google Sign-In)
+    func getRootViewController() -> UIViewController {
+        guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let root = screen.windows.first?.rootViewController else {
+            return UIViewController()
+        }
+        return root
+    }
+    func signUpWithGoogle() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         
         // Create Google Sign In configuration object.
@@ -158,14 +167,48 @@ class AuthViewModel : ObservableObject{
                 self.fetchUser()
             }
         }
-        // Função para obter o root view controller (para o Google Sign-In)
-        func getRootViewController() -> UIViewController {
-            guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                  let root = screen.windows.first?.rootViewController else {
-                return UIViewController()
-            }
-            return root
-        }
+        
+     
+        
         
     }
+    func signInWithGoogle() {
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        
+        // Create Google Sign In configuration object.
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+        
+        // Start the sign in flow!
+        GIDSignIn.sharedInstance.signIn(withPresenting: getRootViewController()) { [unowned self] result, error in
+            guard error == nil else {
+                // ...
+                return
+            }
+            
+            guard let user = result?.user,
+                  let idToken = user.idToken?.tokenString
+            else {
+                // ...
+                return
+            }
+            
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken,
+                                                           accessToken: user.accessToken.tokenString)
+            
+            // ...
+            
+            Auth.auth().signIn(with: credential) { authResult, error in
+                if let error = error {
+                    // mostra error
+                }
+                // usuario autenticado
+                guard let user = authResult?.user else {return}
+                self.userSession = user
+                self.fetchUser()
+            }
+        }
+    }
+   
+    
 }

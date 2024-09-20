@@ -47,7 +47,26 @@ struct LoginView: View {
                 
             }).shadow(color:.gray.opacity(0.5), radius: 10, x: 0,y:0)
             
+            
             Spacer()
+            HStack(spacing: 10){
+                Button {
+                    viewModel.signInWithGoogle()
+                }label: {
+                    Image("google").resizable().scaledToFit()
+                        .clipShape(Circle())
+                        .shadow(radius: 2)
+                        .frame(width: 50, height: 50)
+                }
+                Button {
+                    //
+                }label: {
+                    Image("facebook").resizable().scaledToFit()
+                        .clipShape(Circle())
+                        .shadow(radius: 2)
+                        .frame(width: 50, height: 50)
+                }
+            }
             NavigationLink {
                 RegistrationView().navigationBarHidden(true)
             } label: {

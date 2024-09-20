@@ -53,7 +53,7 @@ struct RegistrationView: View {
                 Spacer()
                 HStack(spacing: 10){
                     Button {
-                        viewModel.signInWithGoogle()
+                        viewModel.signUpWithGoogle()
                     }label: {
                         Image("google").resizable().scaledToFit()
                             .clipShape(Circle())
