@@ -63,7 +63,10 @@ struct FeedView: View {
             .foregroundColor(.white)
             .clipShape(Circle())
             .position(x: UIScreen.main.bounds.width - 50, y: UIScreen.main.bounds.height - 200) // Posição do botão
-            .fullScreenCover(isPresented: $showNewTweetView) {
+            .fullScreenCover(isPresented: $showNewTweetView,onDismiss: {
+                // quando fechar ele faz essa ação
+                feedViewModel.fetchTweets()
+            }) {
                 NewTweetView()
             }
             

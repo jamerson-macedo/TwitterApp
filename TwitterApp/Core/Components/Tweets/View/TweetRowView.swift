@@ -49,7 +49,9 @@ struct TweetRowView: View {
                     showComments.toggle()
                 }, label: {
                     HStack{
-                        Image(systemName: "bubble.left").font(.subheadline).sheet(isPresented:$showComments){
+                        Image(systemName: "bubble.left").font(.subheadline).sheet(isPresented:$showComments,onDismiss: {
+                            
+                        }){
                             CommentsView(tweet: viewmodel.tweet)
                         }
                         if viewmodel.tweet.numberOfComments > 0{
