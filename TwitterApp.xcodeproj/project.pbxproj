@@ -15,6 +15,8 @@
 		CF6976162C9A871300753AEE /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6976152C9A871300753AEE /* DateFormatter.swift */; };
 		CF700F842C9CDE490073C786 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = CF700F832C9CDE490073C786 /* GoogleSignIn */; };
 		CF700F862C9CDE490073C786 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CF700F852C9CDE490073C786 /* GoogleSignInSwift */; };
+		CF700F8D2CA0A8BF0073C786 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = CF700F8C2CA0A8BF0073C786 /* FacebookCore */; };
+		CF700F8F2CA0A8BF0073C786 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = CF700F8E2CA0A8BF0073C786 /* FacebookLogin */; };
 		CF7E6EAD2C9BB9C40099BDCB /* TweetRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7E6EAC2C9BB9BC0099BDCB /* TweetRowViewModel.swift */; };
 		CF7E6EB02C9CABA60099BDCB /* CommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7E6EAF2C9CABA60099BDCB /* CommentsView.swift */; };
 		CF7E6EB22C9CAD170099BDCB /* CommentsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7E6EB12C9CAD170099BDCB /* CommentsRowView.swift */; };
@@ -66,6 +68,7 @@
 		CF6976132C9A798C00753AEE /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		CF6976152C9A871300753AEE /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		CF700F892C9CE7390073C786 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CF700F8A2CA0A7130073C786 /* TwitterApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwitterApp.entitlements; sourceTree = "<group>"; };
 		CF7E6EAC2C9BB9BC0099BDCB /* TweetRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetRowViewModel.swift; sourceTree = "<group>"; };
 		CF7E6EAF2C9CABA60099BDCB /* CommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsView.swift; sourceTree = "<group>"; };
 		CF7E6EB12C9CAD170099BDCB /* CommentsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsRowView.swift; sourceTree = "<group>"; };
@@ -113,9 +116,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF700F862C9CDE490073C786 /* GoogleSignInSwift in Frameworks */,
+				CF700F8D2CA0A8BF0073C786 /* FacebookCore in Frameworks */,
 				CFDFB8572C87D40800F624E6 /* FirebaseAuth in Frameworks */,
 				CF700F842C9CDE490073C786 /* GoogleSignIn in Frameworks */,
 				CFDFB8592C87D40800F624E6 /* FirebaseFirestore in Frameworks */,
+				CF700F8F2CA0A8BF0073C786 /* FacebookLogin in Frameworks */,
 				CFDFB85B2C87D40800F624E6 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -169,6 +174,7 @@
 		CFDFB8032C861A0000F624E6 /* TwitterApp */ = {
 			isa = PBXGroup;
 			children = (
+				CF700F8A2CA0A7130073C786 /* TwitterApp.entitlements */,
 				CF700F892C9CE7390073C786 /* Info.plist */,
 				CFDFB8622C8BD18300F624E6 /* Util */,
 				CFDFB8162C861AAC00F624E6 /* Extensions */,
@@ -477,6 +483,8 @@
 				CFDFB85A2C87D40800F624E6 /* FirebaseStorage */,
 				CF700F832C9CDE490073C786 /* GoogleSignIn */,
 				CF700F852C9CDE490073C786 /* GoogleSignInSwift */,
+				CF700F8C2CA0A8BF0073C786 /* FacebookCore */,
+				CF700F8E2CA0A8BF0073C786 /* FacebookLogin */,
 			);
 			productName = TwitterApp;
 			productReference = CFDFB8012C861A0000F624E6 /* TwitterApp.app */;
@@ -509,6 +517,7 @@
 			packageReferences = (
 				CFDFB8552C87D40800F624E6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				CF700F822C9CDE490073C786 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				CF700F8B2CA0A8BF0073C786 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			productRefGroup = CFDFB8022C861A0000F624E6 /* Products */;
 			projectDirPath = "";
@@ -708,6 +717,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TwitterApp/TwitterApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TwitterApp/Preview Content\"";
@@ -739,6 +749,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TwitterApp/TwitterApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TwitterApp/Preview Content\"";
@@ -797,6 +808,14 @@
 				minimumVersion = 8.0.0;
 			};
 		};
+		CF700F8B2CA0A8BF0073C786 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 14.1.0;
+			};
+		};
 		CFDFB8552C87D40800F624E6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -817,6 +836,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CF700F822C9CDE490073C786 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		CF700F8C2CA0A8BF0073C786 /* FacebookCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF700F8B2CA0A8BF0073C786 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookCore;
+		};
+		CF700F8E2CA0A8BF0073C786 /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF700F8B2CA0A8BF0073C786 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
 		};
 		CFDFB8562C87D40800F624E6 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

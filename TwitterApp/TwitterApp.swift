@@ -8,17 +8,34 @@
 import SwiftUI
 import Firebase
 import GoogleSignIn
+import FacebookCore
+import FacebookLogin
 @main
 struct TwitterApp: App {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        return GIDSignIn.sharedInstance.handle(url)
+        // Verifica se o Facebook pode lidar com o URL
+        let handledByFacebook = ApplicationDelegate.shared.application(app, open: url, options: options)
+        
+        // Verifica se o Google pode lidar com o URL
+        let handledByGoogle = GIDSignIn.sharedInstance.handle(url)
+        
+        // Retorna true se qualquer um dos serviços conseguiu lidar com o URL
+        return handledByFacebook || handledByGoogle
     }
+
+    
+    
     // essa instancia fica por todo o app
     @StateObject var viewModel = AuthViewModel()
     
     init(){
         // iniciar o firebase
         FirebaseApp.configure()
+        // Inicializar Facebook SDK
+            ApplicationDelegate.shared.application(
+                UIApplication.shared,
+                didFinishLaunchingWithOptions: nil
+            )
     }
     var body: some Scene {
         WindowGroup {

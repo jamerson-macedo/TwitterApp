@@ -59,7 +59,7 @@ struct LoginView: View {
                         .frame(width: 50, height: 50)
                 }
                 Button {
-                    //
+                    viewModel.signInWithFacebook()
                 }label: {
                     Image("facebook").resizable().scaledToFit()
                         .clipShape(Circle())

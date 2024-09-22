@@ -11,7 +11,8 @@ import FirebaseAuth
 import FirebaseFirestore
 import FirebaseCore
 import GoogleSignIn
-
+import FacebookCore
+import FacebookLogin
 class AuthViewModel : ObservableObject{
     // a trla principal ta observando essa variavel, se ela for nula vai pro login se não vai para a principal
     @Published var userSession: FirebaseAuth.User?
@@ -29,6 +30,7 @@ class AuthViewModel : ObservableObject{
         // quando iniciar se tiver usuario ele ja registra
         self.userSession = Auth.auth().currentUser
         fetchUser()
+       
      
     
     }
@@ -73,7 +75,7 @@ class AuthViewModel : ObservableObject{
             
         }
     }
-    func registerWithGoogle(id: String ,withEmail email: String, fullname: String, username: String,profileImage : String) {
+    func registerWithAuth(id: String ,withEmail email: String, fullname: String, username: String,profileImage : String) {
         
         
         //storing the user data into the firestore database
@@ -162,16 +164,121 @@ class AuthViewModel : ObservableObject{
                 }
                 // usuario autenticado
                 guard let user = authResult?.user else {return}
-                self.registerWithGoogle(id: user.uid, withEmail: user.email ?? "usuario@gmal.com", fullname: user.displayName ?? "usuario 1", username: user.displayName ?? "@gmail",profileImage: user.photoURL?.absoluteString ?? "https://www.istockphoto.com/photos/user-profile")
+                print(user)
+                self.registerWithAuth(id: user.uid, withEmail: user.email ?? "usuario@gmal.com", fullname: user.displayName ?? "usuario 1", username: user.displayName ?? "@gmail",profileImage: user.photoURL?.absoluteString ?? "https://www.istockphoto.com/photos/user-profile")
                 self.userSession = user
                 self.fetchUser()
             }
         }
-        
-     
-        
-        
     }
+    
+    func signUpWithFacebook() {
+        let loginManager = LoginManager()
+        
+        // Solicita login com permissões de perfil público e e-mail
+        loginManager.logIn(permissions: ["public_profile", "email"], from: nil) { result, error in
+            // Tratamento de erro caso algo falhe no processo de login
+            if let error = error {
+                print("Erro ao fazer login com o Facebook: \(error.localizedDescription)")
+                return
+            }
+            
+            // Verifica se o usuário cancelou o login
+            guard let result = result, !result.isCancelled else {
+                print("Login com o Facebook cancelado")
+                return
+            }
+            
+            // Obtem o token de acesso do Facebook
+            guard let token = result.token?.tokenString else {
+                print("Erro ao obter o token de acesso do Facebook")
+                return
+            }
+            
+            // Cria as credenciais do Firebase com o token do Facebook
+            let credential = FacebookAuthProvider.credential(withAccessToken: token)
+            
+            // Faz o login no Firebase com as credenciais do Facebook
+            Auth.auth().signIn(with: credential) { authResult, error in
+                if let error = error {
+                    print("Erro ao autenticar com Firebase: \(error.localizedDescription)")
+                    return
+                }
+                
+                // Garante que obtemos o usuário autenticado
+                guard let user = authResult?.user else {
+                    print("Erro: Usuário não encontrado após autenticação.")
+                    return
+                }
+                
+                // Armazena a sessão do usuário
+                self.userSession = user
+                
+                // Busca as informações completas do usuário
+                self.fetchUser()
+                print("Usuário autenticado com sucesso com o Facebook!")
+            }
+        }
+    }
+    func signInWithFacebook() {
+        let loginManager = LoginManager()
+        
+        // Solicita login com permissões de perfil público e e-mail
+        loginManager.logIn(permissions: ["public_profile", "email"], from: nil) { result, error in
+            // Tratamento de erro caso algo falhe no processo de login
+            if let error = error {
+                print("Erro ao fazer login com o Facebook: \(error.localizedDescription)")
+                return
+            }
+            
+            // Verifica se o usuário cancelou o login
+            guard let result = result, !result.isCancelled else {
+                print("Login com o Facebook cancelado")
+                return
+            }
+            
+            // Obtem o token de acesso do Facebook
+            guard let token = result.token?.tokenString else {
+                print("Erro ao obter o token de acesso do Facebook")
+                return
+            }
+            
+            // Cria as credenciais do Firebase com o token do Facebook
+            let credential = FacebookAuthProvider.credential(withAccessToken: token)
+            
+            // Faz o login no Firebase com as credenciais do Facebook
+            Auth.auth().signIn(with: credential) { authResult, error in
+                if let error = error {
+                    print("Erro ao autenticar com Firebase: \(error.localizedDescription)")
+                    return
+                }
+                
+                // Garante que obtemos o usuário autenticado
+                guard let user = authResult?.user else {
+                    print("Erro: Usuário não encontrado após autenticação.")
+                    return
+                }
+                
+                // Faz o registro no Google/Firebase com as informações do usuário
+                self.registerWithAuth(
+                    id: user.uid,
+                    withEmail: user.email ?? "usuario@gmal.com",
+                    fullname: user.displayName ?? "Usuario 1",
+                    username: user.displayName ?? "@gmail",
+                    profileImage: user.photoURL?.absoluteString ?? "https://www.istockphoto.com/photos/user-profile"
+                )
+                
+                // Armazena a sessão do usuário
+                self.userSession = user
+                
+                // Busca as informações completas do usuário
+                self.fetchUser()
+                print("Usuário autenticado com sucesso com o Facebook!")
+            }
+        }
+    }
+
+    
     func signInWithGoogle() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         

@@ -61,7 +61,7 @@ struct RegistrationView: View {
                             .frame(width: 50, height: 50)
                     }
                     Button {
-                        //
+                        viewModel.signUpWithFacebook()
                     }label: {
                         Image("facebook").resizable().scaledToFit()
                             .clipShape(Circle())

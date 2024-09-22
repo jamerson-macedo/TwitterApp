@@ -2,16 +2,47 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.472548809937-mj3oiqltcmr0n0fl91fea3gg3ukc32fl</string>
-			</array>
-		</dict>
-	</array>
+    <!-- Definição de URL Schemes -->
+    <key>CFBundleURLTypes</key>
+    <array>
+        <!-- Google Sign-In -->
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>com.googleusercontent.apps.472548809937-mj3oiqltcmr0n0fl91fea3gg3ukc32fl</string> <!-- Seu Client ID do Google -->
+            </array>
+        </dict>
+
+        <!-- Facebook Login -->
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>fb3833666260243144</string> <!-- Seu Facebook App ID -->
+            </array>
+        </dict>
+    </array>
+
+    <!-- Configurações do Facebook -->
+    <key>FacebookAppID</key>
+    <string>3833666260243144</string> <!-- Seu Facebook App ID -->
+    
+    <key>FacebookClientToken</key>
+    <string>3fdb4fdaf698535a183048a77a925408</string> <!-- Seu Facebook Client Token -->
+    
+    <key>FacebookDisplayName</key>
+    <string>Twitter Clone</string> <!-- Nome do App registrado no Facebook Developers -->
+
+    <!-- Permissões para Schemes de consulta -->
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>fbapi</string>
+        <string>fb-messenger-share-api</string>
+        <string>fbauth2</string> <!-- Necessário para o login com o Facebook -->
+        <string>fbshareextension</string> <!-- Para compartilhar conteúdo com o Facebook -->
+    </array>
 </dict>
 </plist>
