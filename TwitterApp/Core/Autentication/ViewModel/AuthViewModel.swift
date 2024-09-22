@@ -30,8 +30,6 @@ class AuthViewModel : ObservableObject{
         // quando iniciar se tiver usuario ele ja registra
         self.userSession = Auth.auth().currentUser
         fetchUser()
-       
-     
     
     }
     func login(withEmail email : String, password : String){
@@ -120,6 +118,7 @@ class AuthViewModel : ObservableObject{
         // se tiver usuario
         guard let uid = self.userSession?.uid else {return}
         service.fetchUser(withuid: uid){ user in
+            // traz os dados do usuario
             self.currentUser = user
             
         }
