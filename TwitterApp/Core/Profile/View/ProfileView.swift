@@ -19,6 +19,7 @@ struct ProfileView: View {
         // passo o usuario para a viewmodel ao inves de passar para uma variavel de campo
         self.profileViewModel = ProfileViewModel(user: user)
         self.isFollowing = isFollowing
+        
     }
     
     var body: some View {
@@ -32,6 +33,9 @@ struct ProfileView: View {
             Spacer()
         }
         .navigationBarHidden(true)
+        .onAppear{
+            profileViewModel.isFollowing()
+        }
     }
 }
 
@@ -54,12 +58,12 @@ extension ProfileView {
                 })
                 
                 AsyncImage(url: URL(string:profileViewModel.user.profileImageUrl )){ image in
-                        image.resizable().scaledToFill()
-                            .clipShape(Circle())
-                        
-                    }placeholder: {
-                        ProgressView()
-                    }
+                    image.resizable().scaledToFill()
+                        .clipShape(Circle())
+                    
+                }placeholder: {
+                    ProgressView()
+                }
                 
                 .frame(width: 72,height: 72).offset(x: 16,y: 24)
             }
@@ -85,16 +89,15 @@ extension ProfileView {
                 })
             }else {
                 Button(action: {
-                    // actionfollow
+                    profileViewModel.toggleFollowState()
                 }, label: {
-                    
-                    Text("Follow").font(.subheadline).bold()
-                        .foregroundStyle(Color.black)
-                        .frame(width: 120,height: 32).overlay{
-                            RoundedRectangle(cornerRadius: 20).stroke(Color.gray,lineWidth: 0.75)
-                        }
-                    
-                })
+                    Text(profileViewModel.ISFollowing ? "Following" : "Follow")
+                                        .font(.headline)
+                                        .padding()
+                                        .frame(width: 200, height: 50)
+                                        .background(profileViewModel.ISFollowing ? Color.red : Color.blue)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(10)})
             }
             
         }.padding(.trailing)
@@ -115,7 +118,7 @@ extension ProfileView {
                     Image(systemName: "mappin.and.ellipse")
                     Text("Carnauba")
                 }
-              
+                
                 HStack{
                     Image(systemName: "link")
                     Text("www.google.com")
@@ -124,7 +127,7 @@ extension ProfileView {
             
             .font(.caption)
             .foregroundStyle(Color.gray)
-            UserStatsView().padding(.vertical)
+            UserStatsView(user: profileViewModel.user).padding(.vertical)
         }.padding(.horizontal)
     }
     var tweetFilterBar : some View{

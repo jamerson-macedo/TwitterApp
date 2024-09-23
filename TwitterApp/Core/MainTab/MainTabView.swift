@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MainTabView: View {
     @State private var selectedIndex = 0
-    @EnvironmentObject var authViewmodel : AuthViewModel
     var body: some View {
         TabView(selection: $selectedIndex){
             FeedView().tabItem {
@@ -18,15 +17,14 @@ struct MainTabView: View {
             ExploreView().tabItem {
                 Image(systemName: "magnifyingglass")
             }.tag(1)
-            MessagesView().tabItem {
-                Image(systemName: "envelope")
-            }.tag(2)
             NotificationsView().tabItem {
                 Image(systemName: "bell")
+            }.tag(2)
+            MessagesView().tabItem {
+                Image(systemName: "envelope")
             }.tag(3)
-            ProfileView(user: authViewmodel.currentUser!, isFollowing: false).tabItem {
-                Image(systemName: "person")
-            }.tag(4)
+          
+          
            
         }
     }

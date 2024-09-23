@@ -30,7 +30,7 @@ class AuthViewModel : ObservableObject{
         // quando iniciar se tiver usuario ele ja registra
         self.userSession = Auth.auth().currentUser
         fetchUser()
-    
+         
     }
     func login(withEmail email : String, password : String){
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
@@ -62,7 +62,10 @@ class AuthViewModel : ObservableObject{
                 "email": email,
                 "username": username.lowercased(),
                 "fullname": fullname,
-                "uid": user.uid
+                "uid": user.uid,
+                "following" : 0,
+                "followers" : 0
+              
             ]
             // quando o usuario é criado ele abre a tela para colocar a foto
             Firestore.firestore().collection("users")
@@ -82,8 +85,12 @@ class AuthViewModel : ObservableObject{
             "username": username.lowercased(),
             "fullname": fullname,
             "uid": id,
-            "profileImageUrl" : profileImage
-        ]
+            "profileImageUrl" : profileImage,
+            "following" : 0,
+            "followers" : 0
+          
+           
+        ] as [String : Any]
         // quando o usuario é criado ele abre a tela para colocar a foto
         Firestore.firestore().collection("users")
         
@@ -171,7 +178,7 @@ class AuthViewModel : ObservableObject{
         }
     }
     
-    func signUpWithFacebook() {
+    func signInWithFacebook() {
         let loginManager = LoginManager()
         
         // Solicita login com permissões de perfil público e e-mail
@@ -219,7 +226,7 @@ class AuthViewModel : ObservableObject{
             }
         }
     }
-    func signInWithFacebook() {
+    func signUpWithFacebook() {
         let loginManager = LoginManager()
         
         // Solicita login com permissões de perfil público e e-mail

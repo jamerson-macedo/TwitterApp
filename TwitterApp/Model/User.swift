@@ -13,5 +13,6 @@ struct User : Identifiable,Decodable{
     let profileImageUrl : String
     let username : String
     let email : String
-    
+    var following = 0
+    var followers = 0
 }

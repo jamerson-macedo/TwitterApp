@@ -195,6 +195,7 @@ extension TweetService{
                     profileImageUrl: data["profileImageUrl"] as? String ?? "",
                     username: data["username"] as? String ?? "Unknown",
                     email: data["email"] as? String ?? "Unknown"
+                   
                 )
             }
             
@@ -279,6 +280,7 @@ extension TweetService{
                         profileImageUrl: userData["profileImageUrl"] as? String ?? "",
                         username: userData["username"] as? String ?? "Unknown",
                         email: userData["email"] as? String ?? "Unknown"
+                     
                     )
                     
                     // Cria o objeto Comment

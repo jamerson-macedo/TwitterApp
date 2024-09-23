@@ -8,21 +8,20 @@
 import SwiftUI
 
 struct UserStatsView: View {
+    let user : User
     var body: some View {
         HStack(spacing:24){
             HStack(spacing:4){
-                Text("10M").font(.subheadline).bold()
-                Text("Following").foregroundStyle(Color.gray)
+                Text("\(user.followers)").font(.subheadline).bold()
+                Text("Followers").foregroundStyle(Color.gray)
             }
           
             HStack(spacing:4){
-                Text("0").font(.subheadline).bold()
-                Text("Followers").foregroundStyle(Color.gray)
+                Text("\(user.following)").font(.subheadline).bold()
+                Text("Following").foregroundStyle(Color.gray)
             }
         }
     }
 }
 
-#Preview {
-    UserStatsView()
-}
+

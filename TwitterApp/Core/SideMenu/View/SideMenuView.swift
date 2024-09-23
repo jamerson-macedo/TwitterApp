@@ -30,7 +30,7 @@ struct SideMenuView: View {
                         Text("@\(user.username)")
                             .font(.caption)
                             .foregroundColor(.gray)
-                        UserStatsView()
+                        UserStatsView(user: authViewModel.currentUser!)
                             .padding(.vertical)
                     }
                 }
