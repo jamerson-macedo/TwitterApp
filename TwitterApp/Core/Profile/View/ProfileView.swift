@@ -163,6 +163,8 @@ extension ProfileView {
                     
                 }
             }
+        }.onAppear(){
+            profileViewModel.fetchTweetsById()
         }
     }
 }

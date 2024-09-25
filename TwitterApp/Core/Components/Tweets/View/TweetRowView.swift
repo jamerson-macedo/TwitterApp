@@ -29,16 +29,33 @@ struct TweetRowView: View {
                         ProgressView()
                     }
                     
-                    VStack(alignment:.leading,spacing: 4){
-                        
-                        
-                        HStack{
-                            Text(user.fullname).font(.subheadline).bold()
-                            Text("@\(user.username)").foregroundStyle(.gray).font(.caption)
-                            Text(Timestamp().formatDate(timestamp: viewmodel.tweet.timestamp)).foregroundStyle(.gray).font(.caption)
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack {
+                            // Nome completo sem truncamento
+                            Text(user.fullname)
+                                .font(.subheadline)
+                                .bold()
+                                .lineLimit(1) // Garante que o nome completo ocupe uma linha
+                                .layoutPriority(1) // Define prioridade maior para o nome completo
+
+                            // Nome de usuário truncado com "..."
+                            Text("@\(user.username)")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                                .lineLimit(1)
+                                .truncationMode(.tail) // Trunca o nome de usuário
+                                .frame(maxWidth: 100, alignment: .trailing) // Define um tamanho máximo para o nome de usuário
+
+                            // Timestamp
+                            Text(Timestamp().formatDate(timestamp: viewmodel.tweet.timestamp))
+                                .font(.caption)
+                                .foregroundColor(.gray)
                         }
                         
-                        Text(viewmodel.tweet.tweet).font(.headline).multilineTextAlignment(.leading)
+                        // Conteúdo do tweet
+                        Text(viewmodel.tweet.tweet)
+                            .font(.headline)
+                            .multilineTextAlignment(.leading)
                     }
                     
                     
@@ -61,7 +78,9 @@ struct TweetRowView: View {
                     
                 })
                 Spacer()
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                Button(action: {
+                    viewmodel.retweet()
+                }, label: {
                     
                     Image(systemName: "arrow.2.squarepath").font(.subheadline)
                     
@@ -70,14 +89,16 @@ struct TweetRowView: View {
                 Button(action: {
                     viewmodel.tweet.didLike ?? false ? viewmodel.unlikeTweet() : viewmodel.likeTweet()
                 }, label: {
-                    HStack{
-                        
-                        Image(systemName: viewmodel.tweet.didLike ?? false ? "heart.fill" : "heart").font(.subheadline)
+                    HStack {
+                        Image(systemName: viewmodel.tweet.didLike ?? false ? "heart.fill" : "heart")
+                            .font(.subheadline)
                             .foregroundStyle(viewmodel.tweet.didLike ?? false ? .red : .gray)
-                        if viewmodel.tweet.likes > 0 {
-                            Text(viewmodel.tweet.likes.description)
-                        }
-                    }  
+                        
+                        // Espaço fixo para o número de likes
+                        Text(viewmodel.tweet.likes > 0 ? "\(viewmodel.tweet.likes)" : " ")
+                            .font(.subheadline)
+                          
+                    }
                 })
                 Spacer()
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {

@@ -7,12 +7,15 @@
 import Foundation
 class TweetRowViewModel: ObservableObject{
     @Published var tweet: Tweet
+    let service = TweetService()
+    
     
     init(tweet: Tweet) {
         self.tweet = tweet
         checkIfUserLikedTweet()
     }
-    let service = TweetService()
+    
+   
     func likeTweet(){
         service.likeTweet(tweet){
             self.tweet.didLike = true
@@ -34,6 +37,9 @@ class TweetRowViewModel: ObservableObject{
             }
             
         }
+    }
+    func retweet(){
+        service.retweet(tweet)
     }
 }
 

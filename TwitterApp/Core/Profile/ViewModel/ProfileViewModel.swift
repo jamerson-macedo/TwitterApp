@@ -10,6 +10,7 @@ import FirebaseAuth
 class ProfileViewModel: ObservableObject {
     @Published var tweets: [Tweet] = []
     @Published var likedTweets: [Tweet] = []
+    @Published var reTweets : [Tweet] = []
     private let twitterService = TweetService()
     private let userService = UserService()
     @Published var ISFollowing: Bool = false
@@ -22,6 +23,7 @@ class ProfileViewModel: ObservableObject {
         self.fetchTweetsById()
         self.fetchLikedTweets()
         self.isFollowing()
+        self.fetchReTweetsById()
         
     }
     func fetchTweetsById() {
@@ -86,12 +88,28 @@ class ProfileViewModel: ObservableObject {
                 followUser()
             }
         }
+    
+    func fetchReTweetsById() {
+        guard let uid = user.id else { return }
+        twitterService.fetchReTweets(forUid: uid){ reTweets in
+            self.reTweets = reTweets
+            print("DEBUG : \(reTweets.count)")
+            for i in 0..<reTweets.count{
+                // percorre todos os twitter e adiciona oid
+                let uid = reTweets[i].uid
+                self.userService.fetchUser(withuid: uid){ user in
+                    self.reTweets[i].user = user
+                }
+            }
+            
+        }
+    }
     func tweets(filter : TweetFilterViewModel)->[Tweet]{
         switch filter{
         case .tweets:
             return tweets
         case .replies:
-            return tweets
+            return reTweets
         case .likes:
             return likedTweets
         }

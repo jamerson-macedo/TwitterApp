@@ -302,4 +302,54 @@ extension TweetService{
             }
         }
     }
+  
+}
+// MARK: - RETWEETS
+extension TweetService{
+    func retweet(_ tweet: Tweet){
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let tweetId = tweet.id else{return}
+        
+        
+        let userLikesRef = Firestore
+            .firestore()
+            .collection("users")
+            .document(uid)
+            .collection("users-retweets")
+        userLikesRef.document(tweetId).setData([:]){ error in
+            if let error{
+                print("Error retweeting tweet: \(error.localizedDescription)")
+            }else {
+                print("retweets feito")
+            }
+            
+        }
+        
+        
+    }
+    func fetchReTweets(forUid uid : String, completion : @escaping ([Tweet]) -> Void){
+        var tweets = [Tweet]()
+        // primeiro vou na colecao que os usuairos deram like e vou pehar so o id que tem la
+        Firestore
+            .firestore()
+            .collection("users")
+            .document(uid)
+            .collection("users-retweets").getDocuments{ documents, error in
+                // me retorna so os ids
+                guard let documents = documents?.documents else { return }
+                documents.forEach { doc in
+                    // para cada um dos ids eu vou buscar eles agora
+                    
+                    let tweetId = doc.documentID
+                    Firestore.firestore().collection("tweets").document(tweetId)
+                        .getDocument(){ document, error in
+                            guard let tweet = try? document?.data(as:Tweet.self) else { return }
+                            tweets.append(tweet)
+                            completion(tweets)
+                        }
+                    
+                }
+                
+            }
+    }
 }
