@@ -40,7 +40,7 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView(user: User(fullname: "jamerson", profileImageUrl: "https://firebasestorage.googleapis.com:443/v0/b/twitter-a398c.appspot.com/o/profile_image%2F6AEDABE2-0A8F-4CD9-AA0E-27FA36F6F1F6?alt=media&token=dad3d01f-9f53-429c-a8a6-fa400259edc1", username: "Jamerson", email: "Jamerson@gmail.com"), isFollowing: true)
+    ProfileView(user: User(fullname: "jamerson", profileImageUrl: "https://firebasestorage.googleapis.com:443/v0/b/twitter-a398c.appspot.com/o/profile_image%2F6AEDABE2-0A8F-4CD9-AA0E-27FA36F6F1F6?alt=media&token=dad3d01f-9f53-429c-a8a6-fa400259edc1", username: "Jamerson", email: "Jamerson@gmail.com",following: 0,followers: 0), isFollowing: true)
 }
 
 extension ProfileView {
@@ -92,12 +92,12 @@ extension ProfileView {
                     profileViewModel.toggleFollowState()
                 }, label: {
                     Text(profileViewModel.ISFollowing ? "Following" : "Follow")
-                                        .font(.headline)
-                                        .padding()
-                                        .frame(width: 200, height: 50)
-                                        .background(profileViewModel.ISFollowing ? Color.red : Color.blue)
-                                        .foregroundColor(.white)
-                                        .cornerRadius(10)})
+                        .font(.headline)
+                        .padding()
+                        .frame(width: 200, height: 50)
+                        .background(profileViewModel.ISFollowing ? Color.red : Color.blue)
+                        .foregroundColor(.white)
+                    .cornerRadius(10)})
             }
             
         }.padding(.trailing)
@@ -156,15 +156,17 @@ extension ProfileView {
         ScrollView{
             LazyVStack{
                 ForEach(profileViewModel.tweets(filter: self.selectedFilter)){ tweets in
-                    TweetRowView(tweet: tweets) .padding().onAppear{
-                        profileViewModel.fetchLikedTweets()
+                    TweetRowView(tweet: tweets).padding().onAppear{
+                       
                     }
                     
                     
                 }
             }
-        }.onAppear(){
+        }.onAppear{
+            profileViewModel.fetchLikedTweets()
             profileViewModel.fetchTweetsById()
+            profileViewModel.fetchReTweetsById()
         }
     }
 }

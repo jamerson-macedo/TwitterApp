@@ -23,6 +23,7 @@ class CommentsViewModel : ObservableObject {
             if let newcomment = newcomment {
                 DispatchQueue.main.async {
                     self.comments.append(newcomment)
+                    self.tweet.numberOfComments += 1
                     // tenho que retornar para a view o id do novo comentario para a view atualizar
                     completion(newcomment.id)
                 }

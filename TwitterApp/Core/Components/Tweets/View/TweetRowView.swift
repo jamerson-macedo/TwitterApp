@@ -35,19 +35,19 @@ struct TweetRowView: View {
                             Text(user.fullname)
                                 .font(.subheadline)
                                 .bold()
-                                .lineLimit(1) // Garante que o nome completo ocupe uma linha
-                                .layoutPriority(1) // Define prioridade maior para o nome completo
+                                .lineLimit(1) // Limita o nome a uma linha
+                                .layoutPriority(1) // Dá prioridade ao nome completo para ocupar espaço
 
-                            // Nome de usuário truncado com "..."
+                            // Nome de usuário
                             Text("@\(user.username)")
                                 .font(.caption)
                                 .foregroundColor(.gray)
                                 .lineLimit(1)
-                                .truncationMode(.tail) // Trunca o nome de usuário
-                                .frame(maxWidth: 100, alignment: .trailing) // Define um tamanho máximo para o nome de usuário
-
+                                .truncationMode(.tail) // Trunca o username se for muito longo
+                                .layoutPriority(0) // Menor prioridade que o nome completo
                             // Timestamp
-                            Text(Timestamp().formatDate(timestamp: viewmodel.tweet.timestamp))
+                            Spacer()
+                            Text(viewmodel.tweet.timestamp.timeAgoDisplay())
                                 .font(.caption)
                                 .foregroundColor(.gray)
                         }
@@ -71,9 +71,8 @@ struct TweetRowView: View {
                         }){
                             CommentsView(tweet: viewmodel.tweet)
                         }
-                        if viewmodel.tweet.numberOfComments > 0{
-                            Text("\(viewmodel.tweet.numberOfComments)")
-                        }
+                        Text(viewmodel.tweet.numberOfComments > 0 ? "\(viewmodel.tweet.numberOfComments)" : " ")
+                            .font(.subheadline)
                     }
                     
                 })
@@ -81,13 +80,18 @@ struct TweetRowView: View {
                 Button(action: {
                     viewmodel.retweet()
                 }, label: {
-                    
-                    Image(systemName: "arrow.2.squarepath").font(.subheadline)
+                    HStack{
+                        Image(systemName: "arrow.2.squarepath").font(.subheadline)
+                        Text(viewmodel.tweet.numberOfRetweets > 0 ? "\(viewmodel.tweet.numberOfRetweets)" : " ")
+                            .font(.subheadline)
+                    }
                     
                 })
                 Spacer()
                 Button(action: {
-                    viewmodel.tweet.didLike ?? false ? viewmodel.unlikeTweet() : viewmodel.likeTweet()
+                    if !(viewmodel.isProcessing) {
+                           viewmodel.tweet.didLike ?? false ? viewmodel.unlikeTweet() : viewmodel.likeTweet()
+                       }
                 }, label: {
                     HStack {
                         Image(systemName: viewmodel.tweet.didLike ?? false ? "heart.fill" : "heart")
@@ -99,7 +103,7 @@ struct TweetRowView: View {
                             .font(.subheadline)
                           
                     }
-                })
+                }).disabled(viewmodel.isProcessing)
                 Spacer()
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                     Image(systemName: "bookmark").font(.subheadline)

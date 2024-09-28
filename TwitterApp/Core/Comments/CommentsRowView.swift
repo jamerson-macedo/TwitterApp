@@ -59,5 +59,5 @@ struct CommentsRowView: View {
 }
 
 #Preview {
-    CommentsRowView( comments: Comments(comments: "Estou infomando que estou fazendo um c", timestamp: Timestamp.init(),user: User(fullname: "Jamerson", profileImageUrl: "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*U4gZLnRtHEeJuc6tdVLwPw.png", username: "zezin", email: "")))
+    CommentsRowView( comments: Comments(comments: "Estou infomando que estou fazendo um c", timestamp: Timestamp.init(),user: User(fullname: "Jamerson", profileImageUrl: "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*U4gZLnRtHEeJuc6tdVLwPw.png", username: "zezin", email: "",following: 0,followers: 0)))
 }

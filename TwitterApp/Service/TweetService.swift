@@ -17,6 +17,7 @@ struct TweetService {
                     "tweet":tweet,
                     "likes" : 0,
                     "numberOfComments" : 0,
+                    "numberOfRetweets" : 0,
                     "timestamp" : Timestamp(date: Date())] as [String : Any]
         // criei um doc com id aleatorio e dentro dele tem o id do usuario e os dados do twitter
         Firestore.firestore().collection("tweets").document().setData(data) { error in
@@ -194,8 +195,10 @@ extension TweetService{
                     fullname: data["fullname"] as? String ?? "Unknown",
                     profileImageUrl: data["profileImageUrl"] as? String ?? "",
                     username: data["username"] as? String ?? "Unknown",
-                    email: data["email"] as? String ?? "Unknown"
-                   
+                    email: data["email"] as? String ?? "Unknown",
+                    following: data["following"] as? Int ?? 0,
+                    followers: data["followers"] as? Int ?? 0
+                    
                 )
             }
             
@@ -279,8 +282,10 @@ extension TweetService{
                         fullname: userData["fullname"] as? String ?? "Unknown",
                         profileImageUrl: userData["profileImageUrl"] as? String ?? "",
                         username: userData["username"] as? String ?? "Unknown",
-                        email: userData["email"] as? String ?? "Unknown"
-                     
+                        email: userData["email"] as? String ?? "Unknown",
+                        following: userData["following"] as? Int ?? 0,
+                        followers: userData["followers"] as? Int ?? 0
+                        
                     )
                     
                     // Cria o objeto Comment
@@ -302,14 +307,15 @@ extension TweetService{
             }
         }
     }
-  
+    
 }
 // MARK: - RETWEETS
 extension TweetService{
     func retweet(_ tweet: Tweet){
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let tweetId = tweet.id else{return}
-        
+        let db = Firestore.firestore()
+        let tweetsRef = db.collection("tweets").document(tweetId)
         
         let userLikesRef = Firestore
             .firestore()
@@ -320,7 +326,8 @@ extension TweetService{
             if let error{
                 print("Error retweeting tweet: \(error.localizedDescription)")
             }else {
-                print("retweets feito")
+                tweetsRef.updateData(["numberOfRetweets": tweet.numberOfRetweets + 1])
+                print("RETWEEETED SUCCESSFULLY")
             }
             
         }
@@ -352,4 +359,69 @@ extension TweetService{
                 
             }
     }
+}
+extension TweetService{
+    // pegando o id de todos usuarios que sigo
+    func fetchFollowingUserIDs(completion: @escaping ([String]) -> Void) {
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            print("Erro: UID do usuário atual não encontrado")
+            return
+        }
+        
+        Firestore.firestore()
+            .collection("users")
+            .document(currentUserId)
+            .collection("following")
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Erro ao buscar usuários seguidos: \(error.localizedDescription)")
+                    completion([])
+                    return
+                }
+                
+                guard let documents = querySnapshot?.documents else {
+                    print("Erro: Nenhum documento encontrado na subcoleção 'following'")
+                    completion([])  // Retorna lista vazia se não houver documentos
+                    return
+                }
+                
+                let userIDs = documents.compactMap { $0.documentID }
+                print("Usuários seguidos (IDs): \(userIDs)")  // Log para verificar os IDs obtidos
+                completion(userIDs)
+            }
+    }
+    func fetchTweetsOfFollowedUsers(completion: @escaping ([Tweet]) -> Void) {
+        fetchFollowingUserIDs { userIDs in
+            guard !userIDs.isEmpty else {
+                completion([]) // Se o usuário não seguir ninguém, retorna uma lista vazia
+                print("CHEGOU AQUI")
+                return
+            }
+            
+            Firestore.firestore()
+                .collection("tweets")
+                .whereField("uid", in: userIDs) // Filtro para buscar tweets apenas dos usuários seguidos
+                .order(by: "timestamp", descending: true)
+                .getDocuments { querySnapshot, error in
+                    if let error = error {
+                        completion([])  // Retorna uma lista vazia em caso de erro
+                        print("Erro ao buscar tweets: \(error.localizedDescription)")
+                        return
+                    }
+                    
+                    guard let documents = querySnapshot?.documents else {
+                        completion([])  // Retorna uma lista vazia se não houver documentos
+                        return
+                    }
+                    
+                    let tweets = documents.compactMap { query in
+                        try? query.data(as: Tweet.self)
+                    }
+                    
+                    completion(tweets)
+                    print("DEBUG ITENS BUSCADOS: \(tweets)")
+                }
+        }
+    }
+    
 }

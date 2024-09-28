@@ -30,5 +30,5 @@ struct UserRowView: View {
 }
 
 #Preview {
-    UserRowView(user: User(fullname: "", profileImageUrl: "", username: "", email: ""))
+    UserRowView(user: User(fullname: "", profileImageUrl: "", username: "", email: "",following: 0,followers: 0))
 }

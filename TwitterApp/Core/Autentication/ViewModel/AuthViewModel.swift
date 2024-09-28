@@ -30,7 +30,7 @@ class AuthViewModel : ObservableObject{
         // quando iniciar se tiver usuario ele ja registra
         self.userSession = Auth.auth().currentUser
         fetchUser()
-         
+     
     }
     func login(withEmail email : String, password : String){
         Auth.auth().signIn(withEmail: email, password: password) { result, error in

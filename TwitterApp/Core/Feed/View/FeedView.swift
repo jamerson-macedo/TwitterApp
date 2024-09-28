@@ -11,20 +11,50 @@ struct FeedView: View {
     @State private var showMenu = false
     @EnvironmentObject var viewModel: AuthViewModel
     @StateObject var feedViewModel = FeedViewModel()
+    @State private var selectedFilter : FeedFilter = .foryou
+    @Namespace var animation
     var body: some View {
         ZStack {
             // Conteúdo do feed
             NavigationView {
+              
                 ScrollView {
+                    HStack(){
+                        ForEach(FeedFilter.allCases, id:\.rawValue){ option in
+                            VStack{
+                                Text(option.title).font(.subheadline)
+                                    .fontWeight(selectedFilter == option ? .semibold : .regular)
+                                    .foregroundStyle( selectedFilter == option ? Color.black : .gray)
+                                if selectedFilter == option{
+                                    Capsule().foregroundColor(.blue).frame(height: 3)
+                                        .matchedGeometryEffect(id: "filterfeed", in: animation)
+                                }else {
+                                    // se não ele fica sem cor
+                                    Capsule().foregroundColor(.clear).frame(height: 3)
+                                }
+                            }
+                            .onTapGesture {
+                                withAnimation(.easeInOut){
+                                    self.selectedFilter = option
+                                }
+                            }
+                            
+                            
+                        }
+
+                    }.frame(width: 200)
+                    .overlay(Divider().offset(x:0,y:16))
+    
                     LazyVStack(alignment: .center) {
-                        ForEach(feedViewModel.tweets) { tweet in
+                        ForEach(feedViewModel.tweets(filter: self.selectedFilter)) { tweet in
                             TweetRowView(tweet: tweet).padding()
                         }
                     }
                 }.refreshable {
                     feedViewModel.fetchTweets()
+                
                 }
-                .animation(.smooth)
+                
                 .navigationTitle("Home") // Título na toolbar
                 .navigationBarTitleDisplayMode(.inline) // Exibe a toolbar de maneira compacta
                 .toolbar {
@@ -66,6 +96,7 @@ struct FeedView: View {
             .fullScreenCover(isPresented: $showNewTweetView,onDismiss: {
                 // quando fechar ele faz essa ação
                 feedViewModel.fetchTweets()
+              
             }) {
                 NewTweetView()
             }
@@ -91,6 +122,9 @@ struct FeedView: View {
                 Spacer()
             }
             .zIndex(1) // Controla a sobreposição do side menu em relação ao conteúdo
+        }.onAppear{
+            viewModel.fetchUser()
+            
         }
     }
 }

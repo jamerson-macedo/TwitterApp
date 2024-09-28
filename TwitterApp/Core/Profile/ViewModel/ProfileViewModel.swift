@@ -72,7 +72,7 @@ class ProfileViewModel: ObservableObject {
         userService.unfollowUser(followingUserID: followerID)
         // Atualiza o estado de forma imediata
         self.ISFollowing.toggle()
-        self.user.following -= 1
+        self.user.followers -= 1
     }
     
     func isFollowing() {

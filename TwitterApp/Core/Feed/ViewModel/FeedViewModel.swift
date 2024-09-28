@@ -8,12 +8,13 @@
 import Foundation
 class FeedViewModel : ObservableObject{
     @Published var tweets: [Tweet] = []
-    
+    @Published var followingTweets : [Tweet] = []
     let userService = UserService()
     let service = TweetService()
     
     init(){
         fetchTweets()
+      
     }
     func fetchTweets(){
         
@@ -31,6 +32,38 @@ class FeedViewModel : ObservableObject{
             }
             
             
+        }
+        service.fetchTweetsOfFollowedUsers{ tweets in
+            self.followingTweets = tweets
+            for i in 0..<tweets.count{
+                let uid = tweets[i].uid
+                self.userService.fetchUser(withuid: uid){ user in
+                    self.followingTweets[i].user = user
+                }
+                
+            }
+        }
+        
+        
+    }
+  
+    func tweets(filter : FeedFilter)->[Tweet]{
+        switch filter{
+        case .foryou:
+            return tweets
+        case .following:
+            return followingTweets// retornar apenas do que eu sigo
+        }
+    }
+}
+enum FeedFilter : Int, CaseIterable{
+    case foryou
+    case following
+    
+    var title:String{
+        switch self{
+        case .foryou : return  "For you"
+        case .following : return  "Following"
         }
     }
 }
