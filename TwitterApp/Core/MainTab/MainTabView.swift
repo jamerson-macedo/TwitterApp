@@ -11,8 +11,7 @@ struct MainTabView: View {
     @State private var selectedIndex = 0
     var body: some View {
         TabView(selection: $selectedIndex){
-            
-            FeedView(selectedTab:$selectedIndex).tabItem {
+            FeedView().tabItem {
                 Image(systemName: "house")
             }.tag(0)
             ExploreView().tabItem {
@@ -24,9 +23,6 @@ struct MainTabView: View {
             MessagesView().tabItem {
                 Image(systemName: "envelope")
             }.tag(3)
-          
-          
-           
         }
     }
 }
