@@ -359,6 +359,21 @@ extension TweetService{
                 
             }
     }
+    func checkIfUserRetweet(_ tweet : Tweet, completion : @escaping(Bool)-> Void){
+        // vejo minha lista de likes
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let tweetId = tweet.id else { return }
+        Firestore
+            .firestore()
+            .collection("users")
+            .document(uid)
+            .collection("users-retweets")
+            .document(tweetId).getDocument(){ document, error in
+                // se o documento existir então deu like
+                guard let document = document else { return }
+                completion(document.exists)
+            }
+    }
 }
 extension TweetService{
     // pegando o id de todos usuarios que sigo

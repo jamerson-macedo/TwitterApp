@@ -13,8 +13,9 @@ struct Tweet : Identifiable,Decodable {
     var likes : Int
     let timestamp : Timestamp
     var numberOfComments : Int
-   var numberOfRetweets : Int
+    var numberOfRetweets : Int
     var user : User?
     var didLike : Bool? = false
+    var didRetweet : Bool? = false
 }
 

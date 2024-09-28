@@ -14,6 +14,8 @@ class TweetRowViewModel: ObservableObject{
     init(tweet: Tweet) {
         self.tweet = tweet
         checkIfUserLikedTweet()
+        checkIfUserRetweetedTweet()
+        
     }
     
    
@@ -40,6 +42,7 @@ class TweetRowViewModel: ObservableObject{
     func checkIfUserLikedTweet(){
         service.checkIfUserLikedTweet(tweet){ didlike in
             if didlike{
+                
                 self.tweet.didLike = true
             }
             
@@ -48,6 +51,14 @@ class TweetRowViewModel: ObservableObject{
     func retweet(){
         service.retweet(tweet)
         self.tweet.numberOfRetweets += 1
+    }
+    func checkIfUserRetweetedTweet(){
+        service.checkIfUserRetweet(tweet){ didRetweet in
+            if didRetweet{
+                self.tweet.didRetweet = true
+            }
+            
+        }
     }
 }
 

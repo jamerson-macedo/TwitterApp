@@ -79,9 +79,10 @@ struct TweetRowView: View {
                 Spacer()
                 Button(action: {
                     viewmodel.retweet()
+                    viewmodel.checkIfUserRetweetedTweet()
                 }, label: {
                     HStack{
-                        Image(systemName: "arrow.2.squarepath").font(.subheadline)
+                        Image(systemName: "arrow.2.squarepath").font(.subheadline).foregroundStyle(viewmodel.tweet.didRetweet ?? false ? .blue : .gray )
                         Text(viewmodel.tweet.numberOfRetweets > 0 ? "\(viewmodel.tweet.numberOfRetweets)" : " ")
                             .font(.subheadline)
                     }
