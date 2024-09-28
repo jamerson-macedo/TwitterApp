@@ -11,7 +11,8 @@ struct MainTabView: View {
     @State private var selectedIndex = 0
     var body: some View {
         TabView(selection: $selectedIndex){
-            FeedView().tabItem {
+            
+            FeedView(selectedTab:$selectedIndex).tabItem {
                 Image(systemName: "house")
             }.tag(0)
             ExploreView().tabItem {
