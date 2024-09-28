@@ -47,7 +47,7 @@ struct FeedView: View {
     
                     LazyVStack(alignment: .center) {
                         ForEach(feedViewModel.tweets(filter: self.selectedFilter)) { tweet in
-                            TweetRowView(tweet: tweet).padding()
+                            TweetRowView(tweet: tweet, isRetweet: false).padding()
                         }
                     }
                 }.refreshable {

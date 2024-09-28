@@ -12,21 +12,31 @@ struct TweetRowView: View {
     @ObservedObject var viewmodel : TweetRowViewModel
     @State var showComments : Bool = false
     
-    init(tweet : Tweet) {
-        self.viewmodel = TweetRowViewModel(tweet: tweet)
+    
+    init(tweet : Tweet, isRetweet : Bool) {
+        self.viewmodel = TweetRowViewModel(tweet: tweet,isRetweet)
+        
     }
     
     var body: some View {
+        
         VStack(alignment:.leading){
-            
-            HStack(alignment : .top,spacing: 12){
-                if let user = viewmodel.tweet.user{
-                    AsyncImage(url: URL(string: user.profileImageUrl)) { image in
-                        image.resizable()
-                            .frame(width: 56, height: 56)
-                            .clipShape(Circle())
-                    } placeholder: {
-                        ProgressView()
+            if let user = viewmodel.tweet.user{
+                if viewmodel.isRetweeting {
+                    HStack {
+                        Image(systemName: "arrow.2.squarepath").font(.subheadline)
+                        Text("Reposted for you")
+                    }
+                }
+                HStack(alignment : .top,spacing: 12){
+                    NavigationLink(destination: ProfileView(user: user,isFollowing: true)) {
+                        AsyncImage(url: URL(string: user.profileImageUrl)) { image in
+                            image.resizable()
+                                .frame(width: 56, height: 56)
+                                .clipShape(Circle())
+                        } placeholder: {
+                            ProgressView()
+                        }
                     }
                     
                     VStack(alignment: .leading, spacing: 4) {
@@ -37,7 +47,7 @@ struct TweetRowView: View {
                                 .bold()
                                 .lineLimit(1) // Limita o nome a uma linha
                                 .layoutPriority(1) // Dá prioridade ao nome completo para ocupar espaço
-
+                            
                             // Nome de usuário
                             Text("@\(user.username)")
                                 .font(.caption)
@@ -91,8 +101,8 @@ struct TweetRowView: View {
                 Spacer()
                 Button(action: {
                     if !(viewmodel.isProcessing) {
-                           viewmodel.tweet.didLike ?? false ? viewmodel.unlikeTweet() : viewmodel.likeTweet()
-                       }
+                        viewmodel.tweet.didLike ?? false ? viewmodel.unlikeTweet() : viewmodel.likeTweet()
+                    }
                 }, label: {
                     HStack {
                         Image(systemName: viewmodel.tweet.didLike ?? false ? "heart.fill" : "heart")
@@ -102,7 +112,7 @@ struct TweetRowView: View {
                         // Espaço fixo para o número de likes
                         Text(viewmodel.tweet.likes > 0 ? "\(viewmodel.tweet.likes)" : " ")
                             .font(.subheadline)
-                          
+                        
                     }
                 }).disabled(viewmodel.isProcessing)
                 Spacer()

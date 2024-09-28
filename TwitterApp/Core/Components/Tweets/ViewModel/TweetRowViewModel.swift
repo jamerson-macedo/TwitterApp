@@ -8,11 +8,13 @@ import Foundation
 class TweetRowViewModel: ObservableObject{
     @Published var tweet: Tweet
     @Published var isProcessing = false // variavel para controlar o numero de cliques
+    @Published var isRetweeting = false
     let service = TweetService()
     
     
-    init(tweet: Tweet) {
+    init(tweet: Tweet, _ isRetweeting: Bool) {
         self.tweet = tweet
+        self.isRetweeting = isRetweeting
         checkIfUserLikedTweet()
         checkIfUserRetweetedTweet()
         

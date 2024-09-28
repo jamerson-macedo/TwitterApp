@@ -156,17 +156,21 @@ extension ProfileView {
         ScrollView{
             LazyVStack{
                 ForEach(profileViewModel.tweets(filter: self.selectedFilter)){ tweets in
-                    TweetRowView(tweet: tweets).padding().onAppear{
-                       
+                    switch self.selectedFilter{
+                    case .tweets:
+                        TweetRowView(tweet: tweets,isRetweet: false).padding()
+                    case .replies:
+                        TweetRowView(tweet: tweets,isRetweet: true).padding()
+                    case .likes:
+                        TweetRowView(tweet: tweets,isRetweet: false).padding()
+                        
                     }
-                    
-                    
                 }
+            }.onAppear{
+                profileViewModel.fetchLikedTweets()
+                profileViewModel.fetchTweetsById()
+                profileViewModel.fetchReTweetsById()
             }
-        }.onAppear{
-            profileViewModel.fetchLikedTweets()
-            profileViewModel.fetchTweetsById()
-            profileViewModel.fetchReTweetsById()
         }
     }
 }

@@ -32,13 +32,13 @@ extension Timestamp {
         
         if secondsAgo < hour {
             let minutes = secondsAgo / minute
-            return minutes == 0 ? "Agora" : "\(minutes) m"
+            return minutes == 0 ? "Agora" : "\(minutes)m"
         } else if secondsAgo < day {
             let hours = secondsAgo / hour
-            return "\(hours) h"
+            return "\(hours)h"
         } else if secondsAgo < 6 * day {
             let days = secondsAgo / day
-            return "\(days) d"
+            return "\(days)d"
         } else {
             // Exibe a data completa se for mais de 6 dias
             return formatter.string(from: date)
