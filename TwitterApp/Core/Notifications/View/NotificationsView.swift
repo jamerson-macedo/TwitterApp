@@ -14,28 +14,33 @@ struct NotificationsView: View {
         NavigationView {
             List(viewModel.notifications) { notification in
                 HStack {
-                    HStack {
+                    // Exibe a imagem de perfil do usuário
+                    if let imageUrl = notification.fromUserProfileImageUrl, let url = URL(string: imageUrl) {
+                        AsyncImage(url: url) { image in
+                            image.resizable()
+                                .frame(width: 40, height: 40)
+                                .clipShape(Circle())
+                        } placeholder: {
+                            Circle()
+                                .frame(width: 40, height: 40)
+                                .foregroundColor(.gray)
+                        }
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        // Exibe o nome do usuário e a mensagem da notificação
                         viewModel.notificationMessage(for: notification)
                         Text(notification.timestamp.timeAgoDisplay())
                             .font(.caption)
                             .foregroundColor(.gray)
                     }
                     Spacer()
-                    
-                    // Se houver um post relacionado, adiciona um link para detalhes do post
-                    if let postId = notification.postId {
-                        // NavigationLink(destination: PostDetailView(postId: postId)) {
-                        //   Image(systemName: "arrow.right")
-                    }
                 }
             }
-            .padding(.vertical, 8)
             .navigationTitle("Notificações")
-            .navigationBarTitleDisplayMode(.inline)
-            // Mova o navigationTitle para dentro do NavigationView
-        }
-        .onAppear {
-            viewModel.fetchNotifications() // Buscar notificações ao abrir a tela
+            .onAppear {
+                viewModel.fetchNotifications() // Buscar notificações ao abrir a tela
+            }
         }
     }
 }
