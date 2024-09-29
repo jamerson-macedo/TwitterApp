@@ -17,6 +17,7 @@ struct CommentsView: View {
     @ObservedObject var viewmodel: CommentsViewModel
     @State var comments = ""
     @State private var lastCommentID: String? // Armazenar o ID do último comentário adicionado
+    @FocusState private var focusedField: Bool
     
     init(tweet: Tweet) {
         self.viewmodel = CommentsViewModel(tweet: tweet)
@@ -30,8 +31,8 @@ struct CommentsView: View {
                 } label: {
                     Image(systemName: "xmark")
                 }
-                
-                Text("Comments").bold()
+                Spacer()
+                Text("Comments").foregroundStyle(.black).bold()
                 Spacer()
             }
             .padding()
@@ -48,16 +49,32 @@ struct CommentsView: View {
                 
                 // Campo de texto para adicionar um novo comentário
                 HStack {
-                    TextField("Add a comment...", text: $comments)
-                        .padding()
+                    if let user = viewmodel.tweet.user{
+                        AsyncImage(url: URL(string: user.profileImageUrl)) { image in
+                            image.resizable()
+                                .frame(width: 35, height: 35)
+                                .clipShape(Circle())
+                                .padding(.leading,10)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                    }
+                    TextField("Add a comment in post of \(viewmodel.tweet.user?.username ?? "")", text: $comments)
+                        .padding(.all,10)
+                        .foregroundStyle(.black)
                         .background(Color(.systemGray6))
-                        .cornerRadius(20)
+                        .cornerRadius(10)
                         .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.gray, lineWidth: 1)
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray, lineWidth: 0.6)
                         )
                         .multilineTextAlignment(.leading)
                         .padding(.leading, 10)
+                        .focused($focusedField)
+                        .onAppear{
+                            focusedField = true
+                        }
+                        
                     
                     // Botão de enviar
                     Button(action: {
@@ -79,18 +96,18 @@ struct CommentsView: View {
                             }
                         }
                     }) {
-                        Image(systemName: "paperplane.fill")
+                        Image(systemName: "arrow.up")
                             .font(.system(size: 24))
                             .foregroundColor(.white)
-                            .padding()
-                            .background(.blue)
+                            .padding(.all,10)
+                            .background(comments.isEmpty ? Color.gray : Color .blue)
                             .clipShape(Circle())
-                            .shadow(color: Color.blue.opacity(0.3), radius: 10, x: 0, y: 5)
-                            .scaleEffect(comments.isEmpty ? 0.9 : 1.1)
+                            .shadow(color: Color.black.opacity(0.3), radius: 10, x: 0, y: 5)
+                           
                             .animation(.spring(), value: comments.isEmpty)
                     }
                     .padding(.trailing, 10)
-                    .disabled(comments.isEmpty) // Desabilita o botão se o campo estiver vazio
+                    .disabled(comments.isEmpty)
                 }
                 .padding(.vertical, 10)
             }

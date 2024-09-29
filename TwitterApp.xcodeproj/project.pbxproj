@@ -128,6 +128,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CF3B97042CA892960021AB69 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
 		CF7E6EAA2C9BB9940099BDCB /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,6 +253,7 @@
 		CFDFB8172C861AB500F624E6 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				CF3B97042CA892960021AB69 /* Feed */,
 				CFDFB8352C8634F300F624E6 /* users */,
 				CFDFB81D2C861BC900F624E6 /* Tweets */,
 				CFDFB8482C866A7700F624E6 /* TextArea.swift */,

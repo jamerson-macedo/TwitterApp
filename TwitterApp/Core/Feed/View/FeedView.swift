@@ -17,7 +17,7 @@ struct FeedView: View {
         ZStack {
             // Conteúdo do feed
             NavigationView {
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     HStack(){
                         ForEach(FeedFilter.allCases, id:\.rawValue){ option in
                             VStack{
