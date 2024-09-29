@@ -11,6 +11,7 @@ struct FeedView: View {
     @State private var showMenu = false
     @EnvironmentObject var viewModel: AuthViewModel
     @StateObject var feedViewModel = FeedViewModel()
+    @StateObject var notificationViewModel = NotificationsViewModel()
     @State private var selectedFilter : FeedFilter = .foryou
     @Namespace var animation
     var body: some View {

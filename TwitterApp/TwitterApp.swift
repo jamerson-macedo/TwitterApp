@@ -27,6 +27,7 @@ struct TwitterApp: App {
     
     // essa instancia fica por todo o app
     @StateObject var viewModel = AuthViewModel()
+    @StateObject var notificationsViewModel = NotificationsViewModel()
     
     init(){
         // iniciar o firebase
@@ -43,6 +44,7 @@ struct TwitterApp: App {
                 ContentView()
             }
             .environmentObject(viewModel)
+            .environmentObject(notificationsViewModel)
         }
     }
 }

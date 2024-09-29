@@ -12,7 +12,7 @@ struct TweetRowView: View {
     @ObservedObject var viewmodel : TweetRowViewModel
     @State var showComments : Bool = false
     @State private var showAlert = false
-    
+    @EnvironmentObject var notificationviewModel : NotificationsViewModel
     
     init(tweet : Tweet, isRetweet : Bool) {
         self.viewmodel = TweetRowViewModel(tweet: tweet,isRetweet)
@@ -100,14 +100,18 @@ struct TweetRowView: View {
                         self.showAlert.toggle()
                     }else  {
                         viewmodel.retweet()
+                        notificationviewModel.sendNotification(toUserId: viewmodel.tweet.user?.id ?? "", postId: viewmodel.tweet.id, type: .comment)
                     }
                     viewmodel.checkIfUserRetweetedTweet()
+                    
                     
                 }, label: {
                     HStack{
                         Image(systemName: "arrow.2.squarepath").font(.subheadline).foregroundStyle(viewmodel.tweet.didRetweet ?? false ? .blue : .gray )
                         Text(viewmodel.tweet.numberOfRetweets > 0 ? "\(viewmodel.tweet.numberOfRetweets)" : " ")
                             .font(.subheadline)
+                        
+                        
                     }
                     
                 }).alert(isPresented: $showAlert){
@@ -126,6 +130,7 @@ struct TweetRowView: View {
                 Button(action: {
                     if !(viewmodel.isProcessing) {
                         viewmodel.tweet.didLike ?? false ? viewmodel.unlikeTweet() : viewmodel.likeTweet()
+                        notificationviewModel.sendNotification(toUserId: viewmodel.tweet.user?.id ?? "", postId: viewmodel.tweet.id, type: .like)
                     }
                 }, label: {
                     HStack {

@@ -18,7 +18,7 @@ struct CommentsView: View {
     @State var comments = ""
     @State private var lastCommentID: String? // Armazenar o ID do último comentário adicionado
     @FocusState private var focusedField: Bool
-    
+    @EnvironmentObject var notificationViewmodel : NotificationsViewModel
     init(tweet: Tweet) {
         self.viewmodel = CommentsViewModel(tweet: tweet)
     }
@@ -89,12 +89,13 @@ struct CommentsView: View {
                             
                             // Limpar o campo de comentário
                             comments = ""
-                            
+                            self.notificationViewmodel .sendNotification(toUserId: viewmodel.tweet.user?.id ?? "", postId: viewmodel.tweet.id, type: .comment)
                             // Garante que a rolagem ocorra após a atualização da interface
                             DispatchQueue.main.async {
                                 if let lastCommentID = lastCommentID {
                                     withAnimation {
                                         scrollViewProxy.scrollTo(lastCommentID, anchor: .bottom)
+                                        
                                     }
                                 }
                             }
