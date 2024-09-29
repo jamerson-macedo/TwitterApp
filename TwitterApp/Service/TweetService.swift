@@ -334,6 +334,31 @@ extension TweetService{
         
         
     }
+    func unRetweet(_ tweet: Tweet){
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let tweetId = tweet.id else{return}
+        let db = Firestore.firestore()
+        let tweetsRef = db.collection("tweets").document(tweetId)
+        
+        let userRetweet = Firestore
+            .firestore()
+            .collection("users")
+            .document(uid)
+            .collection("users-retweets")
+        userRetweet.document(tweetId).delete{ error in
+            if let error{
+                print("Error retweeting tweet: \(error.localizedDescription)")
+            }else {
+                tweetsRef.updateData(["numberOfRetweets": tweet.numberOfRetweets + 1])
+                print("RETWEEETED SUCCESSFULLY")
+            }
+            
+        }
+        
+        
+    }
+    
+    
     func fetchReTweets(forUid uid : String, completion : @escaping ([Tweet]) -> Void){
         var tweets = [Tweet]()
         // primeiro vou na colecao que os usuairos deram like e vou pehar so o id que tem la

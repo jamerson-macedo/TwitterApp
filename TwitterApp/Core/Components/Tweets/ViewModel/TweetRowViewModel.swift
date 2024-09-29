@@ -52,8 +52,17 @@ class TweetRowViewModel: ObservableObject{
     }
     func retweet(){
         service.retweet(tweet)
+        self.tweet.didRetweet = true
         self.tweet.numberOfRetweets += 1
+     
     }
+    func unRetweet(){
+        service.unRetweet(tweet)
+        self.tweet.didRetweet = false
+        self.tweet.numberOfRetweets -= 1
+        
+    }
+    
     func checkIfUserRetweetedTweet(){
         service.checkIfUserRetweet(tweet){ didRetweet in
             if didRetweet{

@@ -11,6 +11,7 @@ import FirebaseCore
 struct TweetRowView: View {
     @ObservedObject var viewmodel : TweetRowViewModel
     @State var showComments : Bool = false
+    @State private var showAlert = false
     
     
     init(tweet : Tweet, isRetweet : Bool) {
@@ -35,7 +36,12 @@ struct TweetRowView: View {
                                 .frame(width: 56, height: 56)
                                 .clipShape(Circle())
                         } placeholder: {
-                            ProgressView()
+                            Circle()
+                                .frame(width: 56, height: 56)
+                                .clipShape(Circle())
+                                .foregroundColor(.gray)
+                                .redacted(reason: .placeholder)
+                            
                         }
                     }
                     
@@ -87,9 +93,16 @@ struct TweetRowView: View {
                     
                 })
                 Spacer()
+                
                 Button(action: {
-                    viewmodel.retweet()
+                    if viewmodel.tweet.didRetweet ?? false{
+                        
+                        self.showAlert.toggle()
+                    }else  {
+                        viewmodel.retweet()
+                    }
                     viewmodel.checkIfUserRetweetedTweet()
+                    
                 }, label: {
                     HStack{
                         Image(systemName: "arrow.2.squarepath").font(.subheadline).foregroundStyle(viewmodel.tweet.didRetweet ?? false ? .blue : .gray )
@@ -97,7 +110,18 @@ struct TweetRowView: View {
                             .font(.subheadline)
                     }
                     
-                })
+                }).alert(isPresented: $showAlert){
+                    Alert(
+                        title: Text("Undo Retweet"),
+                        message: Text("Are you sure you want to undo the retweet?"),
+                        primaryButton: .destructive(Text("Undo")) {
+                            // Ação de desfazer o retweet
+                            viewmodel.unRetweet()
+                            viewmodel.checkIfUserRetweetedTweet()
+                        },
+                        secondaryButton: .cancel()
+                    )
+                }
                 Spacer()
                 Button(action: {
                     if !(viewmodel.isProcessing) {
@@ -107,6 +131,7 @@ struct TweetRowView: View {
                     HStack {
                         Image(systemName: viewmodel.tweet.didLike ?? false ? "heart.fill" : "heart")
                             .font(.subheadline)
+                            .symbolEffect(.bounce, value: viewmodel.tweet.didLike)
                             .foregroundStyle(viewmodel.tweet.didLike ?? false ? .red : .gray)
                         
                         // Espaço fixo para o número de likes

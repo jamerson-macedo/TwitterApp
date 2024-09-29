@@ -15,7 +15,7 @@ struct UserService {
             .getDocument { document, _ in
                 guard let document = document else {return}
                 guard let user = try? document.data(as: User.self) else {return}
-                print("DEBUG : \(user.username)")
+               //print("DEBUG : \(user.username)")
                 completion(user)
             }
     }

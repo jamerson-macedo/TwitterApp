@@ -26,7 +26,10 @@ struct CommentsRowView: View {
                                .frame(width: 40, height: 40)
                                .clipShape(Circle())
                        } placeholder: {
-                           ProgressView()
+                           Circle()
+                               .frame(width: 40, height: 40)
+                               .clipShape(Circle())
+                               .redacted(reason: .placeholder)
                        }
                    }
 
@@ -65,11 +68,6 @@ struct CommentsRowView: View {
                                    Image(systemName: "heart")
                                        .font(.subheadline)
                                        .foregroundColor(.gray)
-                                   
-                                   // Contagem de likes
-                                   Text("\(1)")
-                                       .font(.caption)
-                                       .foregroundColor(.black)
                                }
                            }
                        }

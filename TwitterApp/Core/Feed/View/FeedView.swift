@@ -69,7 +69,10 @@ struct FeedView: View {
                                         .frame(width: 32, height: 32)
                                         .clipShape(Circle())
                                 } placeholder: {
-                                    ProgressView()
+                                    Circle()
+                                        .frame(width: 32, height: 32)
+                                        .clipShape(Circle())
+                                        .redacted(reason: .placeholder)
                                 }
                             }
                         }

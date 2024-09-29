@@ -48,7 +48,7 @@ class ProfileViewModel: ObservableObject {
         guard let uid = user.id else { return }
         twitterService.fetchLikesTweets(forUid: uid){ likedTweets in
             self.likedTweets = likedTweets
-            print("DEBUG : \(likedTweets.count)")
+            //print("DEBUG : \(likedTweets.count)")
             for i in 0..<likedTweets.count{
                 // percorre todos os twitter e adiciona oid
                 let uid = likedTweets[i].uid
@@ -93,7 +93,7 @@ class ProfileViewModel: ObservableObject {
         guard let uid = user.id else { return }
         twitterService.fetchReTweets(forUid: uid){ reTweets in
             self.reTweets = reTweets
-            print("DEBUG : \(reTweets.count)")
+            //print("DEBUG : \(reTweets.count)")
             for i in 0..<reTweets.count{
                 // percorre todos os twitter e adiciona oid
                 let uid = reTweets[i].uid
