@@ -9,7 +9,7 @@ import FirebaseAuth
 import Foundation
 import FirebaseFirestore
 struct TweetService {
-    func uploadTweet(_ tweet: String, completion : @escaping (Bool) -> Void) {
+    func uploadTweet(_ tweet: String,image : String?, completion : @escaping (Bool) -> Void) {
         // id do usuario
         guard let uid = Auth.auth().currentUser?.uid else { return }
         // objeto do twitter
@@ -18,9 +18,11 @@ struct TweetService {
                     "likes" : 0,
                     "numberOfComments" : 0,
                     "numberOfRetweets" : 0,
-                    "timestamp" : Timestamp(date: Date())] as [String : Any]
+                    "timestamp" : Timestamp(date: Date()),
+                    "imageTweet" : image
+        ] as [String : Any?]
         // criei um doc com id aleatorio e dentro dele tem o id do usuario e os dados do twitter
-        Firestore.firestore().collection("tweets").document().setData(data) { error in
+        Firestore.firestore().collection("tweets").document().setData(data as [String : Any]) { error in
             if let error = error{
                 completion(false)
                 print(error)

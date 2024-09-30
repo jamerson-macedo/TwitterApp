@@ -36,11 +36,7 @@ struct TweetRowView: View {
                                 .frame(width: 56, height: 56)
                                 .clipShape(Circle())
                         } placeholder: {
-                            Circle()
-                                .frame(width: 56, height: 56)
-                                .clipShape(Circle())
-                                .foregroundColor(.gray)
-                                .redacted(reason: .placeholder)
+                            ProgressView().frame(width: 56, height: 56)
                             
                         }
                     }
@@ -72,88 +68,100 @@ struct TweetRowView: View {
                         Text(viewmodel.tweet.tweet)
                             .font(.headline)
                             .multilineTextAlignment(.leading)
-                    }
-                    
-                    
-                }
-            }
-            HStack(){
-                Button(action: {
-                    showComments.toggle()
-                }, label: {
-                    HStack{
-                        Image(systemName: "bubble.left").font(.subheadline).sheet(isPresented:$showComments,onDismiss: {
-                            
-                        }){
-                            CommentsView(tweet: viewmodel.tweet)
+                        if let image = viewmodel.tweet.imageTweet {
+                            AsyncImage(url: URL(string: image)) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill() // Garante que a imagem preencha todo o espaço disponível
+                                    .frame(width: 200, height: 200) // Ajusta para um tamanho quadrado
+                                    .clipped() // Corta a imagem para garantir que não transborde
+                            } placeholder: {
+                                ProgressView().frame(width: 200, height: 200)
+                            }
                         }
-                        Text(viewmodel.tweet.numberOfComments > 0 ? "\(viewmodel.tweet.numberOfComments)" : " ")
-                            .font(.subheadline)
-                    }
-                    
-                })
-                Spacer()
-                
-                Button(action: {
-                    if viewmodel.tweet.didRetweet ?? false{
-                        
-                        self.showAlert.toggle()
-                    }else  {
-                        viewmodel.retweet()
-                        notificationviewModel.sendNotification(toUserId: viewmodel.tweet.user?.id ?? "", postId: viewmodel.tweet.id, type: .comment)
-                    }
-                    viewmodel.checkIfUserRetweetedTweet()
-                    
-                    
-                }, label: {
-                    HStack{
-                        Image(systemName: "arrow.2.squarepath").font(.subheadline).foregroundStyle(viewmodel.tweet.didRetweet ?? false ? .blue : .gray )
-                        Text(viewmodel.tweet.numberOfRetweets > 0 ? "\(viewmodel.tweet.numberOfRetweets)" : " ")
-                            .font(.subheadline)
+
                         
                         
                     }
-                    
-                }).alert(isPresented: $showAlert){
-                    Alert(
-                        title: Text("Undo Retweet"),
-                        message: Text("Are you sure you want to undo the retweet?"),
-                        primaryButton: .destructive(Text("Undo")) {
-                            // Ação de desfazer o retweet
-                            viewmodel.unRetweet()
-                            viewmodel.checkIfUserRetweetedTweet()
-                        },
-                        secondaryButton: .cancel()
-                    )
                 }
-                Spacer()
-                Button(action: {
-                    if !(viewmodel.isProcessing) {
-                        viewmodel.tweet.didLike ?? false ? viewmodel.unlikeTweet() : viewmodel.likeTweet()
-                        notificationviewModel.sendNotification(toUserId: viewmodel.tweet.user?.id ?? "", postId: viewmodel.tweet.id, type: .like)
-                    }
-                }, label: {
-                    HStack {
-                        Image(systemName: viewmodel.tweet.didLike ?? false ? "heart.fill" : "heart")
-                            .font(.subheadline)
-                            .symbolEffect(.bounce, value: viewmodel.tweet.didLike)
-                            .foregroundStyle(viewmodel.tweet.didLike ?? false ? .red : .gray)
+                HStack(){
+                    Button(action: {
+                        showComments.toggle()
+                    }, label: {
+                        HStack{
+                            Image(systemName: "bubble.left").font(.subheadline).sheet(isPresented:$showComments,onDismiss: {
+                                
+                            }){
+                                CommentsView(tweet: viewmodel.tweet)
+                            }
+                            Text(viewmodel.tweet.numberOfComments > 0 ? "\(viewmodel.tweet.numberOfComments)" : " ")
+                                .font(.subheadline)
+                        }
                         
-                        // Espaço fixo para o número de likes
-                        Text(viewmodel.tweet.likes > 0 ? "\(viewmodel.tweet.likes)" : " ")
-                            .font(.subheadline)
+                    })
+                    Spacer()
+                    
+                    Button(action: {
+                        if viewmodel.tweet.didRetweet ?? false{
+                            
+                            self.showAlert.toggle()
+                        }else  {
+                            viewmodel.retweet()
+                            
+                            notificationviewModel.sendNotification(toUserId: viewmodel.tweet.user?.id ?? "", postId: viewmodel.tweet.id, type: .comment)
+                        }
+                        viewmodel.checkIfUserRetweetedTweet()
                         
+                        
+                    }, label: {
+                        HStack{
+                            Image(systemName: "arrow.2.squarepath").font(.subheadline).foregroundStyle(viewmodel.tweet.didRetweet ?? false ? .blue : .gray )
+                            Text(viewmodel.tweet.numberOfRetweets > 0 ? "\(viewmodel.tweet.numberOfRetweets)" : " ")
+                                .font(.subheadline)
+                            
+                            
+                        }
+                        
+                    }).alert(isPresented: $showAlert){
+                        Alert(
+                            title: Text("Undo Retweet"),
+                            message: Text("Are you sure you want to undo the retweet?"),
+                            primaryButton: .destructive(Text("Undo")) {
+                                // Ação de desfazer o retweet
+                                viewmodel.unRetweet()
+                                viewmodel.checkIfUserRetweetedTweet()
+                            },
+                            secondaryButton: .cancel()
+                        )
                     }
-                }).disabled(viewmodel.isProcessing)
-                Spacer()
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                    Image(systemName: "bookmark").font(.subheadline)
-                })
-            }.padding()
-                .foregroundStyle(Color.gray)
-            Divider()
+                    Spacer()
+                    Button(action: {
+                        if !(viewmodel.isProcessing) {
+                            viewmodel.tweet.didLike ?? false ? viewmodel.unlikeTweet() : viewmodel.likeTweet()
+                            notificationviewModel.sendNotification(toUserId: viewmodel.tweet.user?.id ?? "", postId: viewmodel.tweet.id, type: .like)
+                        }
+                    }, label: {
+                        HStack {
+                            Image(systemName: viewmodel.tweet.didLike ?? false ? "heart.fill" : "heart")
+                                .font(.subheadline)
+                                .symbolEffect(.bounce, value: viewmodel.tweet.didLike)
+                                .foregroundStyle(viewmodel.tweet.didLike ?? false ? .red : .gray)
+                            
+                            // Espaço fixo para o número de likes
+                            Text(viewmodel.tweet.likes > 0 ? "\(viewmodel.tweet.likes)" : " ")
+                                .font(.subheadline)
+                            
+                        }
+                    }).disabled(viewmodel.isProcessing)
+                    Spacer()
+                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                        Image(systemName: "bookmark").font(.subheadline)
+                    })
+                }.padding()
+                    .foregroundStyle(Color.gray)
+                Divider()
+            }
         }
     }
+    
 }
-
-

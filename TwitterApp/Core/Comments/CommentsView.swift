@@ -56,11 +56,7 @@ struct CommentsView: View {
                                 .clipShape(Circle())
                                 .padding(.leading,10)
                         } placeholder: {
-                            Circle()
-                                .frame(width: 35, height: 35)
-                                .clipShape(Circle())
-                                .padding(.leading,10)
-                                .redacted(reason: .placeholder)
+                            ProgressView().frame(width: 56, height: 56)
                         }
                     }
                     TextField("Add a comment in post of \(viewmodel.tweet.user?.username ?? "")", text: $comments)

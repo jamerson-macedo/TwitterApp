@@ -26,10 +26,7 @@ struct CommentsRowView: View {
                                .frame(width: 40, height: 40)
                                .clipShape(Circle())
                        } placeholder: {
-                           Circle()
-                               .frame(width: 40, height: 40)
-                               .clipShape(Circle())
-                               .redacted(reason: .placeholder)
+                           ProgressView().frame(width: 56, height: 56)
                        }
                    }
 

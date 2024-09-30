@@ -21,9 +21,7 @@ struct NotificationsView: View {
                                 .frame(width: 40, height: 40)
                                 .clipShape(Circle())
                         } placeholder: {
-                            Circle()
-                                .frame(width: 40, height: 40)
-                                .foregroundColor(.gray)
+                            ProgressView().frame(width: 40, height: 40)
                         }
                     }
                     
@@ -38,6 +36,7 @@ struct NotificationsView: View {
                 }
             }
             .navigationTitle("Notificações")
+            .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 viewModel.fetchNotifications() // Buscar notificações ao abrir a tela
             }

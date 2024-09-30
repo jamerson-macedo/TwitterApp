@@ -41,20 +41,24 @@ struct FeedView: View {
                             
                             
                         }
-
+                        
                     }.frame(width: 200)
-                    .overlay(Divider().offset(x:0,y:16))
-    
+                        .overlay(Divider().offset(x:0,y:16))
+                    
                     LazyVStack(alignment: .center) {
                         ForEach(feedViewModel.tweets(filter: self.selectedFilter)) { tweet in
                             TweetRowView(tweet: tweet, isRetweet: false).padding()
                         }
                     }
+                    
                 }.refreshable {
                     feedViewModel.fetchTweets()
-                
+                    
                 }
-                
+                // na hstack que esta os 2 itens eu faco o gesto e vejo ate o final
+                .gesture(DragGesture().onEnded({ value in
+                    handleSwipe(value: value.translation)
+                }))
                 .navigationTitle("Home") // Título na toolbar
                 .navigationBarTitleDisplayMode(.inline) // Exibe a toolbar de maneira compacta
                 .toolbar {
@@ -99,7 +103,7 @@ struct FeedView: View {
             .fullScreenCover(isPresented: $showNewTweetView,onDismiss: {
                 // quando fechar ele faz essa ação
                 feedViewModel.fetchTweets()
-              
+                
             }) {
                 NewTweetView()
             }
@@ -128,6 +132,34 @@ struct FeedView: View {
         }.onAppear{
             viewModel.fetchUser()
             
+        }
+    }
+    
+    
+    func handleSwipe(value: CGSize) {
+        let threshold: CGFloat = 50 // define ate onde tem que arrastar para mudar
+        
+        if value.width > threshold { // Deslizar para a direita
+            moveToPreviousTab()
+        } else if value.width < -threshold { // Deslizar para a esquerda
+            moveToNextTab()
+        }
+    }
+    func moveToNextTab() {
+        if let currentIndex = FeedFilter.allCases.firstIndex(of: selectedFilter),
+           currentIndex < FeedFilter.allCases.count - 1 {
+            withAnimation(.easeInOut) {
+                selectedFilter = FeedFilter.allCases[currentIndex + 1]
+            }
+        }
+    }
+    func moveToPreviousTab() {
+        if let currentIndex = FeedFilter.allCases.firstIndex(of: selectedFilter),
+           currentIndex > 0 {
+            
+            withAnimation(.easeInOut) {
+                selectedFilter = FeedFilter.allCases[currentIndex - 1]
+            }
         }
     }
 }

@@ -6,36 +6,47 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct NewTweetView: View {
+    
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var viewModel : AuthViewModel
+    @EnvironmentObject var viewModel: AuthViewModel
     @StateObject var tweetViewModel = NewTwitterViewModel()
-    // a outra opção seria passar o user como dependencia para essa classe
-    @FocusState var isFocused : Bool
+    
+    @State private var showImagePicker = false
+    @State private var showActionSheet = false
+    @FocusState var isFocused: Bool
+    @State private var selectedImage: UIImage?
     @State private var caption = ""
+    @State private var sourceType: UIImagePickerController.SourceType = .photoLibrary
+    
     var body: some View {
-        VStack{
-            HStack{
-                Button{
+        VStack {
+            // Cabeçalho com Cancel e Tweet
+            HStack {
+                Button {
                     dismiss()
-                }label: {
+                } label: {
                     Text("Cancel")
                 }
                 Spacer()
-                Button{
-                    tweetViewModel.postTweet(text: caption)
-                }label: {
+                Button {
+                    tweetViewModel.postTweet(text: caption, image: selectedImage)
+                } label: {
                     Text("Tweet").bold()
                         .padding(.horizontal)
-                        .padding(.vertical,8)
+                        .padding(.vertical, 8)
                         .background(Color.blue)
                         .foregroundStyle(.white)
                         .clipShape(Capsule())
                 }
-            }.padding()
-            HStack(alignment : .top){
-                if let user = viewModel.currentUser{
+            }
+            .padding()
+            
+            // Campo de texto e botão de imagem
+            HStack(alignment: .top) {
+                if let user = viewModel.currentUser {
                     AsyncImage(url: URL(string: user.profileImageUrl)) { image in
                         image.resizable()
                             .frame(width: 64, height: 64)
@@ -44,17 +55,55 @@ struct NewTweetView: View {
                         ProgressView()
                     }
                 }
-                TextArea(text: $caption).focused($isFocused)
-                    .onAppear{
-                    isFocused = true
+                
+                TextArea(text: $caption)
+                    .focused($isFocused)
+                    .onAppear {
+                        isFocused = true
+                    }
+                
+                // Botão para abrir a ActionSheet (Galeria/Câmera)
+                Button {
+                    showActionSheet.toggle()
+                } label: {
+                    Image(systemName: "photo.artframe")
+                        .font(.title)
                 }
-            }.padding()
-        }.onReceive(tweetViewModel.$didUploadTweet) { success in
-            if success{
-                dismiss()
+                .padding(.leading)
+                .actionSheet(isPresented: $showActionSheet) {
+                    ActionSheet(
+                        title: Text("Selecione uma opção"),
+                        buttons: [
+                            .default(Text("Abrir Galeria")) {
+                                sourceType = .photoLibrary
+                                showImagePicker = true
+                            },
+                            .default(Text("Tirar Foto")) {
+                                sourceType = .camera
+                                showImagePicker = true
+                            },
+                            .cancel()
+                        ]
+                    )
+                }
             }
-            else {
-                // error message
+            .padding()
+            
+            // Mostrar a imagem selecionada, se houver
+            if let selectedImage = selectedImage {
+                Image(uiImage: selectedImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 200, height: 200)
+                    .padding()
+            }
+        }
+        .sheet(isPresented: $showImagePicker) {
+            ImagePicker(image: $selectedImage, sourceType: sourceType)
+        }
+        .onReceive(tweetViewModel.$didUploadTweet) { success in
+            if success {
+                dismiss()
             }
         }
     }

@@ -17,16 +17,17 @@ struct SideMenuView: View {
                 VStack(alignment: .leading) {
                     AsyncImage(url: URL(string: user.profileImageUrl)) { image in
                         image.resizable()
-                            .frame(width: 50, height: 50)
+                            .frame(width: 70, height: 70)
                             .clipShape(Circle())
                     } placeholder: {
-                        ProgressView()
+                        ProgressView().frame(width: 80, height: 80)
                     }
 
                     VStack(alignment: .leading, spacing: 4) {
                         Text(user.fullname)
-                            .font(.headline)
+                            .font(.title2)
                             .bold()
+                            .padding(.top,10)
                         Text("@\(user.username)")
                             .font(.caption)
                             .foregroundColor(.gray)

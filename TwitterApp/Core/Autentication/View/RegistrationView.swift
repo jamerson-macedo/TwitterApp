@@ -85,7 +85,7 @@ struct RegistrationView: View {
             .ignoresSafeArea()
             // quando o usuario cadastra
             .navigationDestination(isPresented: $viewModel.didAuthenticateUser) {
-                PhotoSelectorVIew()
+                PhotoSelectorView()
             }
         }
     }
