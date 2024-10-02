@@ -29,7 +29,9 @@ class AuthViewModel : ObservableObject{
     init(){
         // quando iniciar se tiver usuario ele ja registra
         self.userSession = Auth.auth().currentUser
-        fetchUser()
+        Task{
+           await self.fetchUser()
+        }
         
      
     }
@@ -42,8 +44,9 @@ class AuthViewModel : ObservableObject{
             
             guard let user = result?.user else {return}
             self.userSession = user
-            self.fetchUser()
-        }
+            Task{
+               await self.fetchUser()
+            }        }
         
     }
     func register(withEmail email: String, password: String, fullname: String, username: String) {
@@ -118,19 +121,30 @@ class AuthViewModel : ObservableObject{
                 .document(uid)
                 .updateData(["profileImageUrl": profileImageUrl]) { _ in
                     self.userSession = self.tempUserSession
-                    self.fetchUser()
+                    Task{
+                       await self.fetchUser()
+                    }
                 }
         }
     }
-    func fetchUser() {
-        // se tiver usuario
-        guard let uid = self.userSession?.uid else {return}
-        service.fetchUser(withuid: uid){ user in
-            // traz os dados do usuario
-            self.currentUser = user
+    func fetchUser() async {
+        // Verifica se o usuário está autenticado
+        guard let uid = self.userSession?.uid else { return }
+
+        do {
+            // Busca o usuário de maneira assíncrona
+            let fetchedUser = try await service.fetchUser(withUid: uid)
             
+            // Atualiza a UI na main thread
+            DispatchQueue.main.async {
+                self.currentUser = fetchedUser
+            }
+        } catch {
+            print("ERROR")
         }
     }
+
+    
     // Função para obter o root view controller (para o Google Sign-In)
     func getRootViewController() -> UIViewController {
         guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -174,7 +188,9 @@ class AuthViewModel : ObservableObject{
                 print(user)
                 self.registerWithAuth(id: user.uid, withEmail: user.email ?? "usuario@gmal.com", fullname: user.displayName ?? "usuario 1", username: user.displayName ?? "@gmail",profileImage: user.photoURL?.absoluteString ?? "https://www.istockphoto.com/photos/user-profile")
                 self.userSession = user
-                self.fetchUser()
+                Task{
+                   await self.fetchUser()
+                }
             }
         }
     }
@@ -222,7 +238,9 @@ class AuthViewModel : ObservableObject{
                 self.userSession = user
                 
                 // Busca as informações completas do usuário
-                self.fetchUser()
+                Task{
+                   await self.fetchUser()
+                }
                 print("Usuário autenticado com sucesso com o Facebook!")
             }
         }
@@ -279,7 +297,9 @@ class AuthViewModel : ObservableObject{
                 self.userSession = user
                 
                 // Busca as informações completas do usuário
-                self.fetchUser()
+                Task{
+                   await self.fetchUser()
+                }
                 print("Usuário autenticado com sucesso com o Facebook!")
             }
         }
@@ -319,8 +339,9 @@ class AuthViewModel : ObservableObject{
                 // usuario autenticado
                 guard let user = authResult?.user else {return}
                 self.userSession = user
-                self.fetchUser()
-            }
+                Task{
+                   await self.fetchUser()
+                }            }
         }
     }
    

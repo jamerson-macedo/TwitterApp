@@ -49,7 +49,7 @@ struct CommentsView: View {
                 
                 // Campo de texto para adicionar um novo comentário
                 HStack {
-                    if let user = viewmodel.tweet.user{
+                    if let user = viewmodel.user{
                         AsyncImage(url: URL(string: user.profileImageUrl)) { image in
                             image.resizable()
                                 .frame(width: 35, height: 35)
@@ -111,6 +111,10 @@ struct CommentsView: View {
                     .disabled(comments.isEmpty)
                 }
                 .padding(.vertical, 10)
+            }
+        }.onAppear{
+            Task{
+               await viewmodel.fetchUser()
             }
         }
     }

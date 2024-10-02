@@ -8,11 +8,13 @@
 import Foundation
 import FirebaseAuth
 import FirebaseCore
+@MainActor
 class CommentsViewModel : ObservableObject {
     @Published var comments: [Comments] = []
     @Published var tweet: Tweet
     private let commentsService = TweetService()
-    
+    @Published var user: User?
+    private let userService = UserService()
     init(tweet : Tweet) {
         self.tweet = tweet
         fetchComments()
@@ -41,4 +43,17 @@ class CommentsViewModel : ObservableObject {
             print(comments.count)
         }
     }
+    func fetchUser() async {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        do {
+            let fetchedUser = try await userService.fetchUser(withUid: uid)
+      
+                self.user = fetchedUser
+            
+        } catch {
+            print("Erro ao buscar usuário: \(error.localizedDescription)")
+        }
+    }
 }
+

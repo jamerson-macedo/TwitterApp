@@ -5,6 +5,7 @@
 //  Created by Jamerson Macedo on 18/09/24.
 //
 import Foundation
+@MainActor
 class TweetRowViewModel: ObservableObject{
     @Published var tweet: Tweet
     @Published var isProcessing = false // variavel para controlar o numero de cliques
@@ -52,6 +53,7 @@ class TweetRowViewModel: ObservableObject{
     }
     func retweet(){
         service.retweet(tweet)
+        
         self.tweet.didRetweet = true
         self.tweet.numberOfRetweets += 1
      

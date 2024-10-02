@@ -32,25 +32,26 @@ struct TweetService {
             
         }
     }
-    func fetchTweets(completion: @escaping ([Tweet]) -> Void) {
-        Firestore.firestore()
-            .collection("tweets")
-            .order(by: "timestamp",descending: true)
-            .getDocuments() { querySnapshot, error in
-                if let error = error {
-                    completion([])
-                    print(error)
-                    return
+    func fetchTweets() async throws -> [Tweet] {
+            do {
+                // Executa a requisição de forma assíncrona e aguarda o resultado
+                let snapshot = try await Firestore.firestore()
+                    .collection("tweets")
+                    .order(by: "timestamp", descending: true)
+                    .getDocuments()
+                
+                // Converte os documentos para o modelo Tweet
+                let tweets = snapshot.documents.compactMap { document in
+                    try? document.data(as: Tweet.self)
                 }
                 
-                guard let documents = querySnapshot?.documents else { return }
-                let tweets = documents.compactMap{ query in
-                    try? query.data(as: Tweet.self)
-                }
-                //let tweets = querySnapshot.documents.encode(to: [Tweet].self)
-                completion(tweets)
+                // Retorna a lista de tweets
+                return tweets
+            } catch {
+                // Se houver um erro, propaga-o
+                throw error
             }
-    }
+        }
     func fetchTweetsById(forUid uid : String, completion : @escaping ([Tweet]) -> Void){
         Firestore.firestore()
             .collection("tweets")
@@ -142,31 +143,32 @@ extension TweetService{
                 completion(document.exists)
             }
     }
-    func fetchLikesTweets(forUid uid : String, completion : @escaping ([Tweet]) -> Void){
-        var tweets = [Tweet]()
-        // primeiro vou na colecao que os usuairos deram like e vou pehar so o id que tem la
-        Firestore
-            .firestore()
-            .collection("users")
-            .document(uid)
-            .collection("users-likes").getDocuments{ documents, error in
-                // me retorna so os ids
-                guard let documents = documents?.documents else { return }
-                documents.forEach { doc in
-                    // para cada um dos ids eu vou buscar eles agora
-                    
-                    let tweetId = doc.documentID
-                    Firestore.firestore().collection("tweets").document(tweetId)
-                        .getDocument(){ document, error in
-                            guard let tweet = try? document?.data(as:Tweet.self) else { return }
-                            tweets.append(tweet)
-                            completion(tweets)
-                        }
-                    
-                }
-                
-            }
-    }
+    func fetchLikedTweets(forUid uid: String) async throws -> [Tweet] {
+           var likedTweets = [Tweet]()
+           
+           // Busca os documentos na subcoleção "users-likes"
+           let documents = try await Firestore.firestore()
+               .collection("users")
+               .document(uid)
+               .collection("users-likes")
+               .getDocuments()
+           
+           // Para cada ID de tweet curtido, buscamos o tweet correspondente
+           for doc in documents.documents {
+               let tweetId = doc.documentID
+               let tweetDocument = try await Firestore.firestore()
+                   .collection("tweets")
+                   .document(tweetId)
+                   .getDocument()
+               
+               // Decodifica o documento em um objeto Tweet
+               if let tweet = try? tweetDocument.data(as: Tweet.self) {
+                   likedTweets.append(tweet)
+               }
+           }
+           
+           return likedTweets
+       }
     
 }
 // MARK: - COMMENTS
@@ -361,31 +363,33 @@ extension TweetService{
     }
     
     
-    func fetchReTweets(forUid uid : String, completion : @escaping ([Tweet]) -> Void){
-        var tweets = [Tweet]()
-        // primeiro vou na colecao que os usuairos deram like e vou pehar so o id que tem la
-        Firestore
-            .firestore()
-            .collection("users")
-            .document(uid)
-            .collection("users-retweets").getDocuments{ documents, error in
-                // me retorna so os ids
-                guard let documents = documents?.documents else { return }
-                documents.forEach { doc in
-                    // para cada um dos ids eu vou buscar eles agora
-                    
-                    let tweetId = doc.documentID
-                    Firestore.firestore().collection("tweets").document(tweetId)
-                        .getDocument(){ document, error in
-                            guard let tweet = try? document?.data(as:Tweet.self) else { return }
-                            tweets.append(tweet)
-                            completion(tweets)
-                        }
-                    
-                }
+    func fetchReTweets(forUid uid: String) async throws -> [Tweet] {
+            var reTweets = [Tweet]()
+            
+            // Busca os documentos na subcoleção "users-retweets"
+            let documents = try await Firestore.firestore()
+                .collection("users")
+                .document(uid)
+                .collection("users-retweets")
+                .getDocuments()
+            
+            // Itera sobre os IDs dos tweets retweetados e busca os documentos correspondentes
+            for doc in documents.documents {
+                let tweetId = doc.documentID
                 
+                let tweetDocument = try await Firestore.firestore()
+                    .collection("tweets")
+                    .document(tweetId)
+                    .getDocument()
+                
+                // Decodifica o documento em um objeto Tweet e adiciona à lista
+                if let tweet = try? tweetDocument.data(as: Tweet.self) {
+                    reTweets.append(tweet)
+                }
             }
-    }
+            
+            return reTweets
+        }
     func checkIfUserRetweet(_ tweet : Tweet, completion : @escaping(Bool)-> Void){
         // vejo minha lista de likes
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -403,67 +407,59 @@ extension TweetService{
     }
 }
 extension TweetService{
-    // pegando o id de todos usuarios que sigo
-    func fetchFollowingUserIDs(completion: @escaping ([String]) -> Void) {
+    
+    func fetchFollowingUserIDs() async throws -> [String] {
+        // Obtém o UID do usuário atual
         guard let currentUserId = Auth.auth().currentUser?.uid else {
-            print("Erro: UID do usuário atual não encontrado")
-            return
+            throw NSError(domain: "UserService", code: 401, userInfo: [NSLocalizedDescriptionKey: "UID do usuário atual não encontrado"])
         }
         
-        Firestore.firestore()
+        // Faz a requisição assíncrona ao Firestore
+        let snapshot = try await Firestore.firestore()
             .collection("users")
             .document(currentUserId)
             .collection("following")
-            .getDocuments { querySnapshot, error in
-                if let error = error {
-                    print("Erro ao buscar usuários seguidos: \(error.localizedDescription)")
-                    completion([])
-                    return
-                }
-                
-                guard let documents = querySnapshot?.documents else {
-                    print("Erro: Nenhum documento encontrado na subcoleção 'following'")
-                    completion([])  // Retorna lista vazia se não houver documentos
-                    return
-                }
-                
-                let userIDs = documents.compactMap { $0.documentID }
-                print("Usuários seguidos (IDs): \(userIDs)")  // Log para verificar os IDs obtidos
-                completion(userIDs)
-            }
-    }
-    func fetchTweetsOfFollowedUsers(completion: @escaping ([Tweet]) -> Void) {
-        fetchFollowingUserIDs { userIDs in
-            guard !userIDs.isEmpty else {
-                completion([]) // Se o usuário não seguir ninguém, retorna uma lista vazia
-                print("CHEGOU AQUI")
-                return
-            }
-            
-            Firestore.firestore()
-                .collection("tweets")
-                .whereField("uid", in: userIDs) // Filtro para buscar tweets apenas dos usuários seguidos
-                .order(by: "timestamp", descending: true)
-                .getDocuments { querySnapshot, error in
-                    if let error = error {
-                        completion([])  // Retorna uma lista vazia em caso de erro
-                        print("Erro ao buscar tweets: \(error.localizedDescription)")
-                        return
-                    }
-                    
-                    guard let documents = querySnapshot?.documents else {
-                        completion([])  // Retorna uma lista vazia se não houver documentos
-                        return
-                    }
-                    
-                    let tweets = documents.compactMap { query in
-                        try? query.data(as: Tweet.self)
-                    }
-                    
-                    completion(tweets)
-                    print("DEBUG ITENS BUSCADOS: \(tweets)")
-                }
+            .getDocuments()
+        
+        // Verifica se há documentos na subcoleção 'following'
+        guard !snapshot.isEmpty else {
+            return []  // Retorna uma lista vazia se não houver documentos
         }
+        
+        // Mapeia os IDs dos usuários seguidos
+        let userIDs = snapshot.documents.compactMap { $0.documentID }
+        print("Usuários seguidos (IDs): \(userIDs)")  // Log para verificar os IDs obtidos
+        
+        return userIDs
     }
-    
+   func fetchTweetsOfFollowedUsers() async throws -> [Tweet] {
+        // Busca os IDs dos usuários seguidos
+        let userIDs = try await fetchFollowingUserIDs()
+        
+        guard !userIDs.isEmpty else {
+            print("Nenhum usuário seguido encontrado")
+            return []  // Se o usuário não seguir ninguém, retorna uma lista vazia
+        }
+        
+        // Faz a requisição para buscar os tweets dos usuários seguidos
+        let snapshot = try await Firestore.firestore()
+            .collection("tweets")
+            .whereField("uid", in: userIDs)  // Filtro para buscar tweets apenas dos usuários seguidos
+            .order(by: "timestamp", descending: true)
+            .getDocuments()
+        
+        // Verifica se há documentos na coleção de tweets
+        guard !snapshot.isEmpty else {
+            return []  // Retorna uma lista vazia se não houver documentos
+        }
+        
+        // Mapeia os documentos para o modelo Tweet
+        let tweets = snapshot.documents.compactMap { document in
+            try? document.data(as: Tweet.self)
+        }
+        
+        print("Tweets buscados: \(tweets.count) tweets dos usuários seguidos")
+        return tweets
+    }
 }
+    

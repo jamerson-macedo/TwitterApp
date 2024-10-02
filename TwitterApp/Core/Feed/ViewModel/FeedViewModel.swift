@@ -12,41 +12,50 @@ class FeedViewModel : ObservableObject{
     let userService = UserService()
     let service = TweetService()
     
-    init(){
-        fetchTweets()
-      
-    }
-    func fetchTweets(){
-        
-        service.fetchTweets { tweets in
-            // preencho a lista com os twitters e depois preencho os usuarios
-            self.tweets = tweets
+    func fetchTweets() async {
+        do {
+            // Fetch dos tweets
+            let fetchedTweets = try await service.fetchTweets()
             
-            for i in 0..<tweets.count{
-                // percorre todos os twitter e adiciona oid
-                let uid = tweets[i].uid
-                self.userService.fetchUser(withuid: uid){ user in
-                    self.tweets[i].user = user
-                    
+            // Atualizar os tweets no main thread
+            DispatchQueue.main.async {
+                self.tweets = fetchedTweets
+            }
+
+            // Fetch dos usuários para cada tweet de maneira assíncrona
+            for i in 0..<fetchedTweets.count {
+                let uid = fetchedTweets[i].uid
+                if let user = try? await userService.fetchUser(withUid: uid) {
+                    DispatchQueue.main.async {
+                        self.tweets[i].user = user
+                    }
                 }
             }
+
+            // Fetch dos tweets dos usuários seguidos
+            let fetchedFollowingTweets = try await service.fetchTweetsOfFollowedUsers()
             
-            
-        }
-        service.fetchTweetsOfFollowedUsers{ tweets in
-            self.followingTweets = tweets
-            for i in 0..<tweets.count{
-                let uid = tweets[i].uid
-                self.userService.fetchUser(withuid: uid){ user in
-                    self.followingTweets[i].user = user
-                }
-                
+            DispatchQueue.main.async {
+                self.followingTweets = fetchedFollowingTweets
             }
+
+            // Fetch dos usuários para os tweets dos usuários seguidos
+            for i in 0..<fetchedFollowingTweets.count {
+                let uid = fetchedFollowingTweets[i].uid
+                if let user = try? await userService.fetchUser(withUid: uid) {
+                    DispatchQueue.main.async {
+                        self.followingTweets[i].user = user
+                    }
+                }
+            }
+
+        } catch {
+            print("Erro ao carregar tweets: \(error)")
         }
-        
-        
     }
-  
+
+    
+    
     func tweets(filter : FeedFilter)->[Tweet]{
         switch filter{
         case .foryou:

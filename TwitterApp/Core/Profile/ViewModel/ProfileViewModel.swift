@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+@MainActor
 class ProfileViewModel: ObservableObject {
     @Published var tweets: [Tweet] = []
     @Published var likedTweets: [Tweet] = []
@@ -21,9 +22,9 @@ class ProfileViewModel: ObservableObject {
     init (user: User) {
         self.user = user
         self.fetchTweetsById()
-        self.fetchLikedTweets()
+       // self.fetchLikedTweets()
         self.isFollowing()
-        self.fetchReTweetsById()
+       // self.fetchReTweetsById()
         
     }
     func fetchTweetsById() {
@@ -43,23 +44,26 @@ class ProfileViewModel: ObservableObject {
             
         }
     }
-    func fetchLikedTweets() {
-        
+    func fetchLikedTweets() async {
         guard let uid = user.id else { return }
-        twitterService.fetchLikesTweets(forUid: uid){ likedTweets in
+        
+        // Buscando os tweets que foram curtidos
+        do {
+            let likedTweets = try await twitterService.fetchLikedTweets(forUid: uid)
             self.likedTweets = likedTweets
-            //print("DEBUG : \(likedTweets.count)")
-            for i in 0..<likedTweets.count{
-                // percorre todos os twitter e adiciona oid
+            
+            // Iterando sobre os tweets e buscando os usuários correspondentes de forma assíncrona
+            for i in 0..<likedTweets.count {
                 let uid = likedTweets[i].uid
-                self.userService.fetchUser(withuid: uid){ user in
+                if let user = try? await userService.fetchUser(withUid: uid) {
                     self.likedTweets[i].user = user
-                    
                 }
             }
-            
+        } catch {
+            print("Erro ao buscar os tweets curtidos: \(error.localizedDescription)")
         }
     }
+
     func followUser(){
         
         guard let followerID = user.id else { return }
@@ -89,21 +93,26 @@ class ProfileViewModel: ObservableObject {
             }
         }
     
-    func fetchReTweetsById() {
+    func fetchReTweetsById() async {
         guard let uid = user.id else { return }
-        twitterService.fetchReTweets(forUid: uid){ reTweets in
+
+        do {
+            // Busca os retweets de forma assíncrona
+            let reTweets = try await twitterService.fetchReTweets(forUid: uid)
             self.reTweets = reTweets
-            //print("DEBUG : \(reTweets.count)")
-            for i in 0..<reTweets.count{
-                // percorre todos os twitter e adiciona oid
+            
+            // Itera pelos retweets e busca o usuário associado de forma assíncrona
+            for i in 0..<reTweets.count {
                 let uid = reTweets[i].uid
-                self.userService.fetchUser(withuid: uid){ user in
+                if let user = try? await userService.fetchUser(withUid: uid) {
                     self.reTweets[i].user = user
                 }
             }
-            
+        } catch {
+            print("Erro ao buscar os retweets: \(error.localizedDescription)")
         }
     }
+
     func tweets(filter : TweetFilterViewModel)->[Tweet]{
         switch filter{
         case .tweets:

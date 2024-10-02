@@ -52,8 +52,9 @@ struct FeedView: View {
                     }
                     
                 }.refreshable {
-                    feedViewModel.fetchTweets()
-                    
+                    Task{
+                        await feedViewModel.fetchTweets()
+                    }
                 }
                 // na hstack que esta os 2 itens eu faco o gesto e vejo ate o final
                 .gesture(DragGesture().onEnded({ value in
@@ -102,8 +103,9 @@ struct FeedView: View {
             .position(x: UIScreen.main.bounds.width - 50, y: UIScreen.main.bounds.height - 200) // Posição do botão
             .fullScreenCover(isPresented: $showNewTweetView,onDismiss: {
                 // quando fechar ele faz essa ação
-                feedViewModel.fetchTweets()
-                
+                Task {
+                    await feedViewModel.fetchTweets()
+                }
             }) {
                 NewTweetView()
             }
@@ -130,8 +132,12 @@ struct FeedView: View {
             }
             .zIndex(1) // Controla a sobreposição do side menu em relação ao conteúdo
         }.onAppear{
-            viewModel.fetchUser()
+           
             
+        }
+        .task {
+            await feedViewModel.fetchTweets()
+            await viewModel.fetchUser()
         }
     }
     

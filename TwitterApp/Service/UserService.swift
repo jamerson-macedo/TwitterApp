@@ -9,16 +9,30 @@
 import FirebaseFirestore
 import FirebaseAuth
 struct UserService {
-    func fetchUser(withuid uid : String, completion : @escaping (User)->Void){
-        Firestore.firestore().collection("users")
-            .document(uid)
-            .getDocument { document, _ in
-                guard let document = document else {return}
-                guard let user = try? document.data(as: User.self) else {return}
-               //print("DEBUG : \(user.username)")
-                completion(user)
+    
+    func fetchUser(withUid uid: String) async throws -> User {
+        do {
+            // Tentativa de pegar o documento do Firestore
+            let document = try await Firestore.firestore()
+                .collection("users")
+                .document(uid)
+                .getDocument()
+            
+            // Verifica se o documento existe
+            guard document.data() != nil else {
+                throw NSError(domain: "UserService", code: 404, userInfo: [NSLocalizedDescriptionKey: "Usuário não encontrado"])
             }
+            
+            // Tenta decodificar o documento como um `User`
+            let user = try document.data(as: User.self)
+            
+            return user
+        } catch {
+            // Propaga o erro caso ocorra um problema com a requisição ou decodificação
+            throw error
+        }
     }
+    
     func fetchAllUsers(completion : @escaping ([User]) -> Void){
         // usuario atual
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
@@ -36,7 +50,7 @@ struct UserService {
     }
     func followUser(followingUserID: String) {
         let userId = Auth.auth().currentUser!.uid
-
+        
         // Adiciona o usuário que você quer seguir na subcoleção "following" do usuário atual
         let followingRef = Firestore.firestore()
             .collection("users")
@@ -72,7 +86,7 @@ struct UserService {
                     print("Erro ao adicionar seguidor: \(error.localizedDescription)")
                     return
                 }
-
+                
                 // Incrementa o contador de "followers" no usuário seguido
                 Firestore.firestore()
                     .collection("users")
@@ -87,10 +101,10 @@ struct UserService {
             }
         }
     }
-
+    
     func unfollowUser(followingUserID: String) {
         let userId = Auth.auth().currentUser!.uid
-
+        
         // Remove o usuário da subcoleção "following" do usuário atual
         let followingRef = Firestore.firestore()
             .collection("users")
@@ -113,7 +127,7 @@ struct UserService {
                         print("Erro ao decrementar o contador de seguindo: \(error.localizedDescription)")
                         return
                     }
-
+                    
                     // Remove o usuário atual da subcoleção "followers" do usuário que está sendo seguido
                     let followersRef = Firestore.firestore()
                         .collection("users")
@@ -141,7 +155,7 @@ struct UserService {
                 }
         }
     }
-
+    
     func isFollowing(userId: String, completion: @escaping (Bool) -> Void) {
         guard let currentUserId = Auth.auth().currentUser?.uid else { return }
         

@@ -12,5 +12,4 @@ class CommentsRowViewModel : ObservableObject {
     init(comments: Comments) {
         self.comments = comments
     }
-    
 }

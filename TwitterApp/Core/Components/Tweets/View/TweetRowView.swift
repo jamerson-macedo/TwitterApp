@@ -87,6 +87,7 @@ struct TweetRowView: View {
                 HStack(){
                     Button(action: {
                         showComments.toggle()
+                        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
                     }, label: {
                         HStack{
                             Image(systemName: "bubble.left").font(.subheadline).sheet(isPresented:$showComments,onDismiss: {
@@ -109,9 +110,11 @@ struct TweetRowView: View {
                             viewmodel.retweet()
                             
                             notificationviewModel.sendNotification(toUserId: viewmodel.tweet.user?.id ?? "", postId: viewmodel.tweet.id, type: .comment)
+                         
                         }
                         viewmodel.checkIfUserRetweetedTweet()
-                        
+                        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+                 
                         
                     }, label: {
                         HStack{
@@ -137,8 +140,13 @@ struct TweetRowView: View {
                     Spacer()
                     Button(action: {
                         if !(viewmodel.isProcessing) {
-                            viewmodel.tweet.didLike ?? false ? viewmodel.unlikeTweet() : viewmodel.likeTweet()
+                            if viewmodel.tweet.didLike ?? false {
+                                viewmodel.unlikeTweet()
+                            } else {
+                                viewmodel.likeTweet()
+                            }
                             notificationviewModel.sendNotification(toUserId: viewmodel.tweet.user?.id ?? "", postId: viewmodel.tweet.id, type: .like)
+                            UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
                         }
                     }, label: {
                         HStack {
@@ -147,12 +155,12 @@ struct TweetRowView: View {
                                 .symbolEffect(.bounce, value: viewmodel.tweet.didLike)
                                 .foregroundStyle(viewmodel.tweet.didLike ?? false ? .red : .gray)
                             
-                            // Espaço fixo para o número de likes
                             Text(viewmodel.tweet.likes > 0 ? "\(viewmodel.tweet.likes)" : " ")
                                 .font(.subheadline)
-                            
                         }
-                    }).disabled(viewmodel.isProcessing)
+                    })
+                    .disabled(viewmodel.isProcessing)
+
                     Spacer()
                     Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                         Image(systemName: "bookmark").font(.subheadline)

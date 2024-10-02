@@ -35,6 +35,10 @@ struct ProfileView: View {
         .navigationBarHidden(true)
         .onAppear{
             profileViewModel.isFollowing()
+            
+        }
+        .task {
+            await profileViewModel.fetchLikedTweets()
         }
     }
 }
@@ -167,9 +171,12 @@ extension ProfileView {
                     }
                 }
             }.onAppear{
-                profileViewModel.fetchLikedTweets()
+                Task{
+                   await profileViewModel.fetchLikedTweets()
+                    await  profileViewModel.fetchReTweetsById()
+                }
                 profileViewModel.fetchTweetsById()
-                profileViewModel.fetchReTweetsById()
+              
             }
         }
     }
