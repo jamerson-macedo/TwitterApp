@@ -9,12 +9,15 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 class MessagesViewModel : ObservableObject {
-    @Published var messages: [User] = []
+    @Published var messages: [ContactWithLastMessage] = []
+    @Published var users : [User] = []
     let service =  UserService()
-    func getUsersMessages() {
+    func getUsersLastMessage() {
+        
+    }
+    func getAllUsers() {
         service.fetchAllUsers { users in
-            self.messages=users
-            print(users)
+            self.users = users
         }
     }
 }

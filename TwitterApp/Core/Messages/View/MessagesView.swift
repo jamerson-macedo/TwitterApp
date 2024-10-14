@@ -29,7 +29,7 @@ struct MessagesView: View {
                     
                     
                 }.onAppear{
-                    viewmodel.getUsersMessages()
+                    viewmodel.getUsersLastMessage()
                 }
             }
             .navigationTitle("Messages")

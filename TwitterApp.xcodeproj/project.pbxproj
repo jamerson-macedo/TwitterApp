@@ -31,6 +31,11 @@
 		CFBCEE822CBD82C9006EDC0F /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBCEE812CBD82C9006EDC0F /* ContactView.swift */; };
 		CFBCEE852CBD82FF006EDC0F /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBCEE842CBD82FF006EDC0F /* ContactsViewModel.swift */; };
 		CFBCEE872CBD8414006EDC0F /* ContactMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBCEE862CBD8414006EDC0F /* ContactMessageRow.swift */; };
+		CFBCEE892CBD93F0006EDC0F /* ContactWithLastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBCEE882CBD93F0006EDC0F /* ContactWithLastMessage.swift */; };
+		CFBCEE8D2CBD96A0006EDC0F /* ContactsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBCEE8C2CBD96A0006EDC0F /* ContactsRowView.swift */; };
+		CFBCEE902CBD97EC006EDC0F /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBCEE8F2CBD97EC006EDC0F /* ChatView.swift */; };
+		CFBCEE922CBDA359006EDC0F /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBCEE912CBDA359006EDC0F /* ChatViewModel.swift */; };
+		CFBCEE942CBDA449006EDC0F /* MessageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBCEE932CBDA449006EDC0F /* MessageRowView.swift */; };
 		CFDFB8052C861A0000F624E6 /* TwitterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8042C861A0000F624E6 /* TwitterApp.swift */; };
 		CFDFB8072C861A0000F624E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8062C861A0000F624E6 /* ContentView.swift */; };
 		CFDFB80C2C861A0100F624E6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFDFB80B2C861A0100F624E6 /* Preview Assets.xcassets */; };
@@ -91,6 +96,11 @@
 		CFBCEE812CBD82C9006EDC0F /* ContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
 		CFBCEE842CBD82FF006EDC0F /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
 		CFBCEE862CBD8414006EDC0F /* ContactMessageRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactMessageRow.swift; sourceTree = "<group>"; };
+		CFBCEE882CBD93F0006EDC0F /* ContactWithLastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactWithLastMessage.swift; sourceTree = "<group>"; };
+		CFBCEE8C2CBD96A0006EDC0F /* ContactsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsRowView.swift; sourceTree = "<group>"; };
+		CFBCEE8F2CBD97EC006EDC0F /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		CFBCEE912CBDA359006EDC0F /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		CFBCEE932CBDA449006EDC0F /* MessageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRowView.swift; sourceTree = "<group>"; };
 		CFDFB8012C861A0000F624E6 /* TwitterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFDFB8042C861A0000F624E6 /* TwitterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterApp.swift; sourceTree = "<group>"; };
 		CFDFB8062C861A0000F624E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -197,6 +207,8 @@
 		CFBCEE7E2CBD815B006EDC0F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CFDFB82B2C86257400F624E6 /* MessagesView.swift */,
+				CFBCEE862CBD8414006EDC0F /* ContactMessageRow.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -214,9 +226,19 @@
 			children = (
 				CFBCEE812CBD82C9006EDC0F /* ContactView.swift */,
 				CFBCEE842CBD82FF006EDC0F /* ContactsViewModel.swift */,
-				CFBCEE862CBD8414006EDC0F /* ContactMessageRow.swift */,
+				CFBCEE8C2CBD96A0006EDC0F /* ContactsRowView.swift */,
 			);
 			path = Contacts;
+			sourceTree = "<group>";
+		};
+		CFBCEE8E2CBD97DF006EDC0F /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				CFBCEE8F2CBD97EC006EDC0F /* ChatView.swift */,
+				CFBCEE912CBDA359006EDC0F /* ChatViewModel.swift */,
+				CFBCEE932CBDA449006EDC0F /* MessageRowView.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		CFDFB7F82C861A0000F624E6 = {
@@ -269,6 +291,7 @@
 				CFDFB86B2C90DED400F624E6 /* User.swift */,
 				CF6976112C9A645300753AEE /* Tweet.swift */,
 				CFBCEE7C2CBD7F84006EDC0F /* Messages.swift */,
+				CFBCEE882CBD93F0006EDC0F /* ContactWithLastMessage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -276,6 +299,7 @@
 		CFDFB8142C861AA200F624E6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				CFBCEE8E2CBD97DF006EDC0F /* Chat */,
 				CFBCEE802CBD82B2006EDC0F /* Contacts */,
 				CF7E6EAE2C9CAB8F0099BDCB /* Comments */,
 				CFDFB84A2C87B4CF00F624E6 /* Autentication */,
@@ -391,7 +415,6 @@
 			children = (
 				CFBCEE7F2CBD8160006EDC0F /* ViewModel */,
 				CFBCEE7E2CBD815B006EDC0F /* View */,
-				CFDFB82B2C86257400F624E6 /* MessagesView.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -623,6 +646,7 @@
 				CFDFB8302C8626C300F624E6 /* ProfileView.swift in Sources */,
 				CFDFB86A2C90DBA300F624E6 /* UserService.swift in Sources */,
 				CFBCEE7B2CBD7F5D006EDC0F /* MessagesViewModel.swift in Sources */,
+				CFBCEE8D2CBD96A0006EDC0F /* ContactsRowView.swift in Sources */,
 				CFDFB8682C8FA1A600F624E6 /* AutenticationHeaderView.swift in Sources */,
 				CFDFB8662C8BDA3400F624E6 /* ImageUploader.swift in Sources */,
 				CF6976122C9A645300753AEE /* Tweet.swift in Sources */,
@@ -650,15 +674,19 @@
 				CFDFB8612C8BC93C00F624E6 /* PhotoSelectorVIew.swift in Sources */,
 				CFDFB8702C94E70100F624E6 /* SearchBar.swift in Sources */,
 				CFDFB8402C8654DA00F624E6 /* SideMenuViewModel.swift in Sources */,
+				CFBCEE922CBDA359006EDC0F /* ChatViewModel.swift in Sources */,
 				CFDFB84E2C87B4F600F624E6 /* LoginView.swift in Sources */,
+				CFBCEE942CBDA449006EDC0F /* MessageRowView.swift in Sources */,
 				CF7E6EB22C9CAD170099BDCB /* CommentsRowView.swift in Sources */,
 				CFDFB8502C87B4FF00F624E6 /* RegistrationView.swift in Sources */,
 				CFDFB8472C86689900F624E6 /* NewTweetView.swift in Sources */,
 				CFDFB86C2C90DED400F624E6 /* User.swift in Sources */,
+				CFBCEE892CBD93F0006EDC0F /* ContactWithLastMessage.swift in Sources */,
 				CFDFB8522C87B71700F624E6 /* RoundedShape.swift in Sources */,
 				CF7E6EB62C9CADDE0099BDCB /* Comments.swift in Sources */,
 				CFDFB8372C86350200F624E6 /* UserRowView.swift in Sources */,
 				CFDFB85F2C87D6C200F624E6 /* AuthViewModel.swift in Sources */,
+				CFBCEE902CBD97EC006EDC0F /* ChatView.swift in Sources */,
 				CFDFB8222C86229900F624E6 /* MainTabView.swift in Sources */,
 				CFDFB8642C8BD19A00F624E6 /* ImagePicker.swift in Sources */,
 				CF69760E2C9A58A200753AEE /* NewTwitterViewModel.swift in Sources */,

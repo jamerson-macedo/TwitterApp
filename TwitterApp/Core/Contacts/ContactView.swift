@@ -13,9 +13,9 @@ struct ContactsView: View {
     @Environment(\.dismiss) private var dismiss
     var body: some View {
         NavigationStack{
-            List(viewmodel.messages){ contact in
+            List(viewmodel.users){ contact in
                 //                        NavigationLink(destination: ChatView(contact: contact)){
-                ContactMessageRow(user:contact)
+                ContactsRowView(user: contact)
             }.navigationTitle("New Chat")
                 .navigationBarTitleDisplayMode(.inline)
                 .searchable(text: $search,prompt: "Search by Name")
@@ -28,7 +28,7 @@ struct ContactsView: View {
                     
                 })
                 .onAppear{
-                    viewmodel.getUsersMessages()
+                    viewmodel.getAllUsers()
                 }
             
         }
