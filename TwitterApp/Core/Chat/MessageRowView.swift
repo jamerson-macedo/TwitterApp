@@ -7,7 +7,7 @@
 
 import SwiftUI
 import FirebaseFirestore
-struct MessageRow: View {
+struct MessageRowView: View {
     let message : Messages
     
     var body: some View {
@@ -17,7 +17,6 @@ struct MessageRow: View {
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding()
-             
                 
             }
         }
@@ -35,5 +34,5 @@ struct MessageRow: View {
   
     
 
-    MessageRow(message: Messages( text: "ola", isMe: true, timeStamp : Timestamp()))
+    MessageRowView(message: Messages( text: "ola", isMe: true, timeStamp : Timestamp()))
 }

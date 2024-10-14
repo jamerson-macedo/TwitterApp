@@ -9,14 +9,22 @@ import SwiftUI
 
 struct ChatView: View {
     @StateObject var chatviewModel = ChatViewModel()
+    @State var text: String = ""
     let user : User
     var body: some View {
         NavigationView{
-            ScrollView{
-                ForEach(chatviewModel.messages){ messages in
+            VStack{
+                ScrollView{
+                    ForEach(chatviewModel.messages){ messages in
+                        MessageRowView(message: messages)
+                        
+                    }
                     
+                   
                 }
-                
+                CustomTextField(text: $text) {
+                    //chatviewModel.sendmessage()
+                }
             }.toolbar {
                 ToolbarItem(placement: .navigation) {
                     Image(systemName: "arrow.left")
