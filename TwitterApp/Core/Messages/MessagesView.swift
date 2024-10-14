@@ -8,11 +8,50 @@
 import SwiftUI
 
 struct MessagesView: View {
+    
+    @StateObject var viewmodel = MessagesViewModel()
+    @State var text = ""
+    @State var isPresented: Bool = false
+    
     var body: some View {
-        Text("MessagesView")
+        NavigationStack{
+            ScrollView{
+                // viewmodel is loading ?
+                ForEach(viewmodel.messages){contacts in
+                    
+                    NavigationLink {
+                        //ChatView(contact: contacts)
+                        
+                    } label: {
+                        
+                        ContactMessageRow(user: contacts)
+                    }
+                    
+                    
+                }.onAppear{
+                    viewmodel.getUsersMessages()
+                }
+            }
+            .navigationTitle("Messages")
+            .searchable(text: $text,prompt: "Search Profile")
+            .toolbar{
+                ToolbarItemGroup( placement: .navigationBarTrailing){
+                    
+                    Button("", systemImage: "message"){ isPresented.toggle()
+                        
+                    }.sheet(isPresented: $isPresented, content: {
+                        ContactsView(viewmodel: viewmodel)
+                    })
+                    
+                }
+            }
+            
+        }
     }
 }
 
+
+
 #Preview {
-    MessagesView()
+    MessagesView(viewmodel: MessagesViewModel())
 }
