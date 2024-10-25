@@ -8,52 +8,43 @@
 import Foundation
 import FirebaseAuth
 import FirebaseCore
+
 @MainActor
-class CommentsViewModel : ObservableObject {
+final class CommentsViewModel: ObservableObject {
     @Published var comments: [Comments] = []
     @Published var tweet: Tweet
-    private let commentsService = TweetService()
     @Published var user: User?
-    private let userService = UserService()
-    init(tweet : Tweet) {
+    
+    init(tweet: Tweet) {
         self.tweet = tweet
         fetchComments()
-        
-    }
-    func addComment(commentText: String, completion : @escaping (String?)->Void) {
-        commentsService.addComments(tweet: tweet, commentText: commentText){ newcomment in
-            if let newcomment = newcomment {
-                DispatchQueue.main.async {
-                    self.comments.append(newcomment)
-                    self.tweet.numberOfComments += 1
-                    // tenho que retornar para a view o id do novo comentario para a view atualizar
-                    completion(newcomment.id)
-                }
-            }
-            
-        }
     }
     
-    func fetchComments() {
-        commentsService.fetchComments(tweet: tweet){ comments in
-            
-            DispatchQueue.main.async {
-                self.comments = comments
+    func addComment(commentText: String, completion: @escaping (String?) -> Void) {
+        TweetService.shared.addComments(tweet: tweet, commentText: commentText) { [weak self] newComment in
+            guard let self = self, let newComment = newComment else {
+                completion(nil)
+                return
             }
-            print(comments.count)
+            self.comments.append(newComment)
+            self.tweet.numberOfComments += 1
+            completion(newComment.id)
+        }
+    }
+    func fetchComments() {
+        TweetService.shared.fetchComments(tweet: tweet) { [weak self] comments in
+            guard let self = self else { return }
+            self.comments = comments
         }
     }
     func fetchUser() async {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         do {
-            let fetchedUser = try await userService.fetchUser(withUid: uid)
-      
-                self.user = fetchedUser
-            
+            let fetchedUser = try await UserService.shared.fetchUser(withUid: uid)
+            self.user = fetchedUser
         } catch {
             print("Erro ao buscar usuário: \(error.localizedDescription)")
         }
     }
 }
-

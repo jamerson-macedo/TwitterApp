@@ -22,15 +22,14 @@ class ExploreViewModel : ObservableObject{
             }
         }
     }
-    
-    private var service = UserService()
-    
+
     init(){
         fetchAllUsers()
     }
     
     func fetchAllUsers(){
-        service.fetchAllUsers { users in
+        UserService.shared.fetchAllUsers { [ weak self ] users in
+            guard let self = self else { return }
             self.allUsers = users
         }
     }

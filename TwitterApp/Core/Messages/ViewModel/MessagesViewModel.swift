@@ -11,12 +11,13 @@ import FirebaseFirestore
 class MessagesViewModel : ObservableObject {
     @Published var messages: [ContactWithLastMessage] = []
     @Published var users : [User] = []
-    let service =  UserService()
+    let service =  UserService.shared
     func getUsersLastMessage() {
         
     }
     func getAllUsers() {
-        service.fetchAllUsers { users in
+        UserService.shared.fetchAllUsers { [weak self ] users in
+            guard let self else {return}
             self.users = users
         }
     }

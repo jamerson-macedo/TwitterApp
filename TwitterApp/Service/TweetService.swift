@@ -9,6 +9,8 @@ import FirebaseAuth
 import Foundation
 import FirebaseFirestore
 struct TweetService {
+    static let shared = TweetService()
+    private init() {}
     func uploadTweet(_ tweet: String,image : String?, completion : @escaping (Bool) -> Void) {
         // id do usuario
         guard let uid = Auth.auth().currentUser?.uid else { return }

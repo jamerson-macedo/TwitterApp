@@ -37,6 +37,7 @@
 		CFBCEE922CBDA359006EDC0F /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBCEE912CBDA359006EDC0F /* ChatViewModel.swift */; };
 		CFBCEE942CBDA449006EDC0F /* MessageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBCEE932CBDA449006EDC0F /* MessageRowView.swift */; };
 		CFBCEE972CBDA770006EDC0F /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBCEE962CBDA770006EDC0F /* CustomTextField.swift */; };
+		CFBCEE992CBEE2CE006EDC0F /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBCEE982CBEE2CE006EDC0F /* MessageService.swift */; };
 		CFDFB8052C861A0000F624E6 /* TwitterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8042C861A0000F624E6 /* TwitterApp.swift */; };
 		CFDFB8072C861A0000F624E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDFB8062C861A0000F624E6 /* ContentView.swift */; };
 		CFDFB80C2C861A0100F624E6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFDFB80B2C861A0100F624E6 /* Preview Assets.xcassets */; };
@@ -103,6 +104,7 @@
 		CFBCEE912CBDA359006EDC0F /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		CFBCEE932CBDA449006EDC0F /* MessageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRowView.swift; sourceTree = "<group>"; };
 		CFBCEE962CBDA770006EDC0F /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		CFBCEE982CBEE2CE006EDC0F /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
 		CFDFB8012C861A0000F624E6 /* TwitterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFDFB8042C861A0000F624E6 /* TwitterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterApp.swift; sourceTree = "<group>"; };
 		CFDFB8062C861A0000F624E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 				CFDFB8652C8BDA3400F624E6 /* ImageUploader.swift */,
 				CFDFB8692C90DBA300F624E6 /* UserService.swift */,
 				CF69760B2C9A51C300753AEE /* TweetService.swift */,
+				CFBCEE982CBEE2CE006EDC0F /* MessageService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -691,6 +694,7 @@
 				CFBCEE942CBDA449006EDC0F /* MessageRowView.swift in Sources */,
 				CF7E6EB22C9CAD170099BDCB /* CommentsRowView.swift in Sources */,
 				CFDFB8502C87B4FF00F624E6 /* RegistrationView.swift in Sources */,
+				CFBCEE992CBEE2CE006EDC0F /* MessageService.swift in Sources */,
 				CFDFB8472C86689900F624E6 /* NewTweetView.swift in Sources */,
 				CFDFB86C2C90DED400F624E6 /* User.swift in Sources */,
 				CFBCEE892CBD93F0006EDC0F /* ContactWithLastMessage.swift in Sources */,

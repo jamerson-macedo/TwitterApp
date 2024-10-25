@@ -10,6 +10,9 @@ import FirebaseFirestore
 import FirebaseAuth
 struct UserService {
     
+    static let shared = UserService()
+    
+    init(){}
     func fetchUser(withUid uid: String) async throws -> User {
         do {
             // Tentativa de pegar o documento do Firestore

@@ -20,11 +20,8 @@ class AuthViewModel : ObservableObject{
     @Published var didAuthenticateUser = false
     // o usuario do retorno
     @Published var currentUser: User?
-    //
+    
     private var tempUserSession: FirebaseAuth.User?
-    
-    private let service = UserService()
-    
     
     init(){
         // quando iniciar se tiver usuario ele ja registra
@@ -133,7 +130,7 @@ class AuthViewModel : ObservableObject{
 
         do {
             // Busca o usuário de maneira assíncrona
-            let fetchedUser = try await service.fetchUser(withUid: uid)
+            let fetchedUser = try await UserService.shared.fetchUser(withUid: uid)
             
             // Atualiza a UI na main thread
             DispatchQueue.main.async {

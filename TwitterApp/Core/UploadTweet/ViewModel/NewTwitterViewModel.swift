@@ -10,7 +10,6 @@ import SwiftUI
 class NewTwitterViewModel: ObservableObject {
     
     @Published var didUploadTweet: Bool = false
-    let service = TweetService()
     var imagePost: String? = nil
     
     func postTweet(text: String, image: UIImage?) {
@@ -35,10 +34,11 @@ class NewTwitterViewModel: ObservableObject {
     }
     
     func uploadTweetWithImage(text: String, image: String?) {
-        service.uploadTweet(text, image: image) { success in
+        TweetService.shared.uploadTweet(text, image: image) { [weak self] success in
+            
             if success {
                 // Tweet foi enviado com sucesso
-                self.didUploadTweet = true
+                self?.didUploadTweet = true
                 print("DEBUG: Tweet enviado com sucesso.")
             } else {
                 // Mostrar uma mensagem de erro, caso o upload do tweet falhe

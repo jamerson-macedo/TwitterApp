@@ -4,50 +4,57 @@
 //
 //  Created by Jamerson Macedo on 14/10/24.
 //
-
 import SwiftUI
 
 struct ChatView: View {
     @StateObject var chatviewModel = ChatViewModel()
     @State var text: String = ""
-    let user : User
+    let user: User
+    @Environment(\.dismiss) private var dismiss  // Controla a navegação manualmente
+
     var body: some View {
-        NavigationView{
-            VStack{
-                ScrollView{
-                    ForEach(chatviewModel.messages){ messages in
-                        MessageRowView(message: messages)
-                        
-                    }
-                    
-                   
-                }
-                CustomTextField(text: $text) {
-                    //chatviewModel.sendmessage()
-                }
-            }.toolbar {
-                ToolbarItem(placement: .navigation) {
-                    Image(systemName: "arrow.left")
-                }
-                ToolbarItem(placement:.navigation) {
-                    AsyncImage(url: URL(string: user.profileImageUrl)) { image in
-                        image
-                            .resizable()
-                            .frame(width: 32, height: 32)
-                            .clipShape(Circle())
-                    } placeholder: {
-                        Circle()
-                            .frame(width: 32, height: 32)
-                            .clipShape(Circle())
-                            .redacted(reason: .placeholder)
-                    }
-                    
-                }
-                ToolbarItem(placement: .principal) {
-                    Text(user.username).font(.headline)
+        VStack {
+            ScrollView {
+                ForEach(chatviewModel.messages) { message in
+                    MessageRowView(message: message)
                 }
             }
+
+            CustomTextField(text: $text) {
+                chatviewModel.sendMessage(message: text, toUser : user)
+            }
+            .padding(.bottom, 8)
         }
+        .toolbar {
+           
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    dismiss()
+                }) {
+                    Image(systemName: "arrow.left")
+                        .foregroundColor(.blue)
+                }
+            }
+            ToolbarItem(placement: .navigationBarLeading) {
+                AsyncImage(url: URL(string: user.profileImageUrl)) { image in
+                    image
+                        .resizable()
+                        .frame(width: 32, height: 32)
+                        .clipShape(Circle())
+                } placeholder: {
+                    Circle()
+                        .frame(width: 32, height: 32)
+                        .clipShape(Circle())
+                        .redacted(reason: .placeholder)
+                }
+            }
+
+            ToolbarItem(placement: .principal) {
+                Text(user.username)
+                    .font(.headline)
+            }
+        }
+        .navigationBarBackButtonHidden(true) 
     }
 }
 

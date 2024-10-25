@@ -10,7 +10,6 @@ class TweetRowViewModel: ObservableObject{
     @Published var tweet: Tweet
     @Published var isProcessing = false // variavel para controlar o numero de cliques
     @Published var isRetweeting = false
-    let service = TweetService()
     
     
     init(tweet: Tweet, _ isRetweeting: Bool) {
@@ -22,11 +21,13 @@ class TweetRowViewModel: ObservableObject{
     }
     
    
-    func likeTweet(){
-        // se tiver carregando ja volta
+    func likeTweet() {
+        // Se já estiver processando, não executa novamente
         guard !isProcessing else { return }
         isProcessing = true  // Inicia a operação
-        service.likeTweet(tweet){
+
+        TweetService.shared.likeTweet(tweet) { [weak self] in
+            guard let self = self else { return }
             self.tweet.didLike = true
             self.tweet.likes += 1
             self.isProcessing = false
@@ -34,7 +35,8 @@ class TweetRowViewModel: ObservableObject{
     }
     func unlikeTweet(){
         guard !isProcessing else { return }
-        service.unlikeTweet(tweet){
+        TweetService.shared.unlikeTweet(tweet){[weak self] in
+            guard let self = self else { return }
             self.tweet.didLike = false
             self.tweet.likes -= 1
             self.isProcessing = false
@@ -43,31 +45,32 @@ class TweetRowViewModel: ObservableObject{
     }
     // so para atualizar a view
     func checkIfUserLikedTweet(){
-        service.checkIfUserLikedTweet(tweet){ didlike in
+        TweetService.shared.checkIfUserLikedTweet(tweet){[weak self]  didlike in
             if didlike{
-                
+                guard let self = self else { return }
                 self.tweet.didLike = true
             }
             
         }
     }
     func retweet(){
-        service.retweet(tweet)
+        TweetService.shared.retweet(tweet)
         
         self.tweet.didRetweet = true
         self.tweet.numberOfRetweets += 1
      
     }
     func unRetweet(){
-        service.unRetweet(tweet)
+        TweetService.shared.unRetweet(tweet)
         self.tweet.didRetweet = false
         self.tweet.numberOfRetweets -= 1
         
     }
     
     func checkIfUserRetweetedTweet(){
-        service.checkIfUserRetweet(tweet){ didRetweet in
+        TweetService.shared.checkIfUserRetweet(tweet){[weak self] didRetweet in
             if didRetweet{
+                guard let self = self else { return }
                 self.tweet.didRetweet = true
             }
             

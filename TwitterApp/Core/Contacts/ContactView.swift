@@ -14,8 +14,10 @@ struct ContactsView: View {
     var body: some View {
         NavigationStack{
             List(viewmodel.users){ contact in
-                //                        NavigationLink(destination: ChatView(contact: contact)){
-                ContactsRowView(user: contact)
+                NavigationLink(destination: ChatView( user: contact)){
+                    ContactsRowView(user: contact)
+                }
+                
             }.navigationTitle("New Chat")
                 .navigationBarTitleDisplayMode(.inline)
                 .searchable(text: $search,prompt: "Search by Name")
@@ -30,13 +32,12 @@ struct ContactsView: View {
                 .onAppear{
                     viewmodel.getAllUsers()
                 }
+                .navigationBarBackButtonHidden(true)
             
         }
-        
     }
+    
 }
-
-
 #Preview {
     ContactsView(viewmodel: MessagesViewModel())
 }

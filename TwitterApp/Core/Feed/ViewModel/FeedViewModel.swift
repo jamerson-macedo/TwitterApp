@@ -9,41 +9,44 @@ import Foundation
 class FeedViewModel : ObservableObject{
     @Published var tweets: [Tweet] = []
     @Published var followingTweets : [Tweet] = []
-    let userService = UserService()
-    let service = TweetService()
+    
     
     func fetchTweets() async {
         do {
             // Fetch dos tweets
-            let fetchedTweets = try await service.fetchTweets()
+            let fetchedTweets = try await TweetService.shared.fetchTweets()
             
-            // Atualizar os tweets no main thread
-            DispatchQueue.main.async {
+            // Atualizar os tweets na main thread
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
                 self.tweets = fetchedTweets
             }
 
             // Fetch dos usuários para cada tweet de maneira assíncrona
             for i in 0..<fetchedTweets.count {
                 let uid = fetchedTweets[i].uid
-                if let user = try? await userService.fetchUser(withUid: uid) {
-                    DispatchQueue.main.async {
+                if let user = try? await UserService.shared.fetchUser(withUid: uid) {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self else { return }
                         self.tweets[i].user = user
                     }
                 }
             }
 
             // Fetch dos tweets dos usuários seguidos
-            let fetchedFollowingTweets = try await service.fetchTweetsOfFollowedUsers()
+            let fetchedFollowingTweets = try await TweetService.shared.fetchTweetsOfFollowedUsers()
             
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
                 self.followingTweets = fetchedFollowingTweets
             }
 
             // Fetch dos usuários para os tweets dos usuários seguidos
             for i in 0..<fetchedFollowingTweets.count {
                 let uid = fetchedFollowingTweets[i].uid
-                if let user = try? await userService.fetchUser(withUid: uid) {
-                    DispatchQueue.main.async {
+                if let user = try? await UserService.shared.fetchUser(withUid: uid) {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self else { return }
                         self.followingTweets[i].user = user
                     }
                 }

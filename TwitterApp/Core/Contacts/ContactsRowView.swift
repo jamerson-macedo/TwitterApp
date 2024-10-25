@@ -15,7 +15,7 @@ struct ContactsRowView: View {
                 image
                     .resizable()
                     .frame(width: 56, height: 56)
-                    .scaledToFit()
+                    .scaledToFill()
                     .clipShape(Circle())
             } placeholder: {
                 ProgressView().frame(width: 56,height: 56)

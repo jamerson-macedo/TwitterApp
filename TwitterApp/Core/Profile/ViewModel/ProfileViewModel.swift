@@ -12,8 +12,6 @@ class ProfileViewModel: ObservableObject {
     @Published var tweets: [Tweet] = []
     @Published var likedTweets: [Tweet] = []
     @Published var reTweets : [Tweet] = []
-    private let twitterService = TweetService()
-    private let userService = UserService()
     @Published var ISFollowing: Bool = false
     // Estado reativo que a View irá observar
     
@@ -32,8 +30,9 @@ class ProfileViewModel: ObservableObject {
         guard let uid = user.id else { return }
         // vou buscar os twitters pelo id
         
-        twitterService.fetchTweetsById(forUid: uid) { tweets in
+        TweetService.shared.fetchTweetsById(forUid: uid) {[weak self] tweets in
             // os twitters que tiver o id dele dentro vem todos pra ca
+            guard let self else { return }
             self.tweets = tweets
             //
             // para cada twitter que veio
@@ -49,13 +48,13 @@ class ProfileViewModel: ObservableObject {
         
         // Buscando os tweets que foram curtidos
         do {
-            let likedTweets = try await twitterService.fetchLikedTweets(forUid: uid)
+            let likedTweets = try await TweetService.shared.fetchLikedTweets(forUid: uid)
             self.likedTweets = likedTweets
             
             // Iterando sobre os tweets e buscando os usuários correspondentes de forma assíncrona
             for i in 0..<likedTweets.count {
                 let uid = likedTweets[i].uid
-                if let user = try? await userService.fetchUser(withUid: uid) {
+                if let user = try? await UserService.shared.fetchUser(withUid: uid) {
                     self.likedTweets[i].user = user
                 }
             }
@@ -67,13 +66,13 @@ class ProfileViewModel: ObservableObject {
     func followUser(){
         
         guard let followerID = user.id else { return }
-        userService.followUser(followingUserID:followerID)
+        UserService.shared.followUser(followingUserID:followerID)
         self.ISFollowing.toggle()
         self.user.followers += 1
     }
     func unfollowUser() {
         guard let followerID = user.id else { return }
-        userService.unfollowUser(followingUserID: followerID)
+        UserService.shared.unfollowUser(followingUserID: followerID)
         // Atualiza o estado de forma imediata
         self.ISFollowing.toggle()
         self.user.followers -= 1
@@ -81,7 +80,7 @@ class ProfileViewModel: ObservableObject {
     
     func isFollowing() {
         guard let followerID = user.id else { return }
-        userService.isFollowing(userId: followerID) { isFollowing in
+        UserService.shared.isFollowing(userId: followerID) { isFollowing in
             self.ISFollowing = isFollowing  // Atualiza o estado local com base na verificação
         }
     }
@@ -98,13 +97,13 @@ class ProfileViewModel: ObservableObject {
 
         do {
             // Busca os retweets de forma assíncrona
-            let reTweets = try await twitterService.fetchReTweets(forUid: uid)
+            let reTweets = try await TweetService.shared.fetchReTweets(forUid: uid)
             self.reTweets = reTweets
             
             // Itera pelos retweets e busca o usuário associado de forma assíncrona
             for i in 0..<reTweets.count {
                 let uid = reTweets[i].uid
-                if let user = try? await userService.fetchUser(withUid: uid) {
+                if let user = try? await UserService.shared.fetchUser(withUid: uid) {
                     self.reTweets[i].user = user
                 }
             }
